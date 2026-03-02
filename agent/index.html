@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="squid.css">
 </head>
 <body>
+    <div class="abyss-bubbles" id="abyssBubbles"></div>
     <div id="nav-placeholder"></div>
 
     <!-- ==================== HERO ==================== -->
@@ -626,5 +627,45 @@
     <script src="https://squidbay.io/js/components.js"></script>
     <script src="https://squidbay.io/js/main.js"></script>
     <script src="squid.js"></script>
+    <script>
+    (function() {
+        var container = document.getElementById('abyssBubbles');
+        if (!container) return;
+
+        function createBubble() {
+            var bubble = document.createElement('div');
+            bubble.className = 'abyss-bubble';
+
+            var size = 4 + Math.random() * 28;
+            var left = Math.random() * 100;
+            var duration = 6 + Math.random() * 12;
+            var delay = Math.random() * 0.5;
+            var drift = -40 + Math.random() * 80;
+            var driftEnd = drift + (-20 + Math.random() * 40);
+            var scaleEnd = 0.6 + Math.random() * 0.5;
+
+            bubble.style.width = size + 'px';
+            bubble.style.height = size + 'px';
+            bubble.style.left = left + '%';
+            bubble.style.animationDuration = duration + 's';
+            bubble.style.animationDelay = delay + 's';
+            bubble.style.setProperty('--drift', drift + 'px');
+            bubble.style.setProperty('--drift-end', driftEnd + 'px');
+            bubble.style.setProperty('--scale-end', scaleEnd);
+
+            container.appendChild(bubble);
+
+            setTimeout(function() {
+                if (bubble.parentNode) bubble.remove();
+            }, (duration + delay) * 1000 + 200);
+        }
+
+        for (var i = 0; i < 12; i++) {
+            setTimeout(createBubble, i * 250);
+        }
+
+        setInterval(createBubble, 1000);
+    })();
+    </script>
 </body>
 </html>
