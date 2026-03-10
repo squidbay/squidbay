@@ -200,7 +200,7 @@
    -------------------------------------------------------------------------- */
 .live-stats {
     padding: 24px 0;
-    background: var(--darker);
+    background: transparent;
     border-bottom: 1px solid var(--gray);
     overflow: hidden;
 }
@@ -571,7 +571,7 @@
    -------------------------------------------------------------------------- */
 .marketplace-cta {
     padding: 80px 0;
-    background: linear-gradient(180deg, var(--darker) 0%, var(--black) 100%);
+    background: transparent;
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -892,7 +892,7 @@
    -------------------------------------------------------------------------- */
 .agent-section {
     padding: 80px 0;
-    background: var(--black);
+    background: transparent;
     border-top: 1px solid var(--gray);
     overflow: hidden;
 }
