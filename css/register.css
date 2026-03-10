@@ -1,0 +1,549 @@
+/* ==========================================================================
+   SquidBay - Agent Guide (Onboarding) Styles
+   ========================================================================== */
+
+/* Header */
+.guide-header {
+    padding: 120px 0 60px;
+    text-align: center;
+}
+
+.guide-header h1 {
+    margin-bottom: 16px;
+}
+
+.guide-header p {
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Content Layout */
+.guide-content {
+    padding: 60px 0 120px;
+    overflow-x: hidden;
+}
+
+.guide-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 60px;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* Grid child overflow fix — without this, <main> expands past viewport */
+.guide-grid > main,
+.guide-grid > aside {
+    min-width: 0;
+    overflow: hidden;
+}
+
+/* Sidebar Nav */
+.guide-nav {
+    position: sticky;
+    top: 100px;
+    height: fit-content;
+}
+
+.guide-nav h4 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+}
+
+.guide-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 28px 0;
+}
+
+.guide-nav li {
+    margin-bottom: 8px;
+}
+
+.guide-nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.88rem;
+    transition: color 0.2s;
+}
+
+.guide-nav a:hover,
+.guide-nav a.active {
+    color: var(--primary);
+}
+
+/* Sections */
+.guide-section {
+    margin-bottom: 56px;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+.guide-section h2 {
+    color: var(--primary);
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--gray);
+    font-size: 1.5rem;
+}
+
+.guide-section h3 {
+    margin-top: 28px;
+    margin-bottom: 12px;
+    font-size: 1.15rem;
+}
+
+.guide-section p {
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 16px;
+}
+
+.guide-section ul,
+.guide-section ol {
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    padding-left: 20px;
+    line-height: 1.7;
+}
+
+.guide-section li {
+    margin-bottom: 10px;
+}
+
+.guide-section a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.guide-section a:hover {
+    text-decoration: underline;
+}
+
+.guide-section code {
+    background: var(--darker);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.88em;
+    color: var(--primary);
+    font-family: var(--font-mono);
+}
+
+/* Prevent pre, code blocks, and tables from blowing out the layout */
+.guide-section pre {
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+.guide-section table {
+    max-width: 100%;
+}
+
+.guide-section .code-block {
+    max-width: 100%;
+}
+
+/* Highlight callout box */
+.callout {
+    background: linear-gradient(135deg, rgba(0, 217, 255, 0.05) 0%, rgba(0, 255, 136, 0.05) 100%);
+    border: 1px solid rgba(0, 217, 255, 0.2);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 32px;
+    overflow: hidden;
+}
+
+.callout h2 {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-top: 0;
+}
+
+.callout-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+}
+
+.callout-buttons button {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-family: var(--font-display);
+    border: none;
+}
+
+.callout-buttons .btn-copy {
+    background: linear-gradient(135deg, #00d9ff 0%, #00a8cc 100%);
+    color: #000;
+}
+
+.callout-buttons .btn-preview {
+    background: rgba(0, 217, 255, 0.1);
+    color: #00d9ff;
+    border: 1px solid rgba(0, 217, 255, 0.3);
+}
+
+/* Tier cards */
+.tier-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 24px 0;
+}
+
+.tier-card {
+    background: var(--dark);
+    border: 1px solid var(--gray);
+    border-radius: var(--radius-md);
+    padding: 24px 20px;
+    text-align: center;
+    transition: all 0.2s;
+}
+
+.tier-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.tier-icon {
+    margin-bottom: 10px;
+    color: var(--primary);
+}
+.tier-icon svg {
+    width: 40px;
+    height: 40px;
+}
+
+.tier-card h4 {
+    font-size: 1rem;
+    margin-bottom: 8px;
+    color: var(--white);
+}
+
+.tier-card p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Wallet table */
+.wallet-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+}
+
+.wallet-table th,
+.wallet-table td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid var(--gray);
+}
+
+.wallet-table th {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+}
+
+.wallet-name {
+    font-family: var(--font-mono);
+    color: var(--primary);
+    font-weight: 600;
+}
+
+/* Step cards for the flow */
+.step-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin: 24px 0;
+}
+
+.step-card {
+    background: var(--dark);
+    border: 1px solid var(--gray);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    position: relative;
+}
+
+.step-number {
+    position: absolute;
+    top: -12px;
+    left: 16px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: var(--black);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.8rem;
+    box-shadow: 0 4px 12px var(--primary-glow);
+}
+
+.step-card h4 {
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+    margin-top: 4px;
+}
+
+.step-card p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* API reference link box */
+.api-link-box {
+    background: var(--dark);
+    border: 1px solid var(--gray);
+    border-left: 4px solid var(--primary);
+    border-radius: var(--radius-md);
+    padding: 20px 24px;
+    margin: 24px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.api-link-box p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.api-link-box a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: var(--black);
+    padding: 10px 20px;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.2s;
+}
+
+.api-link-box a:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px var(--primary-glow);
+    text-decoration: none;
+}
+
+/* Skill file preview */
+.skill-preview {
+    display: none;
+    margin-top: 16px;
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #0a0e14;
+    border: 1px solid #2a3540;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.skill-preview pre {
+    margin: 0;
+    white-space: pre-wrap;
+    word-break: break-all;
+    font-size: 0.8rem;
+    color: #c0c0c0;
+    line-height: 1.5;
+}
+
+/* N-F12: SquidBot Quick Start */
+.squidbot-quickstart {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 20px 0 28px;
+    flex-wrap: wrap;
+}
+
+.btn-quickstart {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: var(--black);
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: var(--font-display);
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.btn-quickstart:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px var(--primary-glow);
+}
+
+.quickstart-hint {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* Quickstart dual-column grid */
+.quickstart-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.quickstart-card {
+    background: var(--dark);
+    border: 1px solid var(--gray);
+    border-radius: var(--radius-lg, 12px);
+    padding: 28px;
+    transition: all 0.2s;
+}
+
+.quickstart-card:hover {
+    border-color: rgba(0, 217, 255, 0.3);
+}
+
+.quickstart-badge {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    font-family: var(--font-mono);
+    opacity: 0.7;
+}
+
+.callout-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .quickstart-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .guide-header {
+        padding: 100px 0 40px;
+    }
+
+    .guide-header h1 {
+        font-size: 1.75rem;
+    }
+
+    .guide-content {
+        padding: 20px 0 80px;
+    }
+
+    .guide-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 0 16px;
+        max-width: 100%;
+    }
+
+    .guide-nav {
+        display: none;
+    }
+
+    .guide-section {
+        margin-bottom: 40px;
+        overflow-x: hidden;
+        word-wrap: break-word;
+    }
+
+    .guide-section h2 {
+        font-size: 1.25rem;
+        word-wrap: break-word;
+    }
+
+    .guide-section p {
+        font-size: 0.9rem;
+    }
+
+    /* Callout box — contained within content flow */
+    .callout {
+        padding: 20px;
+        margin-left: 0;
+        margin-right: 0;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .callout h2 {
+        font-size: 1.15rem;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .tier-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .step-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .wallet-table {
+        display: block;
+        overflow-x: auto;
+        font-size: 0.85rem;
+    }
+
+    .api-link-box {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .callout-buttons {
+        flex-direction: column;
+    }
+
+    .callout-buttons button {
+        width: 100%;
+        white-space: normal;
+    }
+
+    /* Code blocks */
+    .code-block pre,
+    .skill-preview pre {
+        font-size: 0.75rem;
+        word-break: break-all;
+    }
+
+    .code-block {
+        max-width: 100%;
+        overflow-x: auto;
+    }
+}
