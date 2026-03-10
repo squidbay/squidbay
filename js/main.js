@@ -218,11 +218,43 @@
     
     // --------------------------------------------------------------------------
     // Cookie Consent
+    // Uses a real cookie on .squidbay.io so consent carries across subdomains
     // --------------------------------------------------------------------------
+
+    /**
+     * Read a cookie by name
+     */
+    function getCookie(name) {
+        var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+        return match ? match[2] : null;
+    }
+
+    /**
+     * Set a cookie on .squidbay.io (works across all subdomains)
+     * Falls back to current hostname for localhost/dev
+     */
+    function setConsentCookie(value) {
+        var maxAge = 365 * 24 * 60 * 60; // 1 year
+        var hostname = window.location.hostname;
+        var domainPart = hostname.endsWith('squidbay.io') ? '; domain=.squidbay.io' : '';
+        document.cookie = 'squidbay_cookie_consent=' + value + '; path=/' + domainPart + '; max-age=' + maxAge + '; SameSite=Lax; Secure';
+    }
     
     function initCookieConsent() {
-        // Check if already consented
-        if (localStorage.getItem('squidbay-cookie-consent')) {
+        // Check if already consented (cookie or legacy localStorage)
+        if (getCookie('squidbay_cookie_consent')) {
+            // Migrate: if localStorage still has the old value, clean it up
+            if (localStorage.getItem('squidbay-cookie-consent')) {
+                localStorage.removeItem('squidbay-cookie-consent');
+            }
+            return;
+        }
+
+        // Migrate from localStorage if user already consented on this origin
+        var legacyConsent = localStorage.getItem('squidbay-cookie-consent');
+        if (legacyConsent) {
+            setConsentCookie(legacyConsent);
+            localStorage.removeItem('squidbay-cookie-consent');
             return;
         }
         
@@ -252,12 +284,12 @@
     
     // Cookie consent functions
     window.acceptCookies = function() {
-        localStorage.setItem('squidbay-cookie-consent', 'accepted');
+        setConsentCookie('accepted');
         hideCookieBanner();
     };
     
     window.declineCookies = function() {
-        localStorage.setItem('squidbay-cookie-consent', 'declined');
+        setConsentCookie('declined');
         hideCookieBanner();
     };
     
