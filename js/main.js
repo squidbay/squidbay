@@ -233,7 +233,7 @@
         banner.innerHTML = '\
             <div class="cookie-consent-inner">\
                 <div class="cookie-consent-text">\
-                    <p>We use cookies to improve your experience. By using SquidBay, you agree to our <a href="/privacy">Privacy Policy</a>.</p>\
+                    <p>We use cookies to improve your experience. By using SquidBay, you agree to our <a href="https://squidbay.io/privacy">Privacy Policy</a>.</p>\
                 </div>\
                 <div class="cookie-consent-buttons">\
                     <button class="btn btn-secondary btn-sm" onclick="declineCookies()">Decline</button>\
