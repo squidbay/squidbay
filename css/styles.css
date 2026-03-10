@@ -2864,3 +2864,60 @@ pre, code, .code-block-small, .agent-code-block pre {
 .pulse-cta-sub { display: block; font-size: 0.7rem; color: var(--text-muted); margin-top: 1px; }
 .pulse-cta-arrow { color: var(--primary); opacity: 0.5; transition: opacity 0.2s, transform 0.2s; flex-shrink: 0; }
 .pulse-cta:hover .pulse-cta-arrow { opacity: 1; transform: translateX(2px); }
+
+/* ===================================
+   ABYSS BUBBLES — subtle ambient
+   Loaded site-wide via components.js
+   =================================== */
+.abyss-bubbles {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.25;
+}
+
+.abyss-bubble {
+    position: absolute;
+    bottom: -20px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%,
+        rgba(0, 255, 136, 0.15),
+        rgba(0, 217, 255, 0.08) 40%,
+        rgba(0, 217, 255, 0.03) 70%,
+        transparent 100%);
+    border: 1px solid rgba(0, 255, 136, 0.12);
+    animation: bubbleRise linear forwards;
+    will-change: transform;
+}
+
+.abyss-bubble::after {
+    content: '';
+    position: absolute;
+    top: 20%; left: 25%;
+    width: 30%; height: 20%;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    transform: rotate(-30deg);
+}
+
+@keyframes bubbleRise {
+    0% {
+        transform: translateY(0) translateX(0) scale(1);
+        opacity: 0;
+    }
+    5% {
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(-50vh) translateX(var(--drift)) scale(var(--scale-end));
+    }
+    90% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(-105vh) translateX(var(--drift-end)) scale(var(--scale-end));
+        opacity: 0;
+    }
+}
