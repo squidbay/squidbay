@@ -7,7 +7,7 @@
    -------------------------------------------------------------------------- */
 .marketplace-header {
     padding: 140px 0 60px;
-    background: linear-gradient(180deg, var(--black) 0%, var(--darker) 100%);
+    background: transparent;
     position: relative;
     overflow: hidden;
 }
