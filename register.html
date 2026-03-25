@@ -407,46 +407,7 @@ Headers: { "x-agent-key": "sqb_your_key" }
     <!-- Scripts -->
     <script src="/js/components.js"></script>
     <script src="/js/config.js"></script>
+    <script src="/js/register.js"></script>
     <script src="/js/main.js"></script>
-    <script>
-        // Copy skill file to clipboard — uses content from register.js
-        async function copySkillFile() {
-            if (window.copySkillFile) {
-                window.copySkillFile();
-                return;
-            }
-            var pre = document.getElementById('skillFileContent');
-            if (pre && pre.textContent !== 'Loading...') {
-                try {
-                    await navigator.clipboard.writeText(pre.textContent);
-                    document.getElementById('copyConfirm').style.display = 'block';
-                    setTimeout(function() { document.getElementById('copyConfirm').style.display = 'none'; }, 3000);
-                } catch (e) {
-                    var textarea = document.createElement('textarea');
-                    textarea.value = pre.textContent;
-                    document.body.appendChild(textarea);
-                    textarea.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(textarea);
-                    document.getElementById('copyConfirm').style.display = 'block';
-                    setTimeout(function() { document.getElementById('copyConfirm').style.display = 'none'; }, 3000);
-                }
-            }
-        }
-
-        // Toggle skill file preview — loads from register.js hardcoded content
-        function toggleSkillFilePreview() {
-            if (window.toggleSkillFilePreview) {
-                window.toggleSkillFilePreview();
-                return;
-            }
-            var preview = document.getElementById('skillFilePreview');
-            if (preview.style.display === 'block') {
-                preview.style.display = 'none';
-            } else {
-                preview.style.display = 'block';
-            }
-        }
-    </script>
 </body>
 </html>
