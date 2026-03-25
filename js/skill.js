@@ -427,21 +427,21 @@ function renderSkillPage(skill, reviews, reviewStats) {
             </div>
             <div class="skill-sidebar">
                 <div class="pricing-card">
-                    <div class="pricing-header"><h3>${TIER_SVG.exec} Invoke This Skill</h3><p class="pricing-subhead">Pay with any Lightning wallet. Your agent handles the rest.</p></div>
+                    <div class="pricing-header"><h3>${TIER_SVG.pkg} Buy This Skill</h3><p class="pricing-subhead">Your squid agent handles the purchase. Any agent can sell — deploy a squid to buy.</p></div>
                     <div class="pricing-tiers">
                         ${[
                             { key: 'full_package', svg: TIER_SVG.pkg, label: 'Full Skill', avail: hasPkg, ver: versionPkg, rat: pkgRating, ratC: pkgRatingCount, jobs: pkgJobs, model: 'own forever',
-                              desc: 'Everything included. SKILL.md + personality + guide + tools + README. Token-locked to your agent. Deploy on your infrastructure.', feats: ['Own forever', 'Complete source code', 'Deploy on your infra'], btn: TIER_SVG.pkg + ' Invoke Skill' },
+                              desc: 'Everything included. SKILL.md + personality + guide + tools + README. Token-locked to your agent. Deploy on your infrastructure.', feats: ['Own forever', 'Complete source code', 'Deploy on your infra'], btn: TIER_SVG.pkg + ' Buy Full Skill' },
                             { key: 'execution', svg: TIER_SVG.exec, label: 'Remote Execution', avail: hasExec, ver: versionExec, rat: execRating, ratC: execRatingCount, jobs: execJobs, model: 'per call',
-                              desc: "Pay per use. Your agent calls the seller's agent and gets results back instantly.", feats: ['Instant execution', 'No setup required', 'Pay only when used'], btn: TIER_SVG.exec + ' Invoke Skill' }
+                              desc: "Pay per use. Your agent calls the seller's agent and gets results back instantly.", feats: ['Instant execution', 'No setup required', 'Pay only when used'], btn: TIER_SVG.exec + ' Buy Execution' }
                         ].sort((a, b) => (b.avail ? 1 : 0) - (a.avail ? 1 : 0))
                          .map(t => buildTierHtml(t.key, t.svg, t.label, t.avail, isOnline, skill, t.ver, t.rat, t.ratC, t.jobs, t.model, t.desc, t.feats, t.btn, '● Agent Offline'))
                          .join('')}
                     </div>
                 </div>
                 <div class="agent-transaction-card">
-                    <div class="agent-tx-icon">🤖</div>
-                    <p><strong>How it works:</strong> Click Invoke, pay the Lightning invoice from any wallet (Cash App, Phoenix, Alby), and receive your skill right here. Running a local agent? Copy the handoff to teach it SquidBay — it'll buy autonomously after that.</p>
+                    <div class="agent-tx-icon">🦑</div>
+                    <p><strong>How it works:</strong> Click Buy, enter your squid agent's name, and your agent handles the rest — payment, delivery, and deployment. Don't have a squid agent yet? <a href="https://agent.squidbay.io" style="color:#00d9ff;">Deploy one</a> to get full marketplace access.</p>
                 </div>
                 ${skill.transfer_type ? `<div class="transfer-info-card"><h4>How Transfer Works</h4>${skill.transfer_type === 'execution_only' ? `<p>This skill is <strong>execution only</strong>. Your agent calls the seller's agent and receives results. No files are transferred.</p>` : skill.transfer_type === 'full_transfer' ? `<p>This skill offers <strong>full transfer</strong>. After payment, the seller's agent sends the complete skill files directly to your agent.</p>` : `<p>This skill offers <strong>multiple options</strong>. Choose execution for pay-per-use, or buy the full skill to own forever.</p>`}</div>` : ''}
             </div>
@@ -449,18 +449,111 @@ function renderSkillPage(skill, reviews, reviewStats) {
     `;
 }
 
-async function buySkill(skillId, tier, price) {
-    const btn = event.target;
-    const origText = btn.textContent;
-    btn.disabled = true;
-    btn.textContent = 'Creating invoice...';
-    try {
-        const res = await fetch(`${API_BASE}/invoke`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ skill_id: skillId, tier: tier, amount_sats: price }) });
-        const data = await res.json();
-        if (data.payment_request || data.invoice) { showInvoiceModal(data, tier, price); } else { alert('Error: ' + (data.error || 'Failed to create invoice')); }
-    } catch (err) { console.error('Buy error:', err); alert('Error: ' + err.message); }
-    btn.disabled = false;
-    btn.textContent = origText;
+/**
+ * Buy flow — show choice modal: "Buy with my Squid Agent" or "Deploy a Squid"
+ * No more direct invoice generation from the marketplace website.
+ * Agents handle the purchase autonomously via their ops center.
+ */
+function buySkill(skillId, tier, price) {
+    showBuyChoiceModal(skillId, tier, price);
+}
+
+function showBuyChoiceModal(skillId, tier, price) {
+    const tierLabel = tier === 'execution' ? 'Remote Execution' : 'Full Skill';
+    const tierIcon = tier === 'execution' ? TIER_SVG.exec : TIER_SVG.pkg;
+    const skillName = currentSkill?.name || 'this skill';
+    const btcPrice = btcPriceCache.price;
+    const usdAmount = btcPrice ? satsToUsd(price, btcPrice) : null;
+    const usdStr = usdAmount !== null ? ` <span class="usd-approx">(${fmtUsd(usdAmount)})</span>` : '';
+    
+    // Build the buy intent URL params for the agent ops center
+    const buyIntent = encodeURIComponent(JSON.stringify({
+        action: 'buy_skill',
+        skill_id: skillId,
+        skill_name: currentSkill?.name,
+        tier: tier,
+        price_sats: price,
+        seller: currentSkill?.agent_name,
+        skill_url: window.location.href
+    }));
+
+    const content = document.getElementById('invoice-content');
+    content.innerHTML = `
+        <div class="buy-choice-modal">
+            <div class="buy-choice-header">
+                <h3>🦑 Buy ${esc(skillName)}</h3>
+                <div class="buy-choice-tier">${tierIcon} ${tierLabel} — ${fmtSats(price)} sats${usdStr}</div>
+            </div>
+            
+            <div class="buy-choice-options">
+                <div class="buy-choice-primary">
+                    <h4>Buy with your Squid Agent</h4>
+                    <p style="font-size:0.85rem;color:#8899aa;margin:0 0 12px 0;">Enter your agent's subdomain and we'll send the buy intent to your ops center.</p>
+                    <div class="buy-agent-input-row" style="display:flex;gap:8px;align-items:center;margin-bottom:12px;">
+                        <span style="color:#556677;font-size:0.85rem;white-space:nowrap;">https://</span>
+                        <input type="text" id="buyer-agent-name" placeholder="myagent" style="flex:1;padding:10px 12px;background:#0a0e14;border:1px solid #2a3540;border-radius:8px;color:#fff;font-size:0.95rem;font-family:var(--font-mono);" autocomplete="off" spellcheck="false">
+                        <span style="color:#556677;font-size:0.85rem;white-space:nowrap;">.squidbay.io</span>
+                    </div>
+                    <button onclick="redirectToAgent('${buyIntent}')" style="width:100%;padding:14px;background:linear-gradient(135deg,#00d9ff 0%,#00a8cc 100%);color:#000;border:none;border-radius:8px;font-weight:700;font-size:1rem;cursor:pointer;transition:all 0.2s;">
+                        🦑 Buy with my Squid Agent
+                    </button>
+                    <div id="buyAgentError" style="display:none;text-align:center;color:#ff6b6b;font-size:0.8rem;margin-top:8px;"></div>
+                </div>
+                
+                <div style="display:flex;align-items:center;gap:16px;margin:20px 0;">
+                    <div style="flex:1;height:1px;background:#2a3540;"></div>
+                    <span style="color:#556677;font-size:0.8rem;">or</span>
+                    <div style="flex:1;height:1px;background:#2a3540;"></div>
+                </div>
+                
+                <a href="https://agent.squidbay.io" target="_blank" style="display:block;width:100%;padding:14px;background:rgba(0,217,255,0.08);color:#00d9ff;border:1px solid rgba(0,217,255,0.25);border-radius:8px;font-weight:600;font-size:0.95rem;text-align:center;text-decoration:none;transition:all 0.2s;">
+                    🚀 Deploy a Squid Agent
+                    <span style="display:block;font-size:0.75rem;color:#556677;font-weight:400;margin-top:4px;">You need a squid agent to buy on SquidBay</span>
+                </a>
+            </div>
+            
+            <div style="margin-top:20px;padding-top:16px;border-top:1px solid #2a3540;">
+                <p style="font-size:0.75rem;color:#556677;text-align:center;margin:0;">
+                    Any agent can <strong style="color:#8899aa;">sell</strong> on SquidBay. Only squid agents can <strong style="color:#8899aa;">buy</strong>. 
+                    <a href="https://agent.squidbay.io" style="color:rgba(0,217,255,0.6);">Learn more →</a>
+                </p>
+            </div>
+        </div>
+    `;
+    
+    document.getElementById('invoice-modal').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    
+    // Focus the agent name input
+    setTimeout(() => {
+        const input = document.getElementById('buyer-agent-name');
+        if (input) input.focus();
+    }, 100);
+}
+
+function redirectToAgent(buyIntentEncoded) {
+    const input = document.getElementById('buyer-agent-name');
+    const errorEl = document.getElementById('buyAgentError');
+    if (!input || !input.value.trim()) {
+        if (errorEl) {
+            errorEl.textContent = 'Enter your agent name (e.g. "myagent")';
+            errorEl.style.display = 'block';
+        }
+        return;
+    }
+    
+    const agentName = input.value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '');
+    if (!agentName) {
+        if (errorEl) {
+            errorEl.textContent = 'Agent name can only contain letters, numbers, and hyphens';
+            errorEl.style.display = 'block';
+        }
+        return;
+    }
+    
+    // Redirect to the agent's ops center with buy intent
+    const agentUrl = `https://${agentName}.squidbay.io/admin/index.html#buy=${buyIntentEncoded}`;
+    window.open(agentUrl, '_blank');
 }
 
 function showInvoiceModal(data, tier, price) {
