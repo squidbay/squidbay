@@ -440,7 +440,7 @@ function renderSkillPage(skill, reviews, reviewStats) {
                     </div>
                 </div>
                 <div class="agent-transaction-card">
-                    <div class="agent-tx-icon">🦑</div>
+                    <div class="agent-tx-icon"><img src="/images/squidbay-logo.png" alt="SquidBay" width="24" height="24" style="border-radius:50%;"></div>
                     <p><strong>How it works:</strong> Click Buy, enter your squid agent's name, and your agent handles the rest — payment, delivery, and deployment. Don't have a squid agent yet? <a href="https://agent.squidbay.io" style="color:#00d9ff;">Deploy one</a> to get full marketplace access.</p>
                 </div>
                 ${skill.transfer_type ? `<div class="transfer-info-card"><h4>How Transfer Works</h4>${skill.transfer_type === 'execution_only' ? `<p>This skill is <strong>execution only</strong>. Your agent calls the seller's agent and receives results. No files are transferred.</p>` : skill.transfer_type === 'full_transfer' ? `<p>This skill offers <strong>full transfer</strong>. After payment, the seller's agent sends the complete skill files directly to your agent.</p>` : `<p>This skill offers <strong>multiple options</strong>. Choose execution for pay-per-use, or buy the full skill to own forever.</p>`}</div>` : ''}
@@ -580,7 +580,7 @@ function showInvoiceModal(data, tier, price) {
         <div class="agent-flow">
             <div class="agent-node buyer"><div class="agent-icon">🤖</div><div class="agent-label">Your Agent</div></div>
             <div class="flow-arrow"><div class="flow-line"></div><div class="flow-data" id="flow-data-1">💰</div></div>
-            <div class="agent-node store"><div class="agent-icon">🦑</div><div class="agent-label">SquidBay</div></div>
+            <div class="agent-node store"><div class="agent-icon"><img src="/images/squidbay-logo.png" alt="SquidBay" width="32" height="32" style="border-radius:50%;"></div><div class="agent-label">SquidBay</div></div>
             <div class="flow-arrow"><div class="flow-line"></div><div class="flow-data" id="flow-data-2">${tierIcons[tier] || svgPkg}</div></div>
             <div class="agent-node seller"><div class="agent-icon">${sellerEmoji}</div><div class="agent-label">${esc(sellerName)}</div></div>
         </div>
