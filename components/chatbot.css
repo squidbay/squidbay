@@ -81,23 +81,26 @@
 .chatbot-btn {
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-    border: none;
+    background: #0a0c10;
+    border: 2px solid rgba(0, 217, 255, 0.3);
     border-radius: 50%;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 10px 40px var(--primary-glow), 0 0 20px rgba(0, 217, 255, 0.3);
+    box-shadow: 0 10px 40px var(--primary-glow), 0 0 20px rgba(0, 217, 255, 0.15);
     transition: all 0.3s ease;
     flex-shrink: 0;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+    overflow: hidden;
+    padding: 0;
 }
 
 .chatbot-btn:hover {
     transform: scale(1.1);
-    box-shadow: 0 15px 50px var(--primary-glow), 0 0 30px rgba(0, 217, 255, 0.4);
+    box-shadow: 0 15px 50px var(--primary-glow), 0 0 30px rgba(0, 217, 255, 0.3);
+    border-color: rgba(0, 217, 255, 0.6);
 }
 
 .chatbot-btn:active {
@@ -107,6 +110,15 @@
 .chatbot-btn-icon {
     font-size: 28px;
     line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chatbot-btn-icon img {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
 }
 
 .chatbot-btn-text {

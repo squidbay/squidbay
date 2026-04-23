@@ -554,7 +554,7 @@ function initChatbot() {
             messageDiv.className = 'chat-message bot';
             messageDiv.innerHTML = `
                 <div class="message-content">
-                    <div class="message-avatar"><img src="/images/squidbay-logo.png" alt="SquidBot" width="28" height="28" style="border-radius:50%;"></div>
+                    <div class="message-avatar"><img src="/images/squidbay-logo.png" alt="SquidBot" width="28" height="28"></div>
                     <div class="message-text"></div>
                 </div>
             `;
@@ -589,7 +589,7 @@ function initChatbot() {
         messageDiv.className = 'chat-message bot';
         messageDiv.innerHTML = `
             <div class="message-content">
-                <div class="message-avatar"><img src="/images/squidbay-logo.png" alt="SquidBot" width="28" height="28" style="border-radius:50%;"></div>
+                <div class="message-avatar"><img src="/images/squidbay-logo.png" alt="SquidBot" width="28" height="28"></div>
                 <div class="message-text">${formatMessage(text)}</div>
             </div>
         `;
@@ -606,7 +606,7 @@ function initChatbot() {
         typing.id = 'typingIndicator';
         typing.innerHTML = `
             <div class="message-content">
-                <div class="message-avatar"><img src="/images/squidbay-logo.png" alt="SquidBot" width="28" height="28" style="border-radius:50%;"></div>
+                <div class="message-avatar"><img src="/images/squidbay-logo.png" alt="SquidBot" width="28" height="28"></div>
                 <div class="typing-dots"><span></span><span></span><span></span></div>
             </div>
         `;
