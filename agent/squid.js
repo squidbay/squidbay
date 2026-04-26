@@ -1,25 +1,33 @@
 /**
  * Squid Agent Landing Page JS
- * Carousel, contact form, interactions
+ * Carousel (multi-instance), contact form, interactions
  */
 
 (function() {
     'use strict';
 
     // --------------------------------------------------------------------------
-    // Feature Carousel
+    // Feature Carousel — supports multiple instances on one page.
+    //
+    // Each carousel is a `.sa-carousel` block with these descendants:
+    //   .sa-carousel-prev    (previous button)
+    //   .sa-carousel-track   (the row of cards)
+    //   .sa-carousel-next    (next button)
+    //   .sa-carousel-dots    (dot indicator container)
     // --------------------------------------------------------------------------
 
-    function initCarousel() {
-        const track = document.getElementById('carousel-track');
-        const prevBtn = document.getElementById('carousel-prev');
-        const nextBtn = document.getElementById('carousel-next');
-        const dotsContainer = document.getElementById('carousel-dots');
+    function initCarousel(carouselEl) {
+        const track = carouselEl.querySelector('.sa-carousel-track');
+        const prevBtn = carouselEl.querySelector('.sa-carousel-prev');
+        const nextBtn = carouselEl.querySelector('.sa-carousel-next');
+        const dotsContainer = carouselEl.querySelector('.sa-carousel-dots');
 
         if (!track || !prevBtn || !nextBtn) return;
 
         const cards = Array.from(track.children);
         const totalCards = cards.length;
+        if (totalCards === 0) return;
+
         let currentIndex = 0;
         let autoTimer = null;
         let touchStartX = 0;
@@ -51,7 +59,7 @@
                 dot.className = 'carousel-dot' + (i === currentIndex ? ' active' : '');
                 dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
                 (function(idx) {
-                    dot.addEventListener('click', function() { goTo(idx); });
+                    dot.addEventListener('click', function() { goTo(idx); startAuto(); });
                 })(i);
                 dotsContainer.appendChild(dot);
             }
@@ -92,11 +100,8 @@
         prevBtn.addEventListener('click', function() { prev(); startAuto(); });
         nextBtn.addEventListener('click', function() { next(); startAuto(); });
 
-        var wrap = track.closest('.sa-carousel');
-        if (wrap) {
-            wrap.addEventListener('mouseenter', stopAuto);
-            wrap.addEventListener('mouseleave', startAuto);
-        }
+        carouselEl.addEventListener('mouseenter', stopAuto);
+        carouselEl.addEventListener('mouseleave', startAuto);
 
         track.addEventListener('touchstart', function(e) {
             touchStartX = e.changedTouches[0].screenX;
@@ -117,6 +122,13 @@
         buildDots();
         goTo(0);
         startAuto();
+    }
+
+    function initAllCarousels() {
+        var carousels = document.querySelectorAll('.sa-carousel');
+        for (var i = 0; i < carousels.length; i++) {
+            initCarousel(carousels[i]);
+        }
     }
 
     // --------------------------------------------------------------------------
@@ -141,10 +153,10 @@
                     form.reset();
                     btn.textContent = 'Sent ✓';
                 } else {
-                    btn.textContent = 'Error — try again';
+                    btn.textContent = 'Error, try again';
                 }
             } catch (err) {
-                btn.textContent = 'Error — try again';
+                btn.textContent = 'Error, try again';
             }
             setTimeout(function() { btn.textContent = orig; btn.disabled = false; }, 3000);
         });
@@ -155,7 +167,7 @@
     // --------------------------------------------------------------------------
 
     function init() {
-        initCarousel();
+        initAllCarousels();
         initContactForm();
     }
 
