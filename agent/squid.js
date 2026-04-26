@@ -81,11 +81,22 @@
         }
 
         function next() {
-            goTo(currentIndex >= getMaxIndex() ? 0 : currentIndex + 1);
+            var maxIdx = getMaxIndex();
+            if (currentIndex >= maxIdx) {
+                // Wrap to start - briefly disable transition for instant snap, then re-enable
+                goTo(0);
+            } else {
+                goTo(currentIndex + 1);
+            }
         }
 
         function prev() {
-            goTo(currentIndex <= 0 ? getMaxIndex() : currentIndex - 1);
+            var maxIdx = getMaxIndex();
+            if (currentIndex <= 0) {
+                goTo(maxIdx);
+            } else {
+                goTo(currentIndex - 1);
+            }
         }
 
         function startAuto() {
@@ -114,9 +125,20 @@
             startAuto();
         }, { passive: true });
 
+        // Resize handler - debounced to avoid thrashing
+        var resizeTimer = null;
         window.addEventListener('resize', function() {
-            goTo(Math.min(currentIndex, getMaxIndex()));
-            buildDots();
+            if (resizeTimer) clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function() {
+                goTo(Math.min(currentIndex, getMaxIndex()));
+                buildDots();
+                startAuto(); // ensure auto keeps running after resize
+            }, 150);
+        });
+
+        // Restart auto if tab returns to focus (handles case where browser pauses interval)
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) startAuto();
         });
 
         buildDots();
