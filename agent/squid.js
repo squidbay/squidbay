@@ -216,20 +216,20 @@
                 avatar: '👤',
                 mode: 'business',
                 message: "Build the homepage and post the new sourdough blog to all socials.",
-                delay: 600
+                delay: 1600
             },
             {
                 type: 'agent',
                 avatar: '🦑',
                 mode: 'business',
                 message: "On it. Pulling your brand, building the page, drafting the post.",
-                delay: 1300
+                delay: 2400
             },
             {
                 type: 'system',
                 mode: 'business',
                 message: '🎨 Website Builder · 📝 Content Creator · 📣 Social Media',
-                delay: 800
+                delay: 2000
             },
             {
                 type: 'agent',
@@ -238,14 +238,14 @@
                 message: '',
                 action: 'success',
                 actionText: '✓ Page live · Blog scheduled · Posted to X, Instagram, Facebook',
-                delay: 1400
+                delay: 2600
             },
             {
                 type: 'user',
                 avatar: '👤',
                 mode: 'business',
                 message: "Flour is running low. Reorder from the mill.",
-                delay: 1100
+                delay: 2200
             },
             {
                 type: 'agent',
@@ -258,35 +258,35 @@
                     price: '⚡ Paid via Lightning',
                     rating: '4.9 ★'
                 },
-                delay: 1700
+                delay: 3000
             },
             {
                 type: 'user',
                 avatar: '👤',
                 mode: 'personal',
                 message: "What's on calendar this week? Anything I missed?",
-                delay: 1100
+                delay: 2200
             },
             {
                 type: 'agent',
                 avatar: '🦑',
                 mode: 'personal',
                 message: "Three things: dentist Tuesday, Leena's recital Wednesday 7pm, supplier Friday. Mom's birthday is Saturday — drafted a card and queued flowers.",
-                delay: 1700
+                delay: 3000
             },
             {
                 type: 'user',
                 avatar: '👤',
                 mode: 'education',
                 message: "Quiz me on the case law for tomorrow's exam. Then summarize for my notes.",
-                delay: 1100
+                delay: 2200
             },
             {
                 type: 'agent',
                 avatar: '🦑',
                 mode: 'education',
                 message: 'Ten questions ready. Citations tracked. One-page study summary in your Drive when we finish.',
-                delay: 1500
+                delay: 2700
             },
             {
                 type: 'agent',
@@ -297,7 +297,7 @@
                     label: 'Three modes. One agent.',
                     value: 'Done while you live your life.'
                 },
-                delay: 1300
+                delay: 2400
             }
         ];
 
@@ -406,7 +406,7 @@
             loopTimer = setTimeout(function() {
                 isPlaying = false;
                 startDemo();
-            }, 5000);
+            }, 7000);
         }
 
         function playNext() {
@@ -430,7 +430,7 @@
                     chatMessages.scrollTop = chatMessages.scrollHeight;
                     currentIndex++;
                     setTimeout(playNext, item.delay);
-                }, 600);
+                }, 900);
             } else {
                 var msg = createMessage(item);
                 chatMessages.appendChild(msg);

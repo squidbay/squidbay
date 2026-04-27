@@ -3376,57 +3376,57 @@
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    gap: 24px;
-    max-width: 880px;
-    margin: 36px auto 0;
+    gap: 16px;
+    max-width: 720px;
+    margin: 28px auto 0;
 }
 .sa-spawn-cost {
     flex: 1 1 0;
-    min-width: 180px;
+    min-width: 140px;
     text-align: center;
-    padding: 0 8px;
+    padding: 0 4px;
 }
 .sa-spawn-cost-amount {
     display: block;
     font-family: var(--font-display, var(--font-sans));
-    font-size: 1.6rem;
+    font-size: 1.25rem;
     font-weight: 700;
     color: var(--primary, #00D9FF);
     line-height: 1.2;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
     letter-spacing: -0.01em;
 }
 .sa-spawn-cost-amount-muted {
     color: var(--text-muted, #94A3B8);
-    font-size: 1.4rem;
+    font-size: 1.1rem;
 }
 .sa-spawn-cost-label {
     display: block;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     color: var(--white, #FFFFFF);
     font-weight: 600;
-    margin-bottom: 4px;
+    margin-bottom: 3px;
 }
 .sa-spawn-cost-detail {
     display: block;
-    font-size: 0.78rem;
+    font-size: 0.72rem;
     color: var(--text-muted, #94A3B8);
     line-height: 1.4;
     opacity: 0.85;
 }
 .sa-spawn-cost-divider {
     width: 1px;
-    height: 56px;
-    background: linear-gradient(180deg, transparent, rgba(148, 163, 184, 0.25), transparent);
+    height: 40px;
+    background: linear-gradient(180deg, transparent, rgba(148, 163, 184, 0.2), transparent);
     flex-shrink: 0;
 }
 .sa-spawn-cost-summary {
     text-align: center;
     color: var(--white, #FFFFFF);
-    font-size: 14.5px;
-    line-height: 1.65;
-    margin: 28px auto 0;
-    max-width: 720px;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 24px auto 0;
+    max-width: 680px;
     padding: 0 16px;
 }
 .sa-spawn-cost-summary-accent {
@@ -3441,15 +3441,16 @@
 @media (max-width: 720px) {
     .sa-spawn-costs {
         flex-direction: column;
-        gap: 8px;
+        gap: 6px;
     }
     .sa-spawn-cost-divider {
         width: 56px;
         height: 1px;
         background: linear-gradient(90deg, transparent, rgba(148, 163, 184, 0.25), transparent);
-        margin: 8px 0;
+        margin: 4px 0;
     }
     .sa-spawn-cost { min-width: 0; padding: 0; }
+    .sa-spawn-cost-amount { font-size: 1.15rem; }
 }
 
 /* ============================================================
@@ -3465,6 +3466,7 @@
     border-radius: var(--radius-lg, 12px);
     text-align: center;
     position: relative;
+    overflow: hidden;
 }
 .sa-surge::before {
     /* Subtle glow accent at top edge */
@@ -3476,6 +3478,30 @@
     height: 1px;
     background: linear-gradient(90deg, transparent, var(--primary, #00D9FF), transparent);
     opacity: 0.6;
+}
+/* Big decorative lightning bolt at top-left of the card.
+   Sits behind the content as a brand anchor — explains the squid logo. */
+.sa-surge-bolt {
+    position: absolute;
+    top: 18px;
+    left: 24px;
+    font-size: 84px;
+    line-height: 1;
+    font-weight: 900;
+    color: var(--primary, #00D9FF);
+    opacity: 0.92;
+    text-shadow: 0 0 40px rgba(0, 217, 255, 0.5), 0 0 80px rgba(0, 217, 255, 0.25);
+    pointer-events: none;
+    user-select: none;
+    transform: rotate(-8deg);
+    z-index: 1;
+}
+@media (max-width: 720px) {
+    .sa-surge-bolt {
+        font-size: 56px;
+        top: 14px;
+        left: 16px;
+    }
 }
 .sa-surge-tag {
     display: inline-block;
@@ -3491,12 +3517,14 @@
     margin-bottom: 18px;
 }
 .sa-surge-title {
-    font-size: 32px;
+    font-size: 26px;
     font-weight: 800;
     color: var(--white, #FFFFFF);
     margin: 0 0 16px 0;
     letter-spacing: -0.02em;
     line-height: 1.15;
+    position: relative;
+    z-index: 2;
 }
 .sa-surge-lead {
     font-size: 15px;

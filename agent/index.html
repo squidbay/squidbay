@@ -70,7 +70,7 @@
     <section class="sa-hero">
         <div class="container">
             <div class="sa-hero-badge">Your Own AI Agent</div>
-            <h1 class="sa-hero-title">Run your whole life from one chat. <span class="sa-accent">All from your phone.</span></h1>
+            <h1 class="sa-hero-title">Your whole life. <span class="sa-accent">One chat.</span></h1>
             <p class="sa-hero-sub sa-hero-shimmer">
                 Build the website. Post the blog. Take the orders. Reply to the email. Quiz you for the exam. Brief you in the morning. All from one chat with one agent that's actually yours. Talks for you, never as you.
             </p>
@@ -654,18 +654,30 @@
     <section class="sa-section sa-section-dark" id="surge">
         <div class="container">
 
+            <!-- Section title + intro - matches the rhythm of every other section on the page.
+                 Teaches the reader what sub-agent mode and surge actually mean before showing the card. -->
+            <h2 class="sa-section-title">Eleven Specialists. <span class="sa-accent">One Agent.</span></h2>
+            <p class="sa-section-sub">Your agent isn&rsquo;t one mind doing everything. It&rsquo;s eleven specialists working together. When a task needs more than one of them, your agent splits the work, runs them at the same time, and brings the answers back as one. That&rsquo;s why the squid has lightning.</p>
+
             <!-- SURGE hero block - explains why the squid has the lightning bolt -->
             <div class="sa-surge">
-                <div class="sa-surge-tag">⚡ SURGE MODE</div>
-                <h2 class="sa-surge-title">Why the Squid Has Lightning</h2>
-                <p class="sa-surge-lead">Sub-Agent Mode splits complex requests across nine specialized modules &mdash; security-analyst, website-builder, content-creator, customer-support, commerce, social-media, devops, onboarding-guide, token-optimizer &mdash; each with its own icon and isolated context for focused output.</p>
+                <!-- Big lightning bolt anchor at top-left of the card -->
+                <div class="sa-surge-bolt" aria-hidden="true">⚡</div>
+
+                <div class="sa-surge-tag">SURGE MODE</div>
+                <h3 class="sa-surge-title">Why the Squid Has Lightning</h3>
+                <p class="sa-surge-lead">When you ask for something simple, one specialist handles it. When you ask for something complex &mdash; build a website, post to socials, and send the customer a follow-up &mdash; your agent calls in the team. Each specialist gets its own slice of focus, with its own tools and memory.</p>
                 <p class="sa-surge-lead">
-                    <strong style="color: var(--primary);">Surge ⚡ is the nested toggle that takes it full throttle.</strong>
-                    Independent modules run in parallel via <code>Promise.all</code>. You see the execution plan, parallel group indicators, thinking dots per module, and individual responses streaming in real-time. Maximum speed. Maximum quality.
+                    <strong style="color: var(--primary);">Flip on Surge ⚡ and let &rsquo;er rip.</strong>
+                    All the specialists work at once instead of one after the other. You watch each one think and reply in real time. The result lands in seconds, not minutes. Maximum speed. Maximum quality.
                 </p>
 
-                <!-- Module lineup pills - shows the 9 modules at a glance -->
+                <!-- Module lineup pills - shows all 11 specialists at a glance -->
                 <div class="sa-surge-modules">
+                    <span class="sa-surge-module">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="9" x2="9" y2="21"/><line x1="3" y1="9" x2="21" y2="9"/></svg>
+                        ops-center
+                    </span>
                     <span class="sa-surge-module">
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                         security-analyst
@@ -689,6 +701,10 @@
                     <span class="sa-surge-module">
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                         social-media
+                    </span>
+                    <span class="sa-surge-module">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                        researcher-strategist
                     </span>
                     <span class="sa-surge-module">
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
@@ -866,12 +882,8 @@
                         <span>Schedules, publishes, and adapts content per platform.</span>
                     </div>
                     <div class="sa-social-personality">
-                        <strong>Strategist</strong>
-                        <span>Surfaces trends, topics, and Search Console insights worth acting on.</span>
-                    </div>
-                    <div class="sa-social-personality">
-                        <strong>Researcher</strong>
-                        <span>Pulls citations from Drive and the web. Source-tracks before content ships.</span>
+                        <strong>Researcher-Strategist</strong>
+                        <span>Crawls competitors. Surfaces trends, topics, and Search Console insights worth acting on. Cites sources before content ships.</span>
                     </div>
                     <div class="sa-social-personality">
                         <strong>Customer Support</strong>
@@ -880,6 +892,10 @@
                     <div class="sa-social-personality">
                         <strong>Commerce</strong>
                         <span>Converts social and email conversations into sales when relevant.</span>
+                    </div>
+                    <div class="sa-social-personality">
+                        <strong>Ops Center</strong>
+                        <span>Always on. The controller that coordinates every other specialist and reports status back to you.</span>
                     </div>
                 </div>
             </div>
@@ -1351,17 +1367,18 @@
                 A typical solo operator runs ChatGPT + Canva + Mailchimp + Squarespace + Buffer for <strong class="sa-spawn-cost-summary-vs">$87/mo</strong> while doing less, on five different vendors.
             </p>
 
-            <!-- Spawn story -->
+            <!-- IMG: Spawn Manager tab -->
+            <div class="sa-screenshot-frame" style="margin: 48px auto 24px; max-width: 920px;">
+                <img src="images/spawn-manager.jpg" alt="Spawn Manager tab with Spawn New Agent button and Managed versus Handoff mode options" loading="lazy" decoding="async">
+                <p class="sa-screenshot-caption">Spawn Manager: Track Every Squid You Deploy</p>
+            </div>
+
+            <!-- Spawn story - moved below screenshot. The screenshot shows the WHAT, this paragraph
+                 explains the SO WHAT. -->
             <h3 class="sa-spawn-story-title">One Ops Center. Unlimited Agents. Unlimited Businesses.</h3>
             <p class="sa-spawn-story-sub">
                 Each spawn is its own agent &mdash; own name, own identity, own customers, own revenue. Push template updates to your whole fleet from one place. The first squid pays for itself. Every one after is profit.
             </p>
-
-            <!-- IMG: Spawn Manager tab -->
-            <div class="sa-screenshot-frame" style="margin: 0 auto 32px; max-width: 920px;">
-                <img src="images/spawn-manager.jpg" alt="Spawn Manager tab with Spawn New Agent button and Managed versus Handoff mode options" loading="lazy" decoding="async">
-                <p class="sa-screenshot-caption">Spawn Manager: Track Every Squid You Deploy</p>
-            </div>
 
             <!-- Two Ways to Spawn (left) + Four Ways to Earn (right) -->
             <div class="sa-spawn-split">
