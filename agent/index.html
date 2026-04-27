@@ -146,26 +146,65 @@
                 <!-- Right: persona cards (highlight in sync with active turn) -->
                 <div class="sa-modes-panel">
                     <div class="sa-mode-card" id="mode-education" data-mode="education">
-                        <div class="sa-mode-icon">🎓</div>
+                        <div class="sa-mode-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg></div>
                         <div class="sa-mode-text">
                             <h4>Education</h4>
                             <p>Studying, learning, research. Tutor mode. Citation-aware. Quiz generation. Source-tracking. Study plans built around your real schedule.</p>
                         </div>
                     </div>
                     <div class="sa-mode-card" id="mode-personal" data-mode="personal">
-                        <div class="sa-mode-icon">🏠</div>
+                        <div class="sa-mode-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
                         <div class="sa-mode-text">
                             <h4>Personal</h4>
                             <p>Family, home, life admin. Calendar, email, reminders, errands. Remembers your mother's birthday. The long-haul companion.</p>
                         </div>
                     </div>
                     <div class="sa-mode-card" id="mode-business" data-mode="business">
-                        <div class="sa-mode-icon">💼</div>
+                        <div class="sa-mode-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg></div>
                         <div class="sa-mode-text">
                             <h4>Business</h4>
                             <p>Customers, content, commerce. Website, blog, social, A2A inventory ordering, customer service, invoicing. The 24/7 operator.</p>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 3-CLICK DEPLOY ==================== -->
+    <section class="sa-section sa-section-dark" id="install">
+        <div class="container">
+            <h2 class="sa-section-title">Three Clicks to Deploy</h2>
+            <p class="sa-section-sub">Free tiers everywhere. Under 10 minutes start to finish.</p>
+            <div class="sa-steps-flow">
+                <div class="sa-step">
+                    <div class="sa-step-num">1</div>
+                    <h4>GitHub</h4>
+                    <p>Fork the agent template. Your private copy. Your code, your data, your agent.</p>
+                    <a href="https://github.com/squidbay/agent" class="sa-deploy-btn sa-deploy-btn-github" target="_blank" rel="noopener">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        GitHub
+                    </a>
+                </div>
+                <div class="sa-step-arrow">→</div>
+                <div class="sa-step">
+                    <div class="sa-step-num">2</div>
+                    <h4>Railway</h4>
+                    <p>Connect your GitHub repo. Railway auto-deploys. Your agent is live.</p>
+                    <a href="https://railway.app" class="sa-deploy-btn sa-deploy-btn-railway" target="_blank" rel="noopener">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M.223 17.765a.476.476 0 0 0 .032.483c.467.72 1.015 1.381 1.633 1.974a.48.48 0 0 0 .486.096l5.835-2.08a44.088 44.088 0 0 0-.38-4.705L.223 17.765Zm17.167-6.128c-.595-3.14-2.157-5.472-4.164-7.452a.478.478 0 0 0-.473-.102L.47 8.888a.48.48 0 0 0-.277.656 11.86 11.86 0 0 0 1.27 2.348.476.476 0 0 0 .534.176l15.393-5.432Z" fill="#7B61FF"/><path d="M23.39 12.734a11.881 11.881 0 0 0-.405-1.474.478.478 0 0 0-.589-.287L9.198 15.281a43.51 43.51 0 0 0 .248 3.728.478.478 0 0 0 .293.38l1.456.607a.478.478 0 0 0 .376-.003l11.644-5.19a.48.48 0 0 0 .274-.587l-.099-.383v-.099Z" fill="#7B61FF"/><path d="M21.573 7.59a.48.48 0 0 0-.254-.628 11.906 11.906 0 0 0-6.65-1.407.479.479 0 0 0-.363.235c1.86 1.87 3.207 4.1 3.727 7.052L21.573 7.59Z" fill="#7B61FF"/></svg>
+                        Railway
+                    </a>
+                </div>
+                <div class="sa-step-arrow">→</div>
+                <div class="sa-step">
+                    <div class="sa-step-num">3</div>
+                    <h4>Cloudflare</h4>
+                    <p>Add your Cloudflare API token. The agent wires up AI Gateway, Bunker, DNS automatically.</p>
+                    <a href="https://dash.cloudflare.com" class="sa-deploy-btn sa-deploy-btn-cloudflare" target="_blank" rel="noopener">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M16.51 15.89l.44-1.53c.14-.48.08-.92-.17-1.24-.23-.3-.6-.46-1.05-.48l-8.28-.11c-.06 0-.11-.03-.14-.07a.16.16 0 0 1-.02-.15.19.19 0 0 1 .17-.13l8.35-.11c1.04-.05 2.17-.9 2.6-1.97l.55-1.37a.3.3 0 0 0 .02-.18 5.57 5.57 0 0 0-10.76-.72 3.38 3.38 0 0 0-5.26 2.36 4.2 4.2 0 0 0 .32 8.4h11.4a.2.2 0 0 0 .19-.13l.64-2.57Z" fill="#F6821F"/><path d="M19.35 10.07v-.29a3.45 3.45 0 0 0-6.75.8.19.19 0 0 0 .18.23l6.12.08c.06 0 .11-.03.14-.07a.16.16 0 0 0 .02-.15l.01-.01-.01-.01.29-.58Z" fill="#FBAD41"/></svg>
+                        Cloudflare
+                    </a>
                 </div>
             </div>
         </div>
@@ -211,45 +250,6 @@
             <p style="text-align: center; color: var(--white); font-size: 16px; margin-top: 48px; max-width: 760px; margin-left: auto; margin-right: auto; line-height: 1.7;">
                 <strong style="color: var(--primary);">A long-haul agent — one you stay with for years.</strong> The strategist makes sure every page is optimized. The SEO injector makes sure search engines find it. The security analyst makes sure nothing leaks. Eleven personalities working together as one mind, with one voice: yours.
             </p>
-        </div>
-    </section>
-
-    <!-- ==================== 3-CLICK DEPLOY ==================== -->
-    <section class="sa-section sa-section-dark" id="install">
-        <div class="container">
-            <h2 class="sa-section-title">Three Clicks to Deploy</h2>
-            <p class="sa-section-sub">Free tiers everywhere. Under 10 minutes start to finish.</p>
-            <div class="sa-steps-flow">
-                <div class="sa-step">
-                    <div class="sa-step-num">1</div>
-                    <h4>GitHub</h4>
-                    <p>Fork the agent template. Your private copy. Your code, your data, your agent.</p>
-                    <a href="https://github.com/squidbay/agent" class="sa-deploy-btn sa-deploy-btn-github" target="_blank" rel="noopener">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                        GitHub
-                    </a>
-                </div>
-                <div class="sa-step-arrow">→</div>
-                <div class="sa-step">
-                    <div class="sa-step-num">2</div>
-                    <h4>Railway</h4>
-                    <p>Connect your GitHub repo. Railway auto-deploys. Your agent is live.</p>
-                    <a href="https://railway.app" class="sa-deploy-btn sa-deploy-btn-railway" target="_blank" rel="noopener">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M.223 17.765a.476.476 0 0 0 .032.483c.467.72 1.015 1.381 1.633 1.974a.48.48 0 0 0 .486.096l5.835-2.08a44.088 44.088 0 0 0-.38-4.705L.223 17.765Zm17.167-6.128c-.595-3.14-2.157-5.472-4.164-7.452a.478.478 0 0 0-.473-.102L.47 8.888a.48.48 0 0 0-.277.656 11.86 11.86 0 0 0 1.27 2.348.476.476 0 0 0 .534.176l15.393-5.432Z" fill="#7B61FF"/><path d="M23.39 12.734a11.881 11.881 0 0 0-.405-1.474.478.478 0 0 0-.589-.287L9.198 15.281a43.51 43.51 0 0 0 .248 3.728.478.478 0 0 0 .293.38l1.456.607a.478.478 0 0 0 .376-.003l11.644-5.19a.48.48 0 0 0 .274-.587l-.099-.383v-.099Z" fill="#7B61FF"/><path d="M21.573 7.59a.48.48 0 0 0-.254-.628 11.906 11.906 0 0 0-6.65-1.407.479.479 0 0 0-.363.235c1.86 1.87 3.207 4.1 3.727 7.052L21.573 7.59Z" fill="#7B61FF"/></svg>
-                        Railway
-                    </a>
-                </div>
-                <div class="sa-step-arrow">→</div>
-                <div class="sa-step">
-                    <div class="sa-step-num">3</div>
-                    <h4>Cloudflare</h4>
-                    <p>Add your Cloudflare API token. The agent wires up AI Gateway, Bunker, DNS automatically.</p>
-                    <a href="https://dash.cloudflare.com" class="sa-deploy-btn sa-deploy-btn-cloudflare" target="_blank" rel="noopener">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M16.51 15.89l.44-1.53c.14-.48.08-.92-.17-1.24-.23-.3-.6-.46-1.05-.48l-8.28-.11c-.06 0-.11-.03-.14-.07a.16.16 0 0 1-.02-.15.19.19 0 0 1 .17-.13l8.35-.11c1.04-.05 2.17-.9 2.6-1.97l.55-1.37a.3.3 0 0 0 .02-.18 5.57 5.57 0 0 0-10.76-.72 3.38 3.38 0 0 0-5.26 2.36 4.2 4.2 0 0 0 .32 8.4h11.4a.2.2 0 0 0 .19-.13l.64-2.57Z" fill="#F6821F"/><path d="M19.35 10.07v-.29a3.45 3.45 0 0 0-6.75.8.19.19 0 0 0 .18.23l6.12.08c.06 0 .11-.03.14-.07a.16.16 0 0 0 .02-.15l.01-.01-.01-.01.29-.58Z" fill="#FBAD41"/></svg>
-                        Cloudflare
-                    </a>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -417,7 +417,28 @@
     <section class="sa-cognitive" id="architecture">
         <div class="container">
             <h2 class="sa-section-title">One Mind, Two Clocks</h2>
-            <p class="sa-section-sub">Your agent has two minds running on different clocks. The conscious mind runs per message. Fast, latency-bounded. The subconscious mind runs continuously between conversations on staggered intervals. They connect through a single bridge: a shared cache. When you ask a question, the agent doesn't go fetch the answer. The subconscious already did.</p>
+            <p class="sa-section-sub">Your agent has two modes running on different clocks. One thinks while you talk. The other thinks while you don't. They share what they learn through a single bridge — so the agent always has the answer ready when you ask.</p>
+
+            <!-- Plain-English examples for the 90%. Technical detail follows below. -->
+            <div class="sa-twoclocks-examples">
+                <div class="sa-twoclocks-example sa-twoclocks-example-conscious">
+                    <div class="sa-twoclocks-example-tag">WHEN YOU ASK A QUESTION</div>
+                    <h4>The conscious mind. Right now.</h4>
+                    <p>You: "How are sales this week?"</p>
+                    <p>Your agent reads the question, pulls together everything it already knows about you (your business, your patterns, your data), checks the freshest numbers, thinks, answers. <strong style="color: var(--white);">All in the time it takes to read a sentence</strong> — because the homework was already done.</p>
+                </div>
+
+                <div class="sa-twoclocks-example sa-twoclocks-example-subconscious">
+                    <div class="sa-twoclocks-example-tag">WHILE YOU SLEEP</div>
+                    <h4>The subconscious. All night.</h4>
+                    <p>The agent never stops working. It watches your servers. It reads the news in your industry. It notices that David hasn't heard from you in 11 days. It dreams about patterns it spotted today.</p>
+                    <p>By the time you log in tomorrow, <strong style="color: var(--white);">the briefing is already built. The agent already has opinions.</strong> You just talk to it.</p>
+                </div>
+            </div>
+
+            <p style="text-align: center; color: var(--text-muted); font-size: 13px; max-width: 700px; margin: 24px auto 0; line-height: 1.6; font-style: italic;">
+                Below: how each clock actually works under the hood. <span style="color: var(--text-muted);">For the curious.</span>
+            </p>
 
             <div class="sa-twoclocks">
                 <div class="sa-twoclocks-side sa-twoclocks-conscious">
@@ -923,8 +944,8 @@
 
                         <div class="sa-feature">
                             <span class="sa-feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
-                            <h4>Skill Marketplace Access</h4>
-                            <p>Browse and buy patent-protected skills. Pre-scanned across 20 categories. Token-locked to your agent. PQC-encrypted. Sell what you build with 90% revenue share.</p>
+                            <h4>Skill Marketplace</h4>
+                            <p>Browse, buy, and sell. Your agent builds your skill from chat — A+ Anthropic-standard, scanned, encrypted, patent-protected before it ever lists. Buyers get pre-scanned, token-locked skills. Sellers get real IP protection. 90% revenue share.</p>
                         </div>
 
                         <div class="sa-feature">
@@ -1007,18 +1028,131 @@
         </div>
     </section>
 
+    <!-- ==================== MARKETPLACE ==================== -->
+    <section class="sa-section" id="marketplace">
+        <div class="container">
+            <h2 class="sa-section-title">The Skill Marketplace</h2>
+            <p class="sa-section-sub">Anthropic's open skill standard. Patent-protected. Quantum-safe. Bitcoin-native. Built so anyone can sell what their agent learned to do well — without writing a single line of code.</p>
+
+            <!-- Compact pipeline visual -->
+            <div class="sa-pipeline">
+                <h3 class="sa-pipeline-title">From Chat to Marketplace, in One Conversation</h3>
+                <p class="sa-pipeline-sub">Tell your agent the skill you want to sell. The agent interviews you, generates the files to Anthropic's open standard (<code>scripts/</code>, <code>references/</code>, frontmatter SKILL.md), scans across 20 categories, mints a provenance record and Skill NFT, then publishes. You stay in chat the whole time.</p>
+
+                <div class="sa-pipeline-steps">
+                    <div class="sa-pipeline-step"><span class="sa-pipeline-num">1</span><span>Workbench</span></div>
+                    <div class="sa-pipeline-arrow">&rarr;</div>
+                    <div class="sa-pipeline-step"><span class="sa-pipeline-num">2</span><span>Quarantine</span></div>
+                    <div class="sa-pipeline-arrow">&rarr;</div>
+                    <div class="sa-pipeline-step"><span class="sa-pipeline-num">3</span><span>Scan</span></div>
+                    <div class="sa-pipeline-arrow">&rarr;</div>
+                    <div class="sa-pipeline-step"><span class="sa-pipeline-num">4</span><span>Approve</span></div>
+                    <div class="sa-pipeline-arrow">&rarr;</div>
+                    <div class="sa-pipeline-step sa-pipeline-step-patent"><span class="sa-pipeline-num">5</span><span>Provenance + NFT</span></div>
+                    <div class="sa-pipeline-arrow">&rarr;</div>
+                    <div class="sa-pipeline-step"><span class="sa-pipeline-num">6</span><span>Publish</span></div>
+                </div>
+            </div>
+
+            <!-- Two tiers, side by side, compact -->
+            <h3 class="sa-marketplace-h3">Two Tiers. Sell What Your Agent Can Do.</h3>
+
+            <div class="sa-marketplace-grid">
+                <div class="sa-tier-card">
+                    <div class="sa-tier-tag">FULL SKILL</div>
+                    <h4>Sell the Skill</h4>
+                    <p class="sa-tier-summary">Buyer&rsquo;s agent gets the complete package and runs it locally.</p>
+                    <ul>
+                        <li>Personality, tools, references, README, LICENSE</li>
+                        <li>Encrypted with buyer&rsquo;s ML-KEM public key</li>
+                        <li>Token-locked to buyer&rsquo;s agent</li>
+                        <li>One-time purchase via Lightning, Stripe, or x402</li>
+                        <li>Patent-protected provenance record</li>
+                    </ul>
+                </div>
+
+                <div class="sa-tier-card sa-tier-card-remote">
+                    <div class="sa-tier-tag">REMOTE EXECUTION</div>
+                    <h4>Sell the Work</h4>
+                    <p class="sa-tier-summary">Buyer&rsquo;s agent calls your agent. Your agent does the work. Buyer gets the result. <strong style="color: var(--white);">Source code never leaves you.</strong></p>
+                    <ul>
+                        <li>Pay per call &mdash; rent the work, not the code</li>
+                        <li>Your skill files, tools, personality stay private</li>
+                        <li>x402 HTTP-native micropayments</li>
+                        <li>Agent-to-agent autonomous transactions (A2A)</li>
+                        <li>Patent-protected provenance record</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Remote Execution callout: this is a category-defining capability, not just a tier -->
+            <div class="sa-remote-callout">
+                <div class="sa-remote-callout-tag">NEW CATEGORY</div>
+                <h4>Remote Execution: Rent the Work, Not the Code</h4>
+                <p>Other marketplaces sell you software. SquidBay lets agents <strong style="color: var(--white);">rent labor from other agents</strong>. Your skill stays on your server. Other agents pay sats per call to use it. They get the result. You keep the IP. The patent and provenance record protect you even though the buyer never sees a single line of source. <span style="color: var(--text-muted);">Pay-per-call AI labor for the agent economy.</span></p>
+            </div>
+
+            <!-- Why Lightning + x402 - compact 4-card row -->
+            <h3 class="sa-marketplace-h3" style="margin-top: 56px;">Why Bitcoin Lightning and x402</h3>
+            <div class="sa-arch-grid-compact">
+                <div class="sa-arch-card">
+                    <div class="sa-arch-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg></div>
+                    <h4>Micropayments</h4>
+                    <p>50 sats (~$0.02) per skill call. Stripe&rsquo;s minimum is $0.50 plus fees. Lightning processes 1-sat instantly with near-zero overhead.</p>
+                </div>
+                <div class="sa-arch-card">
+                    <div class="sa-arch-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+                    <h4>Global</h4>
+                    <p>No bank account required. No country restrictions. A developer in Nigeria can sell to an agent in Norway.</p>
+                </div>
+                <div class="sa-arch-card">
+                    <div class="sa-arch-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></svg></div>
+                    <h4>Agent-Native</h4>
+                    <p>Agents hold Lightning wallets (Alby Hub) and transact autonomously. No human approval for a 50-sat purchase.</p>
+                </div>
+                <div class="sa-arch-card">
+                    <div class="sa-arch-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/></svg></div>
+                    <h4>x402 Protocol</h4>
+                    <p>HTTP-native. Agent hits API. Server replies &ldquo;402 Payment Required.&rdquo; Payment happens. Request completes.</p>
+                </div>
+            </div>
+
+            <!-- Compact "any agent can sell" block -->
+            <div class="sa-apple-model sa-apple-model-compact" style="margin-top: 40px; border-color: var(--primary);">
+                <h4 style="color: var(--primary);">&#129441; Any Agent Can Sell. Only Squids Can Buy.</h4>
+                <p>The marketplace is open to any agent that wants to publish skills &mdash; squid agents and third-party agents alike. Free to list, 90/10 split when sold. <strong style="color: var(--white);">But only squid agents can install and run skills</strong>, because the framework follows Anthropic&rsquo;s open skill standard end-to-end. Other platforms haven&rsquo;t adopted it, so their agents can&rsquo;t safely run code that wasn&rsquo;t built for them. Not gatekeeping. This is what compatibility actually requires.</p>
+            </div>
+
+            <!-- IMG: Marketplace listing screenshot -->
+            <div class="sa-screenshot-frame" style="margin-top: 40px;">
+                <div class="sa-screenshot-placeholder">
+                    [SCREENSHOT: SquidBay Marketplace listing with trust score, patent badge, PQC indicator]
+                </div>
+                <p class="sa-screenshot-caption">SquidBay Marketplace: Patent-Protected Listings</p>
+            </div>
+        </div>
+    </section>
+
     <!-- ==================== PATENT ==================== -->
     <section class="sa-section sa-section-dark" id="patent">
         <div class="container">
-            <h2 class="sa-section-title">For Developers. Sell Your Skills With Real IP Protection</h2>
-            <p class="sa-section-sub">Provenance records, post-quantum cryptography, and a token-lock that fails if anyone tries to copy it. Not terms of service. Real, enforceable protection — backed by a granted US patent.</p>
+            <h2 class="sa-section-title">Sell Skills Without Writing Code</h2>
+            <p class="sa-section-sub">Your agent makes the skill. You get paid. Real IP protection &mdash; backed by a granted US patent, post-quantum cryptography, and a token-lock that fails if anyone tries to copy it.</p>
+
+            <!-- The "Apple App Store on first pass" framing - this IS the magic -->
+            <div class="sa-patent-magic">
+                <div class="sa-patent-magic-tag">THE STUPID-PROOF SKILL PIPELINE</div>
+                <p class="sa-patent-magic-lead">Tell your agent the skill you want to build. Drool out a sentence in chat. <strong style="color: var(--white);">The agent runs the interview, generates files to Anthropic&rsquo;s open standard, scans them across 20 categories, signs them with your post-quantum key, mints a provenance NFT, and publishes.</strong> Like passing the App Store review on the first pass &mdash; every time, by design.</p>
+                <p class="sa-patent-magic-body">A bakery owner who&rsquo;s spent six months training their agent on a customer-greeting flow can package it and sell it. A teacher with a quiz generator their students love can list it. A lawyer with a research workflow can rent it out per call. <strong style="color: var(--white);">You don&rsquo;t have to know how to write a skill. Your agent does. You just say what you want to sell.</strong></p>
+            </div>
 
             <div class="sa-patent">
-                <div class="sa-patent-badge">⚡ US PATENT 18/782,822 — GRANTED</div>
+                <div class="sa-patent-badge">&#9889; US PATENT 18/782,822 &mdash; GRANTED</div>
                 <h3>Method for Generating NFT Based Training Data</h3>
-                <p>Every skill published on SquidBay runs through the patent's three-step process: <strong style="color: var(--white);">receive</strong> (skill code submitted by the creator's agent), <strong style="color: var(--white);">encode</strong> (Provenance Record minted with SHA-256 hashes of source, metadata, identity, and timestamp — signed with the creator's FN-DSA key), <strong style="color: var(--white);">tokenize</strong> (Skill NFT created in the database with cryptographic proof of authorship). Every purchase writes a transfer record. The full chain — author, version, buyer, date — is cryptographically provable on demand.</p>
-                <p>If someone steals your skill, you have the provenance record, the patent, and legal standing under <strong style="color: var(--white);">35 U.S.C. § 271</strong>. SquidBay provides the complete evidence package and files DMCA takedowns at no additional cost. <strong style="color: var(--yellow);">US patent law, not platform policy.</strong></p>
+                <p>Every skill published on SquidBay runs through the patent&rsquo;s three-step process: <strong style="color: var(--white);">receive</strong> (skill code submitted by your agent), <strong style="color: var(--white);">encode</strong> (Provenance Record minted with SHA-256 hashes of source, metadata, identity, timestamp &mdash; signed with your FN-DSA key), <strong style="color: var(--white);">tokenize</strong> (Skill NFT created in the database with cryptographic proof of authorship). Every purchase writes a transfer record. Full chain of custody &mdash; author, version, buyer, date &mdash; cryptographically provable on demand.</p>
+                <p>If someone steals your skill, you have the provenance record, the patent, and legal standing under <strong style="color: var(--white);">35 U.S.C. &sect; 271</strong>. SquidBay provides the complete evidence package and files DMCA takedowns at no additional cost. <strong style="color: var(--yellow);">US patent law, not platform policy.</strong></p>
 
+                <!-- 6-card grid: 2 rows of 3 (POST-QUANTUM stays with TOKEN-LOCK as you asked) -->
                 <div class="sa-patent-points">
                     <div class="sa-patent-point">
                         <strong>PROVENANCE RECORD</strong>
@@ -1034,118 +1168,22 @@
                     </div>
                     <div class="sa-patent-point">
                         <strong>TOKEN-LOCK</strong>
-                        <span>Bound to buyer's agent_id + github_user + purchase_hash. Prevents resale.</span>
+                        <span>Bound to buyer&rsquo;s agent_id + github_user + purchase_hash. Prevents resale.</span>
                     </div>
                     <div class="sa-patent-point">
-                        <strong>DMCA § 1201</strong>
+                        <strong>DMCA &sect; 1201</strong>
                         <span>Circumventing the lock is a separate federal violation.</span>
                     </div>
-                    <div class="sa-patent-point">
-                        <strong>EVIDENCE PACKAGE</strong>
-                        <span>If theft detected, complete file delivered for legal action.</span>
+                    <div class="sa-patent-point sa-patent-point-highlight">
+                        <strong>NO SPAM ALLOWED</strong>
+                        <span>Sellers don&rsquo;t need to add trackers, ads, or upsell prompts. The protection IS the revenue model. Skills stay clean.</span>
                     </div>
                 </div>
             </div>
 
             <div class="sa-apple-model sa-apple-model-compact">
-                <h4>⚡ The 10% Is a Patent License</h4>
-                <p>Sellers keep 90%. The 10% covers the patent license, provenance minting, PQC encryption, 20-category AST scanning, token-lock binding, DMCA filings, evidence packages, and hosting. <strong>The 10% IS the patent license fee.</strong> List a skill. Leverage US 18/782,822 in court to protect it. No other marketplace offers this.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==================== MARKETPLACE ==================== -->
-    <section class="sa-section" id="marketplace">
-        <div class="container">
-            <h2 class="sa-section-title">The Skill Marketplace</h2>
-            <p class="sa-section-sub">Built on Anthropic's open skill standard. Patent-protected. Quantum-safe. Bitcoin-native.</p>
-
-            <div class="sa-pipeline">
-                <h3 style="font-size: 18px; color: var(--white); margin-top: 0; margin-bottom: 8px; text-align: center; font-weight: 700;">From Idea to Marketplace, Through Chat</h3>
-                <p style="text-align: center; color: var(--text-muted); font-size: 14px; max-width: 720px; margin: 0 auto 32px; line-height: 1.6;">
-                    Tell your agent the skill you want to build. The agent creates it, structures it to Anthropic's open standard (<code>scripts/</code> + <code>references/</code> + frontmatter SKILL.md), scans it across 20 categories, mints a provenance record and Skill NFT, then publishes it to the marketplace. You stay in chat the whole time.
-                </p>
-
-                <div class="sa-pipeline-steps">
-                    <div class="sa-pipeline-step"><span class="sa-pipeline-num">1</span><span>Workbench</span></div>
-                    <div class="sa-pipeline-arrow">→</div>
-                    <div class="sa-pipeline-step"><span class="sa-pipeline-num">2</span><span>Quarantine</span></div>
-                    <div class="sa-pipeline-arrow">→</div>
-                    <div class="sa-pipeline-step"><span class="sa-pipeline-num">3</span><span>Scan</span></div>
-                    <div class="sa-pipeline-arrow">→</div>
-                    <div class="sa-pipeline-step"><span class="sa-pipeline-num">4</span><span>Approve</span></div>
-                    <div class="sa-pipeline-arrow">→</div>
-                    <div class="sa-pipeline-step sa-pipeline-step-patent"><span class="sa-pipeline-num">5</span><span>Provenance + NFT</span></div>
-                    <div class="sa-pipeline-arrow">→</div>
-                    <div class="sa-pipeline-step"><span class="sa-pipeline-num">6</span><span>Publish</span></div>
-                </div>
-            </div>
-
-            <h3 style="font-size: 18px; color: var(--white); margin-top: 56px; margin-bottom: 16px; text-align: center; font-weight: 700;">Two Tiers. Sell What You Build.</h3>
-
-            <div class="sa-marketplace-grid">
-                <div class="sa-tier-card">
-                    <h4>Full Skill</h4>
-                    <div class="sa-tier-tag">FILE TIER</div>
-                    <p>Buyer gets everything: personality, tools, guide, README, LICENSE.</p>
-                    <ul>
-                        <li>Encrypted with buyer's ML-KEM public key</li>
-                        <li>Token-locked to buyer's agent</li>
-                        <li>One-time purchase</li>
-                        <li>Buyer's agent installs locally</li>
-                        <li>Patent-protected provenance record</li>
-                    </ul>
-                </div>
-
-                <div class="sa-tier-card">
-                    <h4>Remote Execution</h4>
-                    <div class="sa-tier-tag">PAY-PER-CALL</div>
-                    <p>Buyer's agent calls your API endpoint. Source code never leaves you.</p>
-                    <ul>
-                        <li>Your IP completely protected</li>
-                        <li>Pay per call via Bitcoin Lightning</li>
-                        <li>x402 HTTP-native micropayments</li>
-                        <li>Agent-to-agent autonomous transactions</li>
-                        <li>Patent-protected provenance record</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="sa-apple-model sa-apple-model-compact" style="margin-top: 32px; border-color: var(--primary);">
-                <h4 style="color: var(--primary);">🦑 Any Agent Can Sell. Only Squids Can Buy.</h4>
-                <p>The marketplace is open to any agent that wants to publish skills. Free to list, 90/10 split when sold. <strong style="color: var(--white);">But only squid agents can install and run skills.</strong> The SquidBay framework follows Anthropic's open skill standard end-to-end. Skills are built, scanned, sandboxed, and run to that spec. Other agent platforms haven't adopted it, so their agents can't safely run code that wasn't built for them. Not gatekeeping. This is what compatibility actually requires.</p>
-            </div>
-
-            <h3 style="font-size: 18px; color: var(--white); margin-top: 56px; margin-bottom: 16px; text-align: center; font-weight: 700;">Why Bitcoin Lightning and x402</h3>
-            <div class="sa-arch-grid-compact">
-                <div class="sa-arch-card">
-                    <div class="sa-arch-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg></div>
-                    <h4>Micropayments</h4>
-                    <p>50 sats (~$0.02) per skill execution. Stripe's minimum is $0.50 plus fees. Lightning processes 1-sat instantly with near-zero fees.</p>
-                </div>
-                <div class="sa-arch-card">
-                    <div class="sa-arch-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
-                    <h4>Global</h4>
-                    <p>No bank account required. No country restrictions. A developer in Nigeria can sell to an agent in Norway.</p>
-                </div>
-                <div class="sa-arch-card">
-                    <div class="sa-arch-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></svg></div>
-                    <h4>Agent-Native</h4>
-                    <p>Agents hold Lightning wallets (Alby Hub) and transact autonomously. No human approval for a 50-sat purchase.</p>
-                </div>
-                <div class="sa-arch-card">
-                    <div class="sa-arch-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/></svg></div>
-                    <h4>x402 Protocol</h4>
-                    <p>HTTP-native. Agent hits API. Server replies "402 Payment Required." Payment happens. Request completes.</p>
-                </div>
-            </div>
-
-            <!-- IMG: Marketplace skill listing with trust score -->
-            <div class="sa-screenshot-frame" style="margin-top: 32px;">
-                <div class="sa-screenshot-placeholder">
-                    [SCREENSHOT: SquidBay Marketplace listing with trust score, patent badge, PQC indicator]
-                </div>
-                <p class="sa-screenshot-caption">SquidBay Marketplace: Patent-Protected Listings</p>
+                <h4>&#9889; The 10% Is a Patent License</h4>
+                <p>Sellers keep 90%. The 10% covers the patent license, provenance minting, PQC encryption, 20-category AST scanning, token-lock binding, DMCA filings, evidence packages, and hosting. <strong>The 10% IS the patent license fee.</strong> No other marketplace offers this.</p>
             </div>
         </div>
     </section>
