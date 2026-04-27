@@ -20,11 +20,11 @@ app.use(helmet({
     contentSecurityPolicy: {
         directives: {
             defaultSrc: ["'self'", "https://squidbay.io", "https://*.squidbay.io"],
-            scriptSrc: ["'self'", "'unsafe-inline'", "https://squidbay.io", "https://*.squidbay.io", "https://cdnjs.cloudflare.com"],
+            scriptSrc: ["'self'", "'unsafe-inline'", "https://squidbay.io", "https://*.squidbay.io", "https://cdnjs.cloudflare.com", "https://static.cloudflareinsights.com"],
             styleSrc: ["'self'", "'unsafe-inline'", "https://squidbay.io", "https://*.squidbay.io", "https://fonts.googleapis.com"],
             fontSrc: ["'self'", "https://fonts.gstatic.com", "https://squidbay.io"],
             imgSrc: ["'self'", "data:", "https:"],
-            connectSrc: ["'self'", "https://squidbay.io", "https://api.squidbay.io", "https://squidbay-api-production.up.railway.app", "https://*.squidbay.io"],
+            connectSrc: ["'self'", "https://squidbay.io", "https://api.squidbay.io", "https://squidbay-api-production.up.railway.app", "https://*.squidbay.io", "https://cloudflareinsights.com"],
             frameSrc: ["'none'"],
             frameAncestors: ["'none'"],
             objectSrc: ["'none'"],
@@ -65,15 +65,28 @@ const imageOptions = {
 };
 
 // CORS for *.squidbay.io subdomains — allows component fetches from agent.squidbay.io etc.
-app.use('/components', (req, res, next) => {
+// Sends Access-Control-Allow-Origin matching the requesting origin, plus Vary: Origin
+// so Cloudflare caches a separate entry per origin (prevents the "missing CORS header on
+// first cold load, fixed by hard refresh" race condition).
+const SQUIDBAY_SUBDOMAIN_RE = /^https:\/\/[a-z0-9-]+\.squidbay\.io$/;
+const allowSubdomainCors = (req, res, next) => {
     const origin = req.get('Origin');
-    if (origin && origin.endsWith('.squidbay.io')) {
+    if (origin && SQUIDBAY_SUBDOMAIN_RE.test(origin)) {
         res.set('Access-Control-Allow-Origin', origin);
-        res.set('Access-Control-Allow-Methods', 'GET');
+        res.set('Access-Control-Allow-Methods', 'GET, OPTIONS');
         res.set('Access-Control-Allow-Headers', 'Content-Type');
+        res.set('Vary', 'Origin');
+    }
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(204);
     }
     next();
-});
+};
+
+// Apply CORS to all cross-subdomain asset routes the agent page fetches.
+app.use('/components', allowSubdomainCors);
+app.use('/js', allowSubdomainCors);
+app.use('/css', allowSubdomainCors);
 
 app.use('/css', express.static(path.join(__dirname, 'css'), staticOptions));
 app.use('/js', express.static(path.join(__dirname, 'js'), staticOptions));
