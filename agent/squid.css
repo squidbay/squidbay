@@ -298,10 +298,13 @@
 .sa-carousel-track {
     display: flex;
     gap: 16px;
+    align-items: stretch; /* All cards inherit height of tallest visible — equal height across the carousel */
     transition: transform 0.4s ease;
 }
 
-/* Fixed card width — compact, not stretched */
+/* Fixed card width — compact, not stretched.
+   height: auto with align-items:stretch on track means siblings match
+   the tallest peer. min-height keeps the empty-state floor. */
 .sa-carousel-track .sa-feature {
     min-width: 280px;
     max-width: 280px;
@@ -3361,4 +3364,287 @@
     .sa-helper-p { font-size: 13.5px; line-height: 1.6; margin-top: 24px; padding: 0 4px; }
     .sa-section-h3 { font-size: 17px; margin-top: 40px; padding: 0 8px; }
     .sa-section-h3-sm { font-size: 16px; margin-top: 36px; padding: 0 8px; }
+}
+
+/* ============================================================
+   SPAWN SECTION REDESIGN — lightweight pillar trio (matches hero pattern)
+   Replaces the heavy .sa-cost-pill cards with text-column pillars
+   on the section's dark background. No box chrome.
+   ============================================================ */
+.sa-spawn-costs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+    max-width: 880px;
+    margin: 36px auto 0;
+}
+.sa-spawn-cost {
+    flex: 1 1 0;
+    min-width: 180px;
+    text-align: center;
+    padding: 0 8px;
+}
+.sa-spawn-cost-amount {
+    display: block;
+    font-family: var(--font-display, var(--font-sans));
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--primary, #00D9FF);
+    line-height: 1.2;
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+}
+.sa-spawn-cost-amount-muted {
+    color: var(--text-muted, #94A3B8);
+    font-size: 1.4rem;
+}
+.sa-spawn-cost-label {
+    display: block;
+    font-size: 0.95rem;
+    color: var(--white, #FFFFFF);
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+.sa-spawn-cost-detail {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--text-muted, #94A3B8);
+    line-height: 1.4;
+    opacity: 0.85;
+}
+.sa-spawn-cost-divider {
+    width: 1px;
+    height: 56px;
+    background: linear-gradient(180deg, transparent, rgba(148, 163, 184, 0.25), transparent);
+    flex-shrink: 0;
+}
+.sa-spawn-cost-summary {
+    text-align: center;
+    color: var(--white, #FFFFFF);
+    font-size: 14.5px;
+    line-height: 1.65;
+    margin: 28px auto 0;
+    max-width: 720px;
+    padding: 0 16px;
+}
+.sa-spawn-cost-summary-accent {
+    color: var(--primary, #00D9FF);
+    font-weight: 700;
+}
+.sa-spawn-cost-summary-vs {
+    color: var(--white, #FFFFFF);
+    font-weight: 700;
+}
+
+@media (max-width: 720px) {
+    .sa-spawn-costs {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .sa-spawn-cost-divider {
+        width: 56px;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(148, 163, 184, 0.25), transparent);
+        margin: 8px 0;
+    }
+    .sa-spawn-cost { min-width: 0; padding: 0; }
+}
+
+/* ============================================================
+   SURGE SECTION — the lightning bolt, explained.
+   Bold primary-themed hero block + module lineup pills.
+   ============================================================ */
+.sa-surge {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 40px 36px;
+    background: linear-gradient(135deg, rgba(0, 217, 255, 0.06), transparent);
+    border: 1px solid rgba(0, 217, 255, 0.25);
+    border-radius: var(--radius-lg, 12px);
+    text-align: center;
+    position: relative;
+}
+.sa-surge::before {
+    /* Subtle glow accent at top edge */
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 20%;
+    right: 20%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--primary, #00D9FF), transparent);
+    opacity: 0.6;
+}
+.sa-surge-tag {
+    display: inline-block;
+    font-family: var(--font-mono, monospace);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--primary, #00D9FF);
+    background: rgba(0, 217, 255, 0.1);
+    border: 1px solid rgba(0, 217, 255, 0.3);
+    border-radius: 999px;
+    padding: 6px 14px;
+    margin-bottom: 18px;
+}
+.sa-surge-title {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--white, #FFFFFF);
+    margin: 0 0 16px 0;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+}
+.sa-surge-lead {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--text-muted, #94A3B8);
+    max-width: 720px;
+    margin: 0 auto 16px;
+}
+.sa-surge-lead:last-of-type {
+    margin-bottom: 28px;
+}
+.sa-surge-lead code {
+    font-family: var(--font-mono, monospace);
+    font-size: 13px;
+    background: rgba(0, 217, 255, 0.08);
+    color: var(--primary, #00D9FF);
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+/* Module lineup - inline pills showing the 9 specialized modules */
+.sa-surge-modules {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin: 0 auto;
+    max-width: 760px;
+}
+.sa-surge-module {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono, monospace);
+    font-size: 11.5px;
+    color: var(--white, #FFFFFF);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+    padding: 6px 12px;
+    white-space: nowrap;
+    transition: all 0.2s;
+}
+.sa-surge-module svg {
+    color: var(--primary, #00D9FF);
+    flex-shrink: 0;
+}
+.sa-surge-module:hover {
+    background: rgba(0, 217, 255, 0.08);
+    border-color: rgba(0, 217, 255, 0.25);
+}
+
+@media (max-width: 720px) {
+    .sa-surge {
+        padding: 28px 20px;
+    }
+    .sa-surge-title {
+        font-size: 24px;
+    }
+    .sa-surge-lead {
+        font-size: 14px;
+    }
+    .sa-surge-module {
+        font-size: 10.5px;
+        padding: 5px 10px;
+    }
+}
+
+/* ============================================================
+   SHIPS WITH YOUR AGENT — tight feature grid (3x2 desktop)
+   ============================================================ */
+.sa-ships-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--white, #FFFFFF);
+    text-align: center;
+    margin: 56px 0 8px;
+    letter-spacing: -0.01em;
+}
+.sa-ships-sub {
+    font-size: 14px;
+    color: var(--text-muted, #94A3B8);
+    text-align: center;
+    margin: 0 0 32px;
+}
+.sa-ships-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    max-width: 1080px;
+    margin: 0 auto;
+}
+.sa-ship-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--gray-light, #1F2937);
+    border-radius: var(--radius-md, 8px);
+    padding: 20px 22px;
+    transition: all 0.2s;
+}
+.sa-ship-card:hover {
+    border-color: rgba(0, 217, 255, 0.3);
+    transform: translateY(-2px);
+}
+.sa-ship-card-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: rgba(0, 217, 255, 0.08);
+    border: 1px solid rgba(0, 217, 255, 0.2);
+    border-radius: var(--radius-sm, 6px);
+    color: var(--primary, #00D9FF);
+    margin-bottom: 12px;
+}
+.sa-ship-card-icon svg {
+    color: var(--primary, #00D9FF);
+}
+/* The ⚡ on Streaming Responses is the only text glyph used (intentional - 
+   the lightning bolt is part of the brand vocabulary). Sized to match SVG peers. */
+.sa-ship-card-icon-bolt {
+    font-size: 18px;
+    line-height: 1;
+}
+.sa-ship-card h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--white, #FFFFFF);
+    margin: 0 0 8px 0;
+    letter-spacing: -0.005em;
+}
+.sa-ship-card p {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--text-muted, #94A3B8);
+    margin: 0;
+}
+
+@media (max-width: 900px) {
+    .sa-ships-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 560px) {
+    .sa-ships-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    .sa-ships-title { font-size: 19px; margin-top: 40px; }
+    .sa-ship-card { padding: 16px 18px; }
 }
