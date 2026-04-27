@@ -60,10 +60,55 @@
     <section class="sa-hero">
         <div class="container">
             <div class="sa-hero-badge">Your Own AI Agent</div>
-            <h1 class="sa-hero-title">Your whole life in your pocket. <span class="sa-accent">Finally, actually yours.</span></h1>
+            <h1 class="sa-hero-title">Run your whole business from one chat. <span class="sa-accent">All from your phone.</span></h1>
             <p class="sa-hero-sub sa-hero-shimmer">
-                A real AI agent with its own identity, persistent memory, and a brain that thinks between conversations. Runs on your private server. Talks for you, never as you.
+                Build the website. Post the blog. Take the orders. Reply to the email. Reorder inventory from another agent. Brief you in the morning. All from one chat with one agent that's actually yours. Talks for you, never as you.
             </p>
+
+            <div class="sa-hero-ctas">
+                <a href="https://github.com/squidbay/agent" class="sa-btn sa-btn-primary" target="_blank" rel="noopener">Get Your Copy →</a>
+                <a href="#architecture" class="sa-btn sa-btn-ghost">See the Architecture</a>
+            </div>
+
+            <!-- Chat Simulator: scenario-led demo -->
+            <div class="chat-demo sa-hero-chat-demo">
+                <div class="chat-window">
+                    <div class="chat-header">
+                        <div class="chat-header-left">
+                            <div class="chat-avatar agent">🦑</div>
+                            <div class="chat-header-info">
+                                <span class="chat-header-name">Your Agent</span>
+                                <span class="chat-header-status">● Online</span>
+                            </div>
+                        </div>
+                        <div class="chat-header-right">
+                            <span class="chat-badge">One chat. Everything done.</span>
+                        </div>
+                    </div>
+
+                    <div class="chat-messages" id="agentChatMessages">
+                        <!-- Messages inserted by JS -->
+                    </div>
+
+                    <div class="chat-input-area">
+                        <input type="text" placeholder="Talk to your agent..." disabled>
+                        <button class="chat-send-btn" disabled>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <button class="btn btn-secondary replay-btn" id="agentReplayDemo">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="1 4 1 10 7 10"></polyline>
+                        <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+                    </svg>
+                    Replay Demo
+                </button>
+            </div>
 
             <div class="sa-hero-integrations">
                 <div class="sa-pill">Cloudflare AI Gateway</div>
@@ -72,11 +117,6 @@
                 <div class="sa-pill">A2A Protocol</div>
                 <div class="sa-pill sa-pill-patent">⚡ US Patent 18/782,822</div>
                 <div class="sa-pill">Post-Quantum Crypto</div>
-            </div>
-
-            <div class="sa-hero-ctas">
-                <a href="https://github.com/squidbay/agent" class="sa-btn sa-btn-primary" target="_blank" rel="noopener">Get Your Copy →</a>
-                <a href="#architecture" class="sa-btn sa-btn-ghost">See the Architecture</a>
             </div>
 
             <div class="sa-hero-stats" style="grid-template-columns: repeat(2, minmax(220px, 280px)); justify-content: center; max-width: 600px; margin-left: auto; margin-right: auto;">

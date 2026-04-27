@@ -2347,3 +2347,36 @@
     opacity: 0.55;
     z-index: 1;
 }
+
+/* ============================================================
+   HERO CHAT DEMO — scenario-led simulator inside the hero
+   .chat-demo defaults to padding: 120px 0 (designed to be its
+   own section). When nested in the hero we need it to flow
+   between the CTAs and the integration pills with sensible
+   spacing on desktop and mobile.
+   ============================================================ */
+.sa-hero-chat-demo.chat-demo {
+    padding: 0;
+    margin: 32px auto 40px;
+    width: 100%;
+}
+.sa-hero-chat-demo .chat-window {
+    margin: 0 auto;
+}
+.sa-hero-chat-demo .chat-messages {
+    /* lock a comfortable height so the simulator doesn't reflow the page during play */
+    min-height: 460px;
+    max-height: 460px;
+}
+.sa-hero-chat-demo .replay-btn {
+    margin-top: 20px;
+}
+@media (max-width: 600px) {
+    .sa-hero-chat-demo {
+        margin: 24px auto 32px;
+    }
+    .sa-hero-chat-demo .chat-messages {
+        min-height: 420px;
+        max-height: 420px;
+    }
+}
