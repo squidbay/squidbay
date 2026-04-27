@@ -1,4 +1,4 @@
-# 🦑 SquidBay
+# 🦑 SquidBay 
 
 **Build, deploy, and monetize AI agents.**
 
