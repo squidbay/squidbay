@@ -2349,34 +2349,173 @@
 }
 
 /* ============================================================
-   HERO CHAT DEMO — scenario-led simulator inside the hero
-   .chat-demo defaults to padding: 120px 0 (designed to be its
-   own section). When nested in the hero we need it to flow
-   between the CTAs and the integration pills with sensible
-   spacing on desktop and mobile.
+   CHAT DEMO SECTION — Three Modes (chat left, persona cards right)
    ============================================================ */
-.sa-hero-chat-demo.chat-demo {
+.sa-chat-demo-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 40px;
+    align-items: start;
+    max-width: 1100px;
+    margin: 40px auto 0;
+}
+@media (max-width: 900px) {
+    .sa-chat-demo-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+}
+
+/* Hero variant override (legacy class kept off here — we are in a section, not hero) */
+.sa-modes-chat-demo.chat-demo {
     padding: 0;
-    margin: 32px auto 40px;
+    margin: 0;
     width: 100%;
+    overflow: visible;
 }
-.sa-hero-chat-demo .chat-window {
-    margin: 0 auto;
+.sa-modes-chat-demo .chat-window {
+    width: 100%;
+    max-width: none;
+    margin: 0;
 }
-.sa-hero-chat-demo .chat-messages {
-    /* lock a comfortable height so the simulator doesn't reflow the page during play */
-    min-height: 460px;
-    max-height: 460px;
-}
-.sa-hero-chat-demo .replay-btn {
-    margin-top: 20px;
+.sa-modes-chat-demo .chat-messages {
+    /* Lock height so the simulator doesn't reflow the page during play */
+    min-height: 480px;
+    max-height: 480px;
 }
 @media (max-width: 600px) {
-    .sa-hero-chat-demo {
-        margin: 24px auto 32px;
-    }
-    .sa-hero-chat-demo .chat-messages {
+    .sa-modes-chat-demo .chat-messages {
         min-height: 420px;
         max-height: 420px;
+    }
+}
+
+/* Persona cards on the right */
+.sa-modes-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.sa-mode-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 24px;
+    background: var(--darker, #0A0E14);
+    border: 1px solid var(--gray-light, #1F2937);
+    border-radius: var(--radius-lg, 12px);
+    transition: border-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+    position: relative;
+}
+.sa-mode-icon {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    background: var(--gray, #1F2937);
+    border-radius: var(--radius-md, 8px);
+    transition: background 0.4s ease, transform 0.4s ease;
+}
+.sa-mode-text h4 {
+    color: var(--white, #FFFFFF);
+    font-size: 16px;
+    font-weight: 800;
+    margin: 0 0 6px 0;
+    letter-spacing: -0.01em;
+}
+.sa-mode-text p {
+    color: var(--text-muted, #94A3B8);
+    font-size: 13px;
+    line-height: 1.55;
+    margin: 0;
+}
+
+/* Active mode highlight — driven by JS adding .is-active during matching turns */
+.sa-mode-card.is-active {
+    border-color: var(--primary, #00D9FF);
+    box-shadow: 0 0 0 1px var(--primary, #00D9FF), 0 12px 32px rgba(0, 217, 255, 0.18);
+    background: linear-gradient(135deg, rgba(0, 217, 255, 0.08), transparent);
+    transform: translateY(-2px);
+}
+.sa-mode-card.is-active .sa-mode-icon {
+    background: linear-gradient(135deg, rgba(0, 217, 255, 0.2), rgba(0, 217, 255, 0.05));
+    transform: scale(1.05);
+}
+.sa-mode-card.is-active .sa-mode-text h4 {
+    color: var(--primary, #00D9FF);
+}
+
+/* ============================================================
+   CHAT-FIRST SECTION — Cards
+   ============================================================ */
+.sa-chat-first-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+.sa-chat-first-card {
+    background: var(--darker, #0A0E14);
+    border: 1px solid var(--gray-light, #1F2937);
+    border-radius: var(--radius-lg, 12px);
+    padding: 28px 24px;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+}
+.sa-chat-first-card:hover {
+    border-color: var(--primary, #00D9FF);
+    transform: translateY(-2px);
+}
+.sa-chat-first-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gray, #1F2937);
+    border-radius: var(--radius-md, 8px);
+    color: var(--primary, #00D9FF);
+    margin-bottom: 16px;
+}
+.sa-chat-first-card h4 {
+    color: var(--white, #FFFFFF);
+    font-size: 16px;
+    font-weight: 800;
+    margin: 0 0 10px 0;
+    letter-spacing: -0.01em;
+}
+.sa-chat-first-card p {
+    color: var(--text-muted, #94A3B8);
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ============================================================
+   SCALE MODULE — Bigger step numbers (Edit #4)
+   Numbers were undersized vs prices. Bump font + circle, tighten gap.
+   ============================================================ */
+.sa-scale-num {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 15px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    flex-shrink: 0 !important;
+}
+.sa-scale-step {
+    gap: 12px !important;
+}
+.sa-scale-steps {
+    gap: 10px !important;
+}
+@media (max-width: 600px) {
+    .sa-scale-num {
+        width: 28px !important;
+        height: 28px !important;
+        font-size: 14px !important;
     }
 }

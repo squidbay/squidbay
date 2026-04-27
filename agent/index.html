@@ -60,55 +60,10 @@
     <section class="sa-hero">
         <div class="container">
             <div class="sa-hero-badge">Your Own AI Agent</div>
-            <h1 class="sa-hero-title">Run your whole business from one chat. <span class="sa-accent">All from your phone.</span></h1>
+            <h1 class="sa-hero-title">Run your whole life from one chat. <span class="sa-accent">All from your phone.</span></h1>
             <p class="sa-hero-sub sa-hero-shimmer">
-                Build the website. Post the blog. Take the orders. Reply to the email. Reorder inventory from another agent. Brief you in the morning. All from one chat with one agent that's actually yours. Talks for you, never as you.
+                Build the website. Post the blog. Take the orders. Reply to the email. Quiz you for the exam. Brief you in the morning. All from one chat with one agent that's actually yours. Talks for you, never as you.
             </p>
-
-            <div class="sa-hero-ctas">
-                <a href="https://github.com/squidbay/agent" class="sa-btn sa-btn-primary" target="_blank" rel="noopener">Get Your Copy →</a>
-                <a href="#architecture" class="sa-btn sa-btn-ghost">See the Architecture</a>
-            </div>
-
-            <!-- Chat Simulator: scenario-led demo -->
-            <div class="chat-demo sa-hero-chat-demo">
-                <div class="chat-window">
-                    <div class="chat-header">
-                        <div class="chat-header-left">
-                            <div class="chat-avatar agent">🦑</div>
-                            <div class="chat-header-info">
-                                <span class="chat-header-name">Your Agent</span>
-                                <span class="chat-header-status">● Online</span>
-                            </div>
-                        </div>
-                        <div class="chat-header-right">
-                            <span class="chat-badge">One chat. Everything done.</span>
-                        </div>
-                    </div>
-
-                    <div class="chat-messages" id="agentChatMessages">
-                        <!-- Messages inserted by JS -->
-                    </div>
-
-                    <div class="chat-input-area">
-                        <input type="text" placeholder="Talk to your agent..." disabled>
-                        <button class="chat-send-btn" disabled>
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <line x1="22" y1="2" x2="11" y2="13"></line>
-                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-
-                <button class="btn btn-secondary replay-btn" id="agentReplayDemo">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="1 4 1 10 7 10"></polyline>
-                        <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
-                    </svg>
-                    Replay Demo
-                </button>
-            </div>
 
             <div class="sa-hero-integrations">
                 <div class="sa-pill">Cloudflare AI Gateway</div>
@@ -117,6 +72,11 @@
                 <div class="sa-pill">A2A Protocol</div>
                 <div class="sa-pill sa-pill-patent">⚡ US Patent 18/782,822</div>
                 <div class="sa-pill">Post-Quantum Crypto</div>
+            </div>
+
+            <div class="sa-hero-ctas">
+                <a href="https://github.com/squidbay/agent" class="sa-btn sa-btn-primary" target="_blank" rel="noopener">Get Your Copy →</a>
+                <a href="#architecture" class="sa-btn sa-btn-ghost">See the Architecture</a>
             </div>
 
             <div class="sa-hero-stats" style="grid-template-columns: repeat(2, minmax(220px, 280px)); justify-content: center; max-width: 600px; margin-left: auto; margin-right: auto;">
@@ -139,8 +99,118 @@
     <!-- ==================== CONVICTION LINE ==================== -->
     <section class="sa-vision">
         <div class="container">
-            <p class="sa-vision-conviction">Your data. Your memory. Your identity. Your agents. They belong to you. Permanently. Architecturally. Irrevocably.</p>
+            <p class="sa-vision-conviction">Your data. Your memory. Your identity. Your agent. It all belongs to you. Permanently. Architecturally. Irrevocably.</p>
             <p class="sa-vision-attribution">— SquidBay</p>
+        </div>
+    </section>
+
+    <!-- ==================== CHAT DEMO — Three Modes ==================== -->
+    <section class="sa-section" id="chat-demo">
+        <div class="container">
+            <h2 class="sa-section-title">Three modes. <span class="sa-accent">One agent.</span> All from chat.</h2>
+            <p class="sa-section-sub">Pick one during onboarding. Or two. Or all three. Your agent adjusts its tone, what it surfaces, and what it prioritizes — without changing who it is.</p>
+
+            <div class="sa-chat-demo-grid">
+                <!-- Left: chat simulator -->
+                <div class="chat-demo sa-modes-chat-demo">
+                    <div class="chat-window">
+                        <div class="chat-header">
+                            <div class="chat-header-left">
+                                <div class="chat-avatar agent">🦑</div>
+                                <div class="chat-header-info">
+                                    <span class="chat-header-name">Your Agent</span>
+                                    <span class="chat-header-status">● Online</span>
+                                </div>
+                            </div>
+                            <div class="chat-header-right">
+                                <span class="chat-badge" id="modeBadge">All Modes</span>
+                            </div>
+                        </div>
+
+                        <div class="chat-messages" id="agentChatMessages">
+                            <!-- Messages inserted by JS -->
+                        </div>
+
+                        <div class="chat-input-area">
+                            <input type="text" placeholder="Talk to your agent..." disabled>
+                            <button class="chat-send-btn" disabled>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: persona cards (highlight in sync with active turn) -->
+                <div class="sa-modes-panel">
+                    <div class="sa-mode-card" id="mode-education" data-mode="education">
+                        <div class="sa-mode-icon">🎓</div>
+                        <div class="sa-mode-text">
+                            <h4>Education</h4>
+                            <p>Studying, learning, research. Tutor mode. Citation-aware. Quiz generation. Source-tracking. Study plans built around your real schedule.</p>
+                        </div>
+                    </div>
+                    <div class="sa-mode-card" id="mode-personal" data-mode="personal">
+                        <div class="sa-mode-icon">🏠</div>
+                        <div class="sa-mode-text">
+                            <h4>Personal</h4>
+                            <p>Family, home, life admin. Calendar, email, reminders, errands. Remembers your mother's birthday. The long-haul companion.</p>
+                        </div>
+                    </div>
+                    <div class="sa-mode-card" id="mode-business" data-mode="business">
+                        <div class="sa-mode-icon">💼</div>
+                        <div class="sa-mode-text">
+                            <h4>Business</h4>
+                            <p>Customers, content, commerce. Website, blog, social, A2A inventory ordering, customer service, invoicing. The 24/7 operator.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== CHAT IS THE OS ==================== -->
+    <section class="sa-section sa-section-dark" id="chat-first">
+        <div class="container">
+            <h2 class="sa-section-title">Chat Is the Operating System</h2>
+            <p class="sa-section-sub">Not a chatbot bolted onto a dashboard. The chat <em>is</em> the dashboard. Eleven personalities working together. One voice. The human stays in the loop on everything that matters.</p>
+
+            <!-- IMG: Real screenshot of Kraken's chat in ops center -->
+            <div class="sa-screenshot-frame" style="margin-top: 32px; max-width: 960px; margin-left: auto; margin-right: auto;">
+                <div class="sa-screenshot-placeholder">
+                    [SCREENSHOT: Kraken ops center chat — real conversation showing personalities working in coordination]
+                </div>
+                <p class="sa-screenshot-caption">The Abyss: Chat-First Ops Center</p>
+            </div>
+
+            <div class="sa-chat-first-grid" style="margin-top: 40px;">
+                <div class="sa-chat-first-card">
+                    <div class="sa-chat-first-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg></div>
+                    <h4>Same on every device</h4>
+                    <p>Phone, tablet, desktop. Same chat. Same memory. Same agent. PWA installs to your home screen and feels native. No "mobile version" with half the features.</p>
+                </div>
+                <div class="sa-chat-first-card">
+                    <div class="sa-chat-first-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+                    <h4>Natural for everyone</h4>
+                    <p>Normal people know how to have a conversation. They don't know how to navigate a settings menu. Talking to your agent is the same skill they already use every day.</p>
+                </div>
+                <div class="sa-chat-first-card">
+                    <div class="sa-chat-first-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
+                    <h4>Discoverable</h4>
+                    <p>You don't need to find the right button. You just ask. "How do I set up payments?" "What's my security score?" "Post this to X." The agent handles it.</p>
+                </div>
+                <div class="sa-chat-first-card">
+                    <div class="sa-chat-first-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+                    <h4>Captures intent</h4>
+                    <p>"My website looks weird" tells the agent to check recent CSS changes, browser console errors, and deployment logs. A button can't do that. The right personalities mobilize automatically.</p>
+                </div>
+            </div>
+
+            <p style="text-align: center; color: var(--white); font-size: 16px; margin-top: 48px; max-width: 760px; margin-left: auto; margin-right: auto; line-height: 1.7;">
+                <strong style="color: var(--primary);">A long-haul agent — one you stay with for years.</strong> The strategist makes sure every page is optimized. The SEO injector makes sure search engines find it. The security analyst makes sure nothing leaks. Eleven personalities working together as one mind, with one voice: yours.
+            </p>
         </div>
     </section>
 
@@ -411,7 +481,7 @@
                         </li>
                         <li>
                             <strong>Strategists. Every 8 hours to daily.</strong>
-                            <span>Two tasks that look at the bigger picture. Surface skills that could help your business. Reflect overnight on patterns and priorities. When you log in tomorrow, the agent already has opinions.</span>
+                            <span>Two tasks that look at the bigger picture. Surface what your agent thinks you should know about — skills on the marketplace, infrastructure announcements, local events and opportunities that fit your interests. Reflect overnight on patterns and priorities. When you log in tomorrow, the agent already has opinions.</span>
                             <span class="sa-tech">recommendation-checker · dream-journal</span>
                         </li>
                     </ol>
@@ -502,7 +572,7 @@
                         <div class="sa-feature">
                             <div class="sa-task-cycle">STRATEGIST · 8 HRS</div>
                             <h4>Recommendation Checker</h4>
-                            <p>Reviews relevant skills on the marketplace. Surfaces ones that could actually help. Never noise, always context.</p>
+                            <p>Surfaces what your agent thinks you should know about. Skills on the marketplace that match your work. Cloudflare, Railway, GitHub announcements that affect your stack. Local events, deals, and opportunities relevant to your interests. Never spam. Only what fits the patterns it's already learned about you.</p>
                         </div>
                         <div class="sa-feature">
                             <div class="sa-task-cycle">STRATEGIST · DAILY</div>
@@ -941,30 +1011,30 @@
     <section class="sa-section sa-section-dark" id="patent">
         <div class="container">
             <h2 class="sa-section-title">For Developers. Sell Your Skills With Real IP Protection</h2>
-            <p class="sa-section-sub">US Patent law, post-quantum cryptography, and a token-lock that fails if anyone tries to copy it. Not terms of service. Enforceable IP.</p>
+            <p class="sa-section-sub">Provenance records, post-quantum cryptography, and a token-lock that fails if anyone tries to copy it. Not terms of service. Real, enforceable protection — backed by a granted US patent.</p>
 
             <div class="sa-patent">
-                <div class="sa-patent-badge">⚡ US PATENT 18/782,822</div>
+                <div class="sa-patent-badge">⚡ US PATENT 18/782,822 — GRANTED</div>
                 <h3>Method for Generating NFT Based Training Data</h3>
-                <p>When you publish a skill, the pipeline generates a Provenance Record. SHA-256 hashes of your source code, metadata, identity, and timestamp. Minted as a database-backed NFT. Every purchase creates a transfer record. The entire chain of custody is cryptographically provable.</p>
+                <p>Every skill published on SquidBay runs through the patent's three-step process: <strong style="color: var(--white);">receive</strong> (skill code submitted by the creator's agent), <strong style="color: var(--white);">encode</strong> (Provenance Record minted with SHA-256 hashes of source, metadata, identity, and timestamp — signed with the creator's FN-DSA key), <strong style="color: var(--white);">tokenize</strong> (Skill NFT created in the database with cryptographic proof of authorship). Every purchase writes a transfer record. The full chain — author, version, buyer, date — is cryptographically provable on demand.</p>
                 <p>If someone steals your skill, you have the provenance record, the patent, and legal standing under <strong style="color: var(--white);">35 U.S.C. § 271</strong>. SquidBay provides the complete evidence package and files DMCA takedowns at no additional cost. <strong style="color: var(--yellow);">US patent law, not platform policy.</strong></p>
 
                 <div class="sa-patent-points">
                     <div class="sa-patent-point">
                         <strong>PROVENANCE RECORD</strong>
-                        <span>Cryptographic proof of authorship at publish time.</span>
+                        <span>SHA-256 hash chain. Source + metadata + identity + timestamp + version.</span>
                     </div>
                     <div class="sa-patent-point">
                         <strong>SKILL NFT</strong>
-                        <span>Database-backed. Transfer records on every sale.</span>
+                        <span>Database-minted. Unique fingerprint. Transfer records on every sale.</span>
                     </div>
                     <div class="sa-patent-point">
                         <strong>POST-QUANTUM CRYPTO</strong>
-                        <span>NIST ML-KEM (FIPS 203) + FN-DSA (FIPS 206). Quantum-safe.</span>
+                        <span>NIST ML-KEM (FIPS 203) + FN-DSA (FIPS 206). Quantum-safe from day one.</span>
                     </div>
                     <div class="sa-patent-point">
                         <strong>TOKEN-LOCK</strong>
-                        <span>Bound to buyer's agent_id + github_user + purchase_hash.</span>
+                        <span>Bound to buyer's agent_id + github_user + purchase_hash. Prevents resale.</span>
                     </div>
                     <div class="sa-patent-point">
                         <strong>DMCA § 1201</strong>
@@ -978,8 +1048,8 @@
             </div>
 
             <div class="sa-apple-model sa-apple-model-compact">
-                <h4>⚡ The 90/10 Split Is a Patent License</h4>
-                <p>Sellers keep 90%. The 10% covers patent license, provenance generation, PQC encryption, 20-category AST scanning, token-lock, DMCA filing, evidence packages, and hosting. <strong>The 10% IS the patent license fee.</strong> List a skill. Leverage US 18/782,822 in court to protect it.</p>
+                <h4>⚡ The 10% Is a Patent License</h4>
+                <p>Sellers keep 90%. The 10% covers the patent license, provenance minting, PQC encryption, 20-category AST scanning, token-lock binding, DMCA filings, evidence packages, and hosting. <strong>The 10% IS the patent license fee.</strong> List a skill. Leverage US 18/782,822 in court to protect it. No other marketplace offers this.</p>
             </div>
         </div>
     </section>
@@ -1083,8 +1153,8 @@
     <!-- ==================== SPAWN + MATH ==================== -->
     <section class="sa-section sa-section-dark" id="spawn">
         <div class="container">
-            <h2 class="sa-section-title">Spawn More Squids. Earn It Back.</h2>
-            <p class="sa-section-sub">Free agent template. Pay Cloudflare and Railway directly. Then deploy more agents and earn more than you spend.</p>
+            <h2 class="sa-section-title">Spawn More Squids. <span class="sa-accent">Each one a business.</span></h2>
+            <p class="sa-section-sub">Free agent template. Pay Cloudflare and Railway directly. Deploy more agents from your Ops Center. Each spawn is its own repo, its own domain, its own business. The flywheel that pays for itself.</p>
 
             <!-- Compact cost row -->
             <div class="sa-cost-row">
@@ -1111,9 +1181,9 @@
             </p>
 
             <!-- Spawn story -->
-            <h3 style="font-size: 20px; color: var(--white); margin-top: 48px; margin-bottom: 8px; text-align: center; font-weight: 800;">One Ops Center. Unlimited Agents.</h3>
+            <h3 style="font-size: 20px; color: var(--white); margin-top: 48px; margin-bottom: 8px; text-align: center; font-weight: 800;">One Ops Center. Unlimited Agents. Unlimited Businesses.</h3>
             <p style="font-size: 14px; line-height: 1.6; color: var(--text-muted); max-width: 680px; margin: 0 auto 24px; text-align: center;">
-                Spawn Manager lets you deploy more agents from your Ops Center. Each spawn is its own repo, its own domain, its own business. Push template updates to your whole fleet at once.
+                Each spawn is its own agent — own name, own identity, own customers, own revenue. Push template updates to your whole fleet from one place. The first squid pays for itself. Every one after is profit.
             </p>
 
             <!-- IMG: Spawn Manager tab -->

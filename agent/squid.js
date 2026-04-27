@@ -185,64 +185,72 @@
     }
 
     // --------------------------------------------------------------------------
-    // Agent Chat Demo — scenario-led hero animation
+    // Agent Chat Demo — Three Modes scenario, auto-looping
     //
-    // Mounts on #agentChatMessages with replay button #agentReplayDemo.
-    // Uses the same .chat-message / .chat-message-bubble / .squidbay-card /
-    // .typing-indicator classes from styles.css that index.css piggybacks on.
+    // Mounts on #agentChatMessages. Highlights .sa-mode-card matching the
+    // active turn's `mode` attribute. Loops on a delay after completion.
+    // No replay button — runs continuously while in viewport.
+    // CSS classes (.chat-message, .chat-message-bubble, .squidbay-card,
+    // .typing-indicator, etc.) come from styles.css imported in <head>.
     // --------------------------------------------------------------------------
 
     function initAgentChatDemo() {
         var chatMessages = document.getElementById('agentChatMessages');
-        var replayBtn = document.getElementById('agentReplayDemo');
+        var modeBadge = document.getElementById('modeBadge');
 
         if (!chatMessages) return;
 
-        // Mixed personas threaded into one demo: bakery owner → single parent → law firm partner.
-        // Shows breadth of "all from one chat" without naming professions explicitly.
+        var modeCards = {
+            education: document.getElementById('mode-education'),
+            personal: document.getElementById('mode-personal'),
+            business: document.getElementById('mode-business')
+        };
+
+        // Three-mode conversation: same agent, same human, different modes.
+        // Ordered Business → Personal → Education to feel like a real day,
+        // not a feature catalog. Each turn carries a `mode` so the right
+        // persona card highlights while the message renders.
         var conversation = [
             {
                 type: 'user',
                 avatar: '👤',
-                message: "Build a homepage for the bakery and a blog post about the new sourdough. Then post both to socials.",
+                mode: 'business',
+                message: "Build the homepage and post the new sourdough blog to all socials.",
                 delay: 600
             },
             {
                 type: 'agent',
                 avatar: '🦑',
+                mode: 'business',
                 message: "On it. Pulling your brand, building the page, drafting the post.",
-                delay: 1400
+                delay: 1300
             },
             {
                 type: 'system',
+                mode: 'business',
                 message: '🎨 Website Builder · 📝 Content Creator · 📣 Social Media',
                 delay: 800
             },
             {
                 type: 'agent',
                 avatar: '🦑',
-                message: '',
-                action: 'pending',
-                actionText: 'Building homepage and blog post live in viewport...',
-                delay: 1300
-            },
-            {
-                type: 'agent',
-                avatar: '🦑',
+                mode: 'business',
                 message: '',
                 action: 'success',
-                actionText: '✓ Page live at yourdomain.com · Blog scheduled · Posted to X, Instagram, Facebook',
-                delay: 1500
+                actionText: '✓ Page live · Blog scheduled · Posted to X, Instagram, Facebook',
+                delay: 1400
             },
             {
                 type: 'user',
                 avatar: '👤',
+                mode: 'business',
                 message: "Flour is running low. Reorder from the mill.",
                 delay: 1100
             },
             {
                 type: 'agent',
                 avatar: '🦑',
+                mode: 'business',
                 message: 'Found their agent on the marketplace. Negotiated the order via A2A.',
                 card: {
                     skill: 'Wholesale Order',
@@ -255,41 +263,66 @@
             {
                 type: 'user',
                 avatar: '👤',
-                message: "What's on calendar this week? Any emails I haven't replied to?",
+                mode: 'personal',
+                message: "What's on calendar this week? Anything I missed?",
                 delay: 1100
             },
             {
                 type: 'agent',
                 avatar: '🦑',
-                message: 'Three meetings: dentist Tuesday, school recital Wednesday 7pm, supplier Friday. Six emails waiting — two need you, four I already drafted replies for.',
-                delay: 1600
+                mode: 'personal',
+                message: "Three things: dentist Tuesday, Leena's recital Wednesday 7pm, supplier Friday. Mom's birthday is Saturday — drafted a card and queued flowers.",
+                delay: 1700
             },
             {
                 type: 'user',
                 avatar: '👤',
-                message: "Pull up the Jenkins case research and brief me by morning.",
+                mode: 'education',
+                message: "Quiz me on the case law for tomorrow's exam. Then summarize for my notes.",
                 delay: 1100
             },
             {
                 type: 'agent',
                 avatar: '🦑',
-                message: "Researcher and strategist personalities working on it overnight. I'll have the brief, citations, and a one-pager ready when you log in.",
+                mode: 'education',
+                message: 'Ten questions ready. Citations tracked. One-page study summary in your Drive when we finish.',
                 delay: 1500
             },
             {
                 type: 'agent',
                 avatar: '🦑',
+                mode: 'business',  // closer — flips badge back to general
                 message: 'All from this chat. All your data. Posted from my identity, never as you.',
                 result: {
-                    label: 'Total time',
+                    label: 'Three modes. One agent.',
                     value: 'Done while you live your life.'
                 },
-                delay: 1200
+                delay: 1300
             }
         ];
 
         var currentIndex = 0;
         var isPlaying = false;
+        var loopTimer = null;
+        var observerStarted = false;
+
+        function setActiveMode(mode) {
+            // Clear all
+            Object.keys(modeCards).forEach(function(k) {
+                if (modeCards[k]) modeCards[k].classList.remove('is-active');
+            });
+            // Highlight current
+            if (mode && modeCards[mode]) {
+                modeCards[mode].classList.add('is-active');
+            }
+            // Update badge label
+            if (modeBadge) {
+                if (mode === 'education') modeBadge.textContent = 'Education Mode';
+                else if (mode === 'personal') modeBadge.textContent = 'Personal Mode';
+                else if (mode === 'business') modeBadge.textContent = 'Business Mode';
+                else modeBadge.textContent = 'All Modes';
+            }
+        }
 
         function createMessage(item) {
             var msgDiv = document.createElement('div');
@@ -307,7 +340,7 @@
                 html += '<span>' + item.message + '</span>';
             }
 
-            // SquidBay marketplace card
+            // Marketplace card
             if (item.card) {
                 html += '\
                     <div class="squidbay-card">\
@@ -325,7 +358,6 @@
                     </div>';
             }
 
-            // Action status (pending spinner / success check)
             if (item.action) {
                 html += '<div class="squidbay-action ' + item.action + '">';
                 if (item.action === 'pending') {
@@ -334,7 +366,6 @@
                 html += '<span>' + item.actionText + '</span></div>';
             }
 
-            // Result block
             if (item.result) {
                 html += '\
                     <div class="chat-result">\
@@ -369,14 +400,26 @@
             if (typing) typing.remove();
         }
 
+        function scheduleLoop() {
+            // Brief pause on the closing message, then restart
+            if (loopTimer) clearTimeout(loopTimer);
+            loopTimer = setTimeout(function() {
+                isPlaying = false;
+                startDemo();
+            }, 5000);
+        }
+
         function playNext() {
             if (currentIndex >= conversation.length) {
                 isPlaying = false;
-                if (replayBtn) replayBtn.disabled = false;
+                scheduleLoop();
                 return;
             }
 
             var item = conversation[currentIndex];
+
+            // Highlight the active mode the moment a turn begins
+            setActiveMode(item.mode);
 
             if (item.type === 'agent' && currentIndex > 0) {
                 showTyping();
@@ -403,15 +446,16 @@
             isPlaying = true;
             currentIndex = 0;
             chatMessages.innerHTML = '';
-            if (replayBtn) replayBtn.disabled = true;
+            setActiveMode(null);
 
             setTimeout(playNext, 500);
         }
 
-        // Auto-start when section scrolls into view
+        // Auto-start when section scrolls into view; loops indefinitely after.
         var observer = new IntersectionObserver(function(entries) {
             entries.forEach(function(entry) {
-                if (entry.isIntersecting && !isPlaying && currentIndex === 0) {
+                if (entry.isIntersecting && !observerStarted) {
+                    observerStarted = true;
                     startDemo();
                     observer.unobserve(entry.target);
                 }
@@ -419,10 +463,6 @@
         }, { threshold: 0.3 });
 
         observer.observe(chatMessages);
-
-        if (replayBtn) {
-            replayBtn.addEventListener('click', startDemo);
-        }
     }
 
     // --------------------------------------------------------------------------
