@@ -2738,33 +2738,36 @@
     }
 }
 
-/* Highlight version of patent point — closing slot */
+/* Highlight version of patent point — closing slot. 
+   Visually balanced with peers — same padding, same text size — but
+   uses primary color to mark it as the closing/summary card. */
 .sa-patent-point-highlight {
-    background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(0, 217, 255, 0.02)) !important;
+    background: linear-gradient(135deg, rgba(0, 217, 255, 0.08), rgba(0, 217, 255, 0.02)) !important;
     border-color: var(--primary, #00D9FF) !important;
 }
 .sa-patent-point-highlight strong {
     color: var(--primary, #00D9FF) !important;
+}
+.sa-patent-point-highlight span {
+    /* Same as peer cards - don't grow taller */
+    font-size: inherit !important;
+    line-height: inherit !important;
 }
 
 /* ============================================================
    FINAL PASS — additional styles
    ============================================================ */
 
-/* Hero stat - static (third pillar, no link) */
+/* Hero stat - static (third pillar, no link). Visually identical to .sa-stat-link
+   but cursor stays default. The label/detail use muted color so it reads
+   as informational rather than clickable. */
 .sa-stat-link-static {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 16px;
-    background: var(--gray, #1F2937);
-    border: 1px solid var(--gray-light, #1F2937);
-    border-radius: var(--radius-md, 8px);
+    text-align: center;
     cursor: default;
-    opacity: 0.85;
 }
 .sa-stat-link-static .sa-stat-num {
     color: var(--text-muted, #94A3B8);
+    font-size: 1.5rem;
 }
 @media (max-width: 700px) {
     .sa-hero-stats {
@@ -2776,8 +2779,8 @@
 .sa-modes-reassure {
     margin-top: 8px;
     padding: 18px 20px;
-    background: linear-gradient(135deg, rgba(0, 217, 255, 0.04), transparent);
-    border: 1px solid rgba(0, 217, 255, 0.15);
+    background: linear-gradient(135deg, rgba(244, 196, 48, 0.06), transparent);
+    border: 1px solid rgba(244, 196, 48, 0.25);
     border-radius: var(--radius-md, 8px);
     display: flex;
     align-items: flex-start;
@@ -2790,13 +2793,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 217, 255, 0.1);
+    background: rgba(244, 196, 48, 0.12);
     border-radius: var(--radius-sm, 6px);
-    color: var(--primary, #00D9FF);
+    color: var(--yellow, #F4C430);
 }
 .sa-modes-reassure-text strong {
     display: block;
-    color: var(--white, #FFFFFF);
+    color: var(--yellow, #F4C430);
     font-size: 13px;
     font-weight: 800;
     margin-bottom: 4px;
