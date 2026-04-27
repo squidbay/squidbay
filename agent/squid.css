@@ -3646,7 +3646,9 @@
     }
 }
 .sa-surge-tag {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     font-family: var(--font-mono, monospace);
     font-size: 11px;
     font-weight: 700;
@@ -3660,6 +3662,13 @@
     position: relative;
     z-index: 2;
     box-shadow: 0 0 12px rgba(244, 196, 48, 0.25);
+}
+.sa-surge-tag-bolt {
+    font-size: 16px;
+    line-height: 1;
+    /* Pull up slightly so the bolt sits visually centered with the SURGE MODE text */
+    margin-top: -1px;
+    letter-spacing: 0;
 }
 .sa-surge-title {
     font-size: 26px;
