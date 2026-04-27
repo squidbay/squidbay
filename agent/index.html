@@ -657,18 +657,24 @@
             <!-- Section title + intro - matches the rhythm of every other section on the page.
                  Teaches the reader what sub-agent mode and surge actually mean before showing the card. -->
             <h2 class="sa-section-title">Eleven Specialists. <span class="sa-accent">One Agent.</span></h2>
-            <p class="sa-section-sub">Your agent isn&rsquo;t one mind doing everything. It&rsquo;s eleven specialists working together. When a task needs more than one of them, your agent splits the work, runs them at the same time, and brings the answers back as one. That&rsquo;s why the squid has lightning.</p>
+            <p class="sa-section-sub">Your agent isn&rsquo;t one mind doing everything. It&rsquo;s eleven specialists working together. When a task needs more than one of them, your agent splits the work, runs them at the same time, and brings the answers back as one.</p>
 
             <!-- SURGE hero block - explains why the squid has the lightning bolt -->
             <div class="sa-surge">
-                <!-- Big lightning bolt anchor at top-left of the card -->
-                <div class="sa-surge-bolt" aria-hidden="true">⚡</div>
+                <!-- Animated lightning flash - cuts across the card every 7s -->
+                <div class="sa-surge-flash" aria-hidden="true"></div>
 
-                <div class="sa-surge-tag">SURGE MODE</div>
+                <!-- BIG lightning bolt anchor at top-left of the card.
+                     Real SVG, 160px, glowing cyan, slight rotation for drama. -->
+                <svg class="sa-surge-bolt" viewBox="0 0 24 32" fill="currentColor" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+                    <path d="M14 0 L0 18 L9 18 L7 32 L24 12 L14 12 Z"/>
+                </svg>
+
+                <div class="sa-surge-tag">SURGE MODE ⚡</div>
                 <h3 class="sa-surge-title">Why the Squid Has Lightning</h3>
                 <p class="sa-surge-lead">When you ask for something simple, one specialist handles it. When you ask for something complex &mdash; build a website, post to socials, and send the customer a follow-up &mdash; your agent calls in the team. Each specialist gets its own slice of focus, with its own tools and memory.</p>
                 <p class="sa-surge-lead">
-                    <strong style="color: var(--primary);">Flip on Surge ⚡ and let &rsquo;er rip.</strong>
+                    <strong style="color: var(--yellow, #F4C430);">Flip on Surge ⚡ and let &rsquo;er rip.</strong>
                     All the specialists work at once instead of one after the other. You watch each one think and reply in real time. The result lands in seconds, not minutes. Maximum speed. Maximum quality.
                 </p>
 
@@ -1224,6 +1230,12 @@
 
             <!-- Pipeline visual -->
             <div class="sa-pipeline">
+                <!-- Workbench wrench anchor at top-left, matching the SURGE bolt pattern.
+                     Cyan to keep within the marketplace section's color palette. -->
+                <svg class="sa-pipeline-wrench" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                </svg>
+
                 <h3 class="sa-pipeline-title">From Chat to Marketplace, in One Conversation</h3>
                 <p class="sa-pipeline-sub">Tell your agent the skill you want to sell. The agent interviews you, generates files to Anthropic&rsquo;s open standard, scans across 20 categories, mints a provenance record and Skill NFT, then publishes. You stay in chat the whole time.</p>
 

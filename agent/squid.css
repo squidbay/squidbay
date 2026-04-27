@@ -1982,6 +1982,7 @@
             border-radius: var(--radius-lg);
             padding: 32px 24px;
             margin-top: 32px;
+            position: relative;
         }
         .sa-pipeline-steps {
             display: flex;
@@ -2385,6 +2386,17 @@
     /* Lock height so the simulator doesn't reflow the page during play */
     min-height: 480px;
     max-height: 480px;
+    overflow-y: auto;
+    /* Hide scrollbar — the demo auto-scrolls to bottom, no user scrolling needed.
+       The grey scrollbar appearing on hover broke the visual polish. */
+    scrollbar-width: none;        /* Firefox */
+    -ms-overflow-style: none;     /* IE/Edge legacy */
+}
+.sa-modes-chat-demo .chat-messages::-webkit-scrollbar {
+    /* Chrome / Safari / Edge */
+    width: 0;
+    height: 0;
+    display: none;
 }
 @media (max-width: 600px) {
     .sa-modes-chat-demo .chat-messages {
@@ -3461,12 +3473,12 @@
     max-width: 880px;
     margin: 0 auto;
     padding: 40px 36px;
-    background: linear-gradient(135deg, rgba(0, 217, 255, 0.06), transparent);
-    border: 1px solid rgba(0, 217, 255, 0.25);
+    background: linear-gradient(135deg, rgba(244, 196, 48, 0.06), transparent);
+    border: 1px solid rgba(244, 196, 48, 0.35);
     border-radius: var(--radius-lg, 12px);
     text-align: center;
     position: relative;
-    overflow: hidden;
+    box-shadow: 0 0 0 1px rgba(244, 196, 48, 0.08), 0 0 40px rgba(244, 196, 48, 0.08);
 }
 .sa-surge::before {
     /* Subtle glow accent at top edge */
@@ -3476,31 +3488,161 @@
     left: 20%;
     right: 20%;
     height: 1px;
-    background: linear-gradient(90deg, transparent, var(--primary, #00D9FF), transparent);
-    opacity: 0.6;
-}
-/* Big decorative lightning bolt at top-left of the card.
-   Sits behind the content as a brand anchor — explains the squid logo. */
-.sa-surge-bolt {
-    position: absolute;
-    top: 18px;
-    left: 24px;
-    font-size: 84px;
-    line-height: 1;
-    font-weight: 900;
-    color: var(--primary, #00D9FF);
-    opacity: 0.92;
-    text-shadow: 0 0 40px rgba(0, 217, 255, 0.5), 0 0 80px rgba(0, 217, 255, 0.25);
-    pointer-events: none;
-    user-select: none;
-    transform: rotate(-8deg);
+    background: linear-gradient(90deg, transparent, var(--yellow, #F4C430), transparent);
+    opacity: 0.7;
     z-index: 1;
 }
+
+/* Animated property for the rotating conic gradient angle.
+   @property is what makes the gradient angle actually animate
+   (CSS variables alone won't transition for gradients). */
+@property --surge-angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+}
+
+/* Electrified border - a bright dot of light traces the perimeter of the card.
+   Cheesy in the best way. The 90% loves this. */
+.sa-surge::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: calc(var(--radius-lg, 12px) + 2px);
+    padding: 2px;
+    background: conic-gradient(
+        from var(--surge-angle),
+        transparent 0deg,
+        transparent 320deg,
+        rgba(244, 196, 48, 0.6) 340deg,
+        #FFEC8B 355deg,
+        rgba(244, 196, 48, 0.6) 370deg,
+        transparent 390deg
+    );
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+    animation: surge-electrify 4s linear infinite;
+    z-index: 0;
+    filter: drop-shadow(0 0 4px rgba(244, 196, 48, 0.7))
+            drop-shadow(0 0 10px rgba(244, 196, 48, 0.4));
+}
+
+@keyframes surge-electrify {
+    to { --surge-angle: 360deg; }
+}
+/* Big decorative SVG lightning bolt at top-left of the card.
+   160px tall, gold glow, sits behind text content. Real SVG — not an emoji —
+   so it renders consistently across all platforms and can be styled.
+   Yellow/gold to match the actual squid logo lightning. */
+.sa-surge-bolt {
+    position: absolute;
+    top: 24px;
+    left: 32px;
+    width: 90px;
+    height: 130px;
+    color: var(--yellow, #F4C430);
+    opacity: 0.95;
+    filter: drop-shadow(0 0 20px rgba(244, 196, 48, 0.6))
+            drop-shadow(0 0 40px rgba(244, 196, 48, 0.35));
+    pointer-events: none;
+    user-select: none;
+    transform: rotate(-6deg);
+    z-index: 2;
+    animation: surge-bolt-pulse 4s ease-in-out infinite;
+}
+
+@keyframes surge-bolt-pulse {
+    0%, 100% {
+        opacity: 0.85;
+        filter: drop-shadow(0 0 20px rgba(244, 196, 48, 0.5))
+                drop-shadow(0 0 40px rgba(244, 196, 48, 0.3));
+    }
+    50% {
+        opacity: 1;
+        filter: drop-shadow(0 0 28px rgba(244, 196, 48, 0.85))
+                drop-shadow(0 0 56px rgba(244, 196, 48, 0.5))
+                drop-shadow(0 0 80px rgba(244, 196, 48, 0.25));
+    }
+}
+
+/* Lightning flash effect - bright sweep cuts across the card periodically.
+   Diagonal gradient strikes from top-left to bottom-right every 7s. */
+.sa-surge-flash {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    border-radius: var(--radius-lg, 12px);
+    z-index: 0;
+}
+.sa-surge-flash::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -100%;
+    width: 60%;
+    height: 200%;
+    background: linear-gradient(
+        105deg,
+        transparent 0%,
+        transparent 35%,
+        rgba(244, 196, 48, 0.0) 40%,
+        rgba(244, 196, 48, 0.22) 48%,
+        rgba(255, 255, 255, 0.4) 50%,
+        rgba(244, 196, 48, 0.22) 52%,
+        rgba(244, 196, 48, 0.0) 60%,
+        transparent 65%,
+        transparent 100%
+    );
+    transform: translateX(0) rotate(-2deg);
+    animation: surge-flash-strike 7s ease-in-out infinite;
+}
+
+@keyframes surge-flash-strike {
+    0%, 75% {
+        transform: translateX(0) rotate(-2deg);
+        opacity: 0;
+    }
+    78% {
+        opacity: 0.9;
+    }
+    82% {
+        opacity: 0.4;
+    }
+    85% {
+        opacity: 0.95;
+    }
+    92% {
+        transform: translateX(420%) rotate(-2deg);
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateX(420%) rotate(-2deg);
+        opacity: 0;
+    }
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .sa-surge-bolt {
+        animation: none;
+    }
+    .sa-surge-flash::before {
+        animation: none;
+        display: none;
+    }
+}
+
 @media (max-width: 720px) {
     .sa-surge-bolt {
-        font-size: 56px;
-        top: 14px;
-        left: 16px;
+        width: 56px;
+        height: 80px;
+        top: 18px;
+        left: 18px;
     }
 }
 .sa-surge-tag {
@@ -3509,12 +3651,15 @@
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 1.5px;
-    color: var(--primary, #00D9FF);
-    background: rgba(0, 217, 255, 0.1);
-    border: 1px solid rgba(0, 217, 255, 0.3);
+    color: var(--yellow, #F4C430);
+    background: rgba(244, 196, 48, 0.1);
+    border: 1px solid rgba(244, 196, 48, 0.4);
     border-radius: 999px;
     padding: 6px 14px;
     margin-bottom: 18px;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 0 12px rgba(244, 196, 48, 0.25);
 }
 .sa-surge-title {
     font-size: 26px;
@@ -3532,6 +3677,8 @@
     color: var(--text-muted, #94A3B8);
     max-width: 720px;
     margin: 0 auto 16px;
+    position: relative;
+    z-index: 2;
 }
 .sa-surge-lead:last-of-type {
     margin-bottom: 28px;
@@ -3545,7 +3692,7 @@
     border-radius: 4px;
 }
 
-/* Module lineup - inline pills showing the 9 specialized modules */
+/* Module lineup - inline pills showing the 11 specialized modules */
 .sa-surge-modules {
     display: flex;
     flex-wrap: wrap;
@@ -3553,6 +3700,8 @@
     justify-content: center;
     margin: 0 auto;
     max-width: 760px;
+    position: relative;
+    z-index: 2;
 }
 .sa-surge-module {
     display: inline-flex;
@@ -3569,12 +3718,12 @@
     transition: all 0.2s;
 }
 .sa-surge-module svg {
-    color: var(--primary, #00D9FF);
+    color: var(--yellow, #F4C430);
     flex-shrink: 0;
 }
 .sa-surge-module:hover {
-    background: rgba(0, 217, 255, 0.08);
-    border-color: rgba(0, 217, 255, 0.25);
+    background: rgba(244, 196, 48, 0.08);
+    border-color: rgba(244, 196, 48, 0.3);
 }
 
 @media (max-width: 720px) {
@@ -3675,4 +3824,38 @@
     }
     .sa-ships-title { font-size: 19px; margin-top: 40px; }
     .sa-ship-card { padding: 16px 18px; }
+}
+
+/* ============================================================
+   PIPELINE WRENCH ANCHOR — workbench tool icon top-left,
+   same DNA as the SURGE lightning bolt (decorative anchor).
+   Cyan to stay within the marketplace section palette.
+   ============================================================ */
+.sa-pipeline-wrench {
+    position: absolute;
+    top: 18px;
+    left: 22px;
+    width: 44px;
+    height: 44px;
+    color: var(--primary, #00D9FF);
+    opacity: 0.55;
+    filter: drop-shadow(0 0 8px rgba(0, 217, 255, 0.4));
+    pointer-events: none;
+    user-select: none;
+    transform: rotate(-12deg);
+    z-index: 1;
+    transition: opacity 0.3s, transform 0.3s;
+}
+.sa-pipeline:hover .sa-pipeline-wrench {
+    opacity: 0.85;
+    transform: rotate(-6deg);
+}
+
+@media (max-width: 720px) {
+    .sa-pipeline-wrench {
+        width: 30px;
+        height: 30px;
+        top: 12px;
+        left: 14px;
+    }
 }
