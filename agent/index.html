@@ -42,15 +42,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-    <!-- Cross-origin pre-warming for shared components served from squidbay.io.
-         Helps mitigate the first-visit race where header/footer/chatbot fetch
-         before they can render in cache-partitioned (incognito) sessions. -->
+    <!-- DNS pre-warming for the shared component server. Preconnect only — NO preload/prefetch.
+         Preload tags caused a navigation bug: when visiting squidbay.io first then clicking
+         to agent.squidbay.io, Chrome's local cache held same-origin entries that got rejected
+         when the preload tried to claim them as cross-origin, leaving "provisional headers"
+         and the misleading "blocked by CORS policy" console error. Removing the preloads
+         eliminates the cache-mode mismatch entirely. The scripts at end of body load fine
+         without them — savings was ~50ms, cost was a broken page. Wrong tradeoff. -->
     <link rel="preconnect" href="https://squidbay.io" crossorigin>
-    <link rel="preload" href="https://squidbay.io/js/components.js" as="script" crossorigin>
-    <link rel="preload" href="https://squidbay.io/js/main.js" as="script" crossorigin>
-    <link rel="prefetch" href="https://squidbay.io/components/nav.html" crossorigin>
-    <link rel="prefetch" href="https://squidbay.io/components/footer.html" crossorigin>
-    <link rel="prefetch" href="https://squidbay.io/components/chatbot.html" crossorigin>
 
     <!-- Styles -->
     <link rel="stylesheet" href="https://squidbay.io/css/styles.css">
@@ -1519,11 +1518,14 @@
     <div id="footer-placeholder"></div>
 
     <!-- Scripts -->
-    <!-- crossorigin attribute matches the <link rel="preload"> tags up top so the browser
-         reuses the preloaded fetch instead of refetching with mismatched credentials mode. -->
-    <script src="https://squidbay.io/js/config.js" crossorigin="anonymous"></script>
-    <script src="https://squidbay.io/js/components.js" crossorigin="anonymous"></script>
-    <script src="https://squidbay.io/js/main.js" crossorigin="anonymous"></script>
+    <!-- No crossorigin attribute: scripts load with Chrome's default credentials mode.
+         Server returns Access-Control-Allow-Origin matching the requesting Origin, so
+         cross-origin requests from agent.squidbay.io work. Same-origin requests from
+         squidbay.io itself also work. No preload tags above so no cache-mode mismatch
+         to worry about. -->
+    <script src="https://squidbay.io/js/config.js"></script>
+    <script src="https://squidbay.io/js/components.js"></script>
+    <script src="https://squidbay.io/js/main.js"></script>
     <script src="squid.js"></script>
 </body>
 </html>
