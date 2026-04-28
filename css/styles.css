@@ -253,6 +253,14 @@ nav .container {
 
 .btn-nav {
     padding: 10px 20px !important;
+    /* Win the specificity battle against .nav-links a (which sets color: var(--text-muted)).
+       Without this override, the nav CTA renders muted grey text on cyan — unreadable.
+       Matches the dark text on cyan used by .btn-primary across the rest of the page. */
+    color: var(--black) !important;
+}
+
+.btn-nav:hover {
+    color: var(--black) !important;
 }
 
 .mobile-menu-btn {
@@ -2023,6 +2031,15 @@ footer .container {
     margin-top: 16px;
     text-align: center;
     justify-content: center;
+}
+
+/* Lock the CTA text color against .mobile-menu-links a override.
+   Without this, the cyan CTA renders white-on-cyan — low contrast, hard to read.
+   Mirrors .btn-nav fix in the desktop nav. */
+.mobile-menu-links .btn-primary,
+.mobile-menu-links .btn-primary:hover {
+    color: var(--black) !important;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%) !important;
 }
 
 .mobile-menu-footer {
