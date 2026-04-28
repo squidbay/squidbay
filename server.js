@@ -51,62 +51,74 @@ app.use(helmet({
     crossOriginResourcePolicy: { policy: "cross-origin" }
 }));
 
-// Static files — serve CSS, JS, images, components with cache headers
-// M-05 FIX: Cache-Control headers for static assets
+// Static files — serve CSS, JS, images, components
+// Shared assets (/js, /css, /components) intentionally get no-store via the
+// CORS middleware below — see comment there for why. Images keep normal caching.
 const staticOptions = {
-    maxAge: '1d',           // 1 day for CSS/JS
     etag: true,
     lastModified: true
 };
 const imageOptions = {
-    maxAge: '7d',           // 1 week for images
+    maxAge: '7d',
     etag: true,
     lastModified: true
 };
 
-// CORS for *.squidbay.io subdomains — allows component fetches from agent.squidbay.io etc.
-// Sends Access-Control-Allow-Origin matching the requesting origin.
+// CORS + cache control for *.squidbay.io shared assets.
 //
-// CRITICAL CACHE BEHAVIOR — three CDN layers to bypass:
+// ROOT CAUSE OF THE INTERMITTENT CORS BUG:
+// ----------------------------------------
+// The bug: visit squidbay.io first, then click footer link to agent.squidbay.io
+// → "blocked by CORS policy" + "Provisional headers are shown" in DevTools.
+// Direct visit to agent.squidbay.io works. Hard refresh fixes it. curl always works.
 //
-//   Browser → Cloudflare (CF) → Fastly (Railway's CDN) → Express
+// What was happening:
+//   1. User visits squidbay.io. Page makes SAME-ORIGIN fetch for /js/components.js.
+//      No Origin header → middleware does NOT add ACAO or Vary: Origin.
+//      Browser caches the response keyed by URL alone (no Vary).
+//   2. User clicks footer → navigates to agent.squidbay.io.
+//   3. Agent page loads <script src="https://squidbay.io/js/components.js">
+//      as a CROSS-ORIGIN request (Origin: https://agent.squidbay.io).
+//   4. Browser checks HTTP cache, finds the entry from step 1, sees no ACAO,
+//      blocks the script. "Provisional headers" because the request was
+//      satisfied entirely from cache — it never hit the network.
 //
-// 1. Cloudflare: handled by Cache-Control: no-store + CDN-Cache-Control: no-store
-// 2. Fastly: handled by Surrogate-Control: no-store (Fastly-specific, RFC 5861-style)
-// 3. Browser: handled by Cache-Control: no-store, must-revalidate
+// Why curl always worked: curl has no cache.
+// Why CDN bypass headers didn't fix it: the cache poisoning was in the user's
+// own browser, not Cloudflare or Fastly.
 //
-// Without the Fastly bypass, this happens:
-//   1. User visits squidbay.io → same-origin request to /js/components.js
-//      (no Origin header) → Fastly caches the response WITHOUT ACAO
-//   2. User clicks footer link to agent.squidbay.io
-//   3. Browser fetches /js/components.js cross-origin (Origin: agent.squidbay.io)
-//   4. Cloudflare bypasses its cache (we set no-store), forwards upstream
-//   5. Fastly returns its CACHED entry (no ACAO header) → CORS block
+// The fix: ALWAYS set Vary: Origin and Cache-Control: no-store on these routes,
+// regardless of whether the current request is cross-origin. That way the
+// browser never reuses a same-origin cached entry for a cross-origin request.
 //
-// Surrogate-Control: no-store tells Fastly explicitly: do not cache, do not serve stale.
-// This is documented at https://docs.fastly.com/en/guides/cache-control-tutorial
+// Tradeoff: parent squidbay.io re-fetches these small JS/CSS files on every
+// page load. They are <15KB each, gzipped, behind Cloudflare. Acceptable.
 const SQUIDBAY_SUBDOMAIN_RE = /^https:\/\/[a-z0-9-]+\.squidbay\.io$/;
 const allowSubdomainCors = (req, res, next) => {
     const origin = req.get('Origin');
+
+    // ALWAYS — even on same-origin requests — to prevent browser cache poisoning.
+    res.set('Vary', 'Origin');
+    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+    res.set('CDN-Cache-Control', 'no-store');             // Cloudflare
+    res.set('Cloudflare-CDN-Cache-Control', 'no-store');  // Cloudflare (alternate)
+    res.set('Surrogate-Control', 'no-store');             // Fastly (Railway's CDN)
+    res.set('Pragma', 'no-cache');                        // Legacy proxies
+
+    // ACAO only on real cross-origin requests from *.squidbay.io subdomains.
     if (origin && SQUIDBAY_SUBDOMAIN_RE.test(origin)) {
         res.set('Access-Control-Allow-Origin', origin);
         res.set('Access-Control-Allow-Methods', 'GET, OPTIONS');
         res.set('Access-Control-Allow-Headers', 'Content-Type');
-        res.set('Vary', 'Origin');
-        // Belt-and-suspenders cache bypass — every CDN layer between user and Express.
-        res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
-        res.set('CDN-Cache-Control', 'no-store');             // Cloudflare
-        res.set('Cloudflare-CDN-Cache-Control', 'no-store');  // Cloudflare (alternate header)
-        res.set('Surrogate-Control', 'no-store');             // Fastly (Railway's CDN)
-        res.set('Pragma', 'no-cache');                        // Legacy proxies
     }
+
     if (req.method === 'OPTIONS') {
         return res.sendStatus(204);
     }
     next();
 };
 
-// Apply CORS to all cross-subdomain asset routes the agent page fetches.
+// Apply to all cross-subdomain asset routes the agent page fetches.
 app.use('/components', allowSubdomainCors);
 app.use('/js', allowSubdomainCors);
 app.use('/css', allowSubdomainCors);
