@@ -414,12 +414,12 @@
 
 .chatbot-send {
     padding: 12px 20px;
-    background: #000000;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
     border: none;
     border-radius: 8px;
     color: var(--black);
     font-size: 0.95rem;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
     transition: all 0.2s ease;
     flex-shrink: 0;
@@ -430,11 +430,12 @@
     justify-content: center;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+    box-shadow: 0 2px 12px var(--primary-glow);
 }
 
-.chatbot-send:hover { transform: translateY(-2px); box-shadow: 0 4px 15px var(--primary-glow); }
+.chatbot-send:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 217, 255, 0.35); }
 .chatbot-send:active { transform: scale(0.95); }
-.chatbot-send:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.chatbot-send:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
 
 /* ===================================
    MOBILE PORTRAIT — FIXED: button bottom-right
