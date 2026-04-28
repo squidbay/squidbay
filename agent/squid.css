@@ -1962,16 +1962,53 @@
             .sa-scale-steps {
                 flex-direction: column;
                 align-items: stretch;
-                gap: 4px;
+                gap: 0;
+                padding: 4px 0;
             }
             .sa-scale-arrow {
                 transform: rotate(90deg);
                 text-align: center;
-                opacity: 0.3;
+                opacity: 0.35;
+                font-size: 12px;
+                padding: 2px 0;
+                line-height: 1;
             }
             .sa-scale-step {
                 justify-content: flex-start;
-                padding: 4px 8px;
+                padding: 8px 12px;
+                gap: 14px;
+                background: rgba(255, 255, 255, 0.02);
+                border-radius: 8px;
+                border: 1px solid rgba(255, 255, 255, 0.04);
+            }
+            .sa-scale-num {
+                width: 24px;
+                height: 24px;
+                font-size: 11px;
+            }
+            .sa-scale-text {
+                flex-direction: row;
+                align-items: baseline;
+                gap: 10px;
+                flex: 1;
+            }
+            .sa-scale-price {
+                font-size: 14px;
+                min-width: 56px;
+                /* Right-align prices so $5 / $20 / $2K / Custom line up cleanly */
+                text-align: left;
+            }
+            .sa-scale-name {
+                font-size: 13px;
+                opacity: 0.9;
+            }
+            .sa-scale-module {
+                padding: 20px 16px;
+            }
+            .sa-scale-module-foot {
+                font-size: 11px;
+                margin-top: 12px;
+                text-align: center;
             }
         }
 
@@ -3639,10 +3676,31 @@
 
 @media (max-width: 720px) {
     .sa-surge-bolt {
-        width: 56px;
-        height: 80px;
+        width: 42px;
+        height: 60px;
+        top: 14px;
+        left: 14px;
+    }
+}
+
+/* Phone-specific: bolt is decorative anchor at top-left.
+   Title and pill need clear vertical breathing room below the bolt's height
+   so they don't overlap. Card padding gives the bolt its zone, content sits below. */
+@media (max-width: 480px) {
+    .sa-surge {
+        padding: 84px 20px 32px;
+    }
+    .sa-surge-bolt {
+        width: 38px;
+        height: 54px;
         top: 18px;
         left: 18px;
+    }
+    .sa-surge-title {
+        font-size: 22px;
+    }
+    .sa-surge-tag {
+        margin-bottom: 14px;
     }
 }
 .sa-surge-tag {
@@ -3737,7 +3795,8 @@
 
 @media (max-width: 720px) {
     .sa-surge {
-        padding: 28px 20px;
+        /* Top padding clears the bolt zone so title sits below it, not behind it */
+        padding: 80px 20px 28px;
     }
     .sa-surge-title {
         font-size: 24px;
