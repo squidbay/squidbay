@@ -3927,3 +3927,32 @@
         left: 14px;
     }
 }
+
+/* ============================================================
+   HERO CONVICTION TAGLINE
+   Sits inside the hero as the final beat after cost pillars.
+   Smaller and tighter than the old standalone .sa-vision-conviction
+   so it reads as a closing tagline, not a section unto itself.
+   ============================================================ */
+.sa-hero-conviction {
+    max-width: 720px;
+    margin: 32px auto 0;
+    text-align: center;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--text-muted, #94A3B8);
+    font-style: italic;
+    letter-spacing: 0.01em;
+}
+.sa-hero-conviction-emphasis {
+    color: var(--primary, #00D9FF);
+    font-style: normal;
+    font-weight: 600;
+}
+@media (max-width: 720px) {
+    .sa-hero-conviction {
+        font-size: 13px;
+        margin: 24px auto 0;
+        padding: 0 8px;
+    }
+}

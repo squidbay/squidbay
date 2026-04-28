@@ -48,7 +48,7 @@
     <link rel="preconnect" href="https://squidbay.io" crossorigin>
     <link rel="preload" href="https://squidbay.io/js/components.js" as="script" crossorigin>
     <link rel="preload" href="https://squidbay.io/js/main.js" as="script" crossorigin>
-    <link rel="prefetch" href="https://squidbay.io/components/header.html" crossorigin>
+    <link rel="prefetch" href="https://squidbay.io/components/nav.html" crossorigin>
     <link rel="prefetch" href="https://squidbay.io/components/footer.html" crossorigin>
     <link rel="prefetch" href="https://squidbay.io/components/chatbot.html" crossorigin>
 
@@ -109,14 +109,13 @@
                     <span class="sa-stat-detail">Twilio, X API, Google storage, skill credits</span>
                 </span>
             </div>
-        </div>
-    </section>
 
-    <!-- ==================== CONVICTION LINE ==================== -->
-    <section class="sa-vision">
-        <div class="container">
-            <p class="sa-vision-conviction">Your data. Your memory. Your identity. Your agent. It all belongs to you. Permanently. Architecturally. Irrevocably.</p>
-            <p class="sa-vision-attribution">— SquidBay</p>
+            <!-- Conviction tagline - sits inside the hero as the final beat before next section.
+                 Used to be its own section but stood alone with too much empty space. Lives here
+                 now as the philosophical closer to "$10/mo gets you all this." -->
+            <p class="sa-hero-conviction">
+                Your data. Your memory. Your identity. Your agent. It all belongs to you. <span class="sa-hero-conviction-emphasis">Permanently. Architecturally. Irrevocably.</span>
+            </p>
         </div>
     </section>
 
@@ -1520,9 +1519,11 @@
     <div id="footer-placeholder"></div>
 
     <!-- Scripts -->
-    <script src="https://squidbay.io/js/config.js"></script>
-    <script src="https://squidbay.io/js/components.js"></script>
-    <script src="https://squidbay.io/js/main.js"></script>
+    <!-- crossorigin attribute matches the <link rel="preload"> tags up top so the browser
+         reuses the preloaded fetch instead of refetching with mismatched credentials mode. -->
+    <script src="https://squidbay.io/js/config.js" crossorigin="anonymous"></script>
+    <script src="https://squidbay.io/js/components.js" crossorigin="anonymous"></script>
+    <script src="https://squidbay.io/js/main.js" crossorigin="anonymous"></script>
     <script src="squid.js"></script>
 </body>
 </html>
