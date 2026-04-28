@@ -65,9 +65,22 @@ const imageOptions = {
 };
 
 // CORS for *.squidbay.io subdomains — allows component fetches from agent.squidbay.io etc.
-// Sends Access-Control-Allow-Origin matching the requesting origin, plus Vary: Origin
-// so Cloudflare caches a separate entry per origin (prevents the "missing CORS header on
-// first cold load, fixed by hard refresh" race condition).
+// Sends Access-Control-Allow-Origin matching the requesting origin.
+//
+// CRITICAL CACHE BEHAVIOR:
+// We force Cache-Control: no-store on cross-origin responses to prevent Cloudflare from
+// caching ANY response on these routes. This is the only fully reliable fix for the bug
+// where:
+//   1. User visits squidbay.io (same-origin fetch caches /js/components.js at the edge)
+//   2. User clicks footer link → lands on agent.squidbay.io
+//   3. Browser fetches /js/components.js cross-origin
+//   4. Cloudflare serves the cached entry → wrong/missing ACAO → CORS block
+//
+// Vary: Origin alone does NOT solve this on Cloudflare Free/Pro plans — Cloudflare only
+// reliably honors Vary: Accept-Encoding. Forcing no-store on these specific routes means
+// every request hits Railway directly and gets fresh headers matching the actual origin.
+//
+// Tradeoff: ~50ms latency vs CDN cache hit. For 6 small files, irrelevant. Reliability wins.
 const SQUIDBAY_SUBDOMAIN_RE = /^https:\/\/[a-z0-9-]+\.squidbay\.io$/;
 const allowSubdomainCors = (req, res, next) => {
     const origin = req.get('Origin');
@@ -76,6 +89,12 @@ const allowSubdomainCors = (req, res, next) => {
         res.set('Access-Control-Allow-Methods', 'GET, OPTIONS');
         res.set('Access-Control-Allow-Headers', 'Content-Type');
         res.set('Vary', 'Origin');
+        // Force fresh fetch on every cross-origin request — bypass Cloudflare cache entirely.
+        // Without this, a same-origin fetch from squidbay.io poisons the edge cache and
+        // breaks subsequent cross-origin fetches from agent.squidbay.io.
+        res.set('Cache-Control', 'no-store, must-revalidate');
+        res.set('CDN-Cache-Control', 'no-store');
+        res.set('Cloudflare-CDN-Cache-Control', 'no-store');
     }
     if (req.method === 'OPTIONS') {
         return res.sendStatus(204);
