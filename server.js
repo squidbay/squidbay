@@ -67,20 +67,24 @@ const imageOptions = {
 // CORS for *.squidbay.io subdomains — allows component fetches from agent.squidbay.io etc.
 // Sends Access-Control-Allow-Origin matching the requesting origin.
 //
-// CRITICAL CACHE BEHAVIOR:
-// We force Cache-Control: no-store on cross-origin responses to prevent Cloudflare from
-// caching ANY response on these routes. This is the only fully reliable fix for the bug
-// where:
-//   1. User visits squidbay.io (same-origin fetch caches /js/components.js at the edge)
-//   2. User clicks footer link → lands on agent.squidbay.io
-//   3. Browser fetches /js/components.js cross-origin
-//   4. Cloudflare serves the cached entry → wrong/missing ACAO → CORS block
+// CRITICAL CACHE BEHAVIOR — three CDN layers to bypass:
 //
-// Vary: Origin alone does NOT solve this on Cloudflare Free/Pro plans — Cloudflare only
-// reliably honors Vary: Accept-Encoding. Forcing no-store on these specific routes means
-// every request hits Railway directly and gets fresh headers matching the actual origin.
+//   Browser → Cloudflare (CF) → Fastly (Railway's CDN) → Express
 //
-// Tradeoff: ~50ms latency vs CDN cache hit. For 6 small files, irrelevant. Reliability wins.
+// 1. Cloudflare: handled by Cache-Control: no-store + CDN-Cache-Control: no-store
+// 2. Fastly: handled by Surrogate-Control: no-store (Fastly-specific, RFC 5861-style)
+// 3. Browser: handled by Cache-Control: no-store, must-revalidate
+//
+// Without the Fastly bypass, this happens:
+//   1. User visits squidbay.io → same-origin request to /js/components.js
+//      (no Origin header) → Fastly caches the response WITHOUT ACAO
+//   2. User clicks footer link to agent.squidbay.io
+//   3. Browser fetches /js/components.js cross-origin (Origin: agent.squidbay.io)
+//   4. Cloudflare bypasses its cache (we set no-store), forwards upstream
+//   5. Fastly returns its CACHED entry (no ACAO header) → CORS block
+//
+// Surrogate-Control: no-store tells Fastly explicitly: do not cache, do not serve stale.
+// This is documented at https://docs.fastly.com/en/guides/cache-control-tutorial
 const SQUIDBAY_SUBDOMAIN_RE = /^https:\/\/[a-z0-9-]+\.squidbay\.io$/;
 const allowSubdomainCors = (req, res, next) => {
     const origin = req.get('Origin');
@@ -89,12 +93,12 @@ const allowSubdomainCors = (req, res, next) => {
         res.set('Access-Control-Allow-Methods', 'GET, OPTIONS');
         res.set('Access-Control-Allow-Headers', 'Content-Type');
         res.set('Vary', 'Origin');
-        // Force fresh fetch on every cross-origin request — bypass Cloudflare cache entirely.
-        // Without this, a same-origin fetch from squidbay.io poisons the edge cache and
-        // breaks subsequent cross-origin fetches from agent.squidbay.io.
-        res.set('Cache-Control', 'no-store, must-revalidate');
-        res.set('CDN-Cache-Control', 'no-store');
-        res.set('Cloudflare-CDN-Cache-Control', 'no-store');
+        // Belt-and-suspenders cache bypass — every CDN layer between user and Express.
+        res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+        res.set('CDN-Cache-Control', 'no-store');             // Cloudflare
+        res.set('Cloudflare-CDN-Cache-Control', 'no-store');  // Cloudflare (alternate header)
+        res.set('Surrogate-Control', 'no-store');             // Fastly (Railway's CDN)
+        res.set('Pragma', 'no-cache');                        // Legacy proxies
     }
     if (req.method === 'OPTIONS') {
         return res.sendStatus(204);
