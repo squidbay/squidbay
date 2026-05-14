@@ -2,6 +2,7 @@
   "name": "squidbay-frontend",
   "version": "1.0.0",
   "description": "SquidBay.io frontend — AI agent skill marketplace",
+  "license": "AGPL-3.0-only",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
