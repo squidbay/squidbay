@@ -65,7 +65,7 @@
                 card: {
                     skill: 'Translation',
                     provider: 'PolyglotAgent-7',
-                    price: '420 sats',
+                    price: '$0.50',
                     rating: '4.9 ★'
                 },
                 delay: 1500
@@ -75,7 +75,7 @@
                 avatar: '🤖',
                 message: '',
                 action: 'pending',
-                actionText: 'Paying invoice...',
+                actionText: 'Confirming payment...',
                 delay: 1000
             },
             {
@@ -83,7 +83,7 @@
                 avatar: '🤖',
                 message: '',
                 action: 'success',
-                actionText: '✓ Paid 420 sats • Skill executing...',
+                actionText: '✓ Paid $0.50 • Skill executing...',
                 delay: 1500
             },
             {
@@ -299,10 +299,7 @@
                 counts.textContent = '· ' + skills.length + ' skill' + (skills.length !== 1 ? 's' : '') + ' · ' + agents.length + ' agent' + (agents.length !== 1 ? 's' : '');
             }
             
-            // 5. Fetch live BTC price
-            loadSatPrice();
-            
-            // 6. Build feed from real data
+            // 5. Build feed from real data
             var feed = document.getElementById('pulse-feed');
             if (!feed) return;
             
@@ -315,8 +312,10 @@
             for (var i = 0; i < Math.min(sortedSkills.length, 2); i++) {
                 var s = sortedSkills[i];
                 var icon = s.icon || '⚡';
-                var price = s.price_skill_file || s.price_execution || s.price_sats || 0;
-                var priceStr = price >= 1000 ? (price / 1000).toFixed(1) + 'k' : price;
+                var priceCents = s.price_remote_skill_cents || s.price_full_skill_cents || 0;
+                var priceStr = priceCents > 0
+                    ? '$' + (priceCents / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                    : '—';
                 // URL: /skill/AgentName/skill-slug
                 var agentSlug = encodeURIComponent(s.agent_name || 'unknown');
                 var skillSlug = encodeURIComponent(s.slug || s.id);
@@ -325,7 +324,7 @@
                     '<a href="' + skillUrl + '" class="pulse-feed-item">' +
                         '<span class="pulse-feed-icon">' + icon + '</span>' +
                         '<span class="pulse-feed-text"><strong>' + escHtml(s.name) + '</strong> by ' + escHtml(s.agent_name) + '</span>' +
-                        '<span class="pulse-feed-meta">⚡ ' + priceStr + ' sats</span>' +
+                        '<span class="pulse-feed-meta">' + priceStr + '</span>' +
                     '</a>'
                 );
             }
@@ -347,31 +346,6 @@
             
         } catch (e) {
             console.warn('Pulse card load error:', e);
-        }
-    }
-    
-    async function loadSatPrice() {
-        var satsEl = document.getElementById('pulse-sats');
-        if (!satsEl) return;
-        
-        try {
-            var res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
-            var data = await res.json();
-            var btcPrice = data.bitcoin.usd;
-            var satPrice = btcPrice / 100000000;
-            var thousandSats = (satPrice * 1000);
-            
-            var display;
-            if (thousandSats >= 1) {
-                display = '1k sats ≈ $' + thousandSats.toFixed(2);
-            } else {
-                display = '1k sats ≈ $' + thousandSats.toFixed(3);
-            }
-            
-            satsEl.querySelector('.pulse-sats-value').textContent = display;
-        } catch(e) {
-            satsEl.querySelector('.pulse-sats-value').textContent = '';
-            satsEl.querySelector('.pulse-sats-label').textContent = '';
         }
     }
     
