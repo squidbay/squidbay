@@ -262,8 +262,8 @@ function renderSkillCard(skill) {
     const totalJobs = (skill.success_count || 0);
     const successRate = totalJobs > 0 ? (skill.success_rate || 0) : null;
     const tiers = skill.available_tiers || [];
-    const hasExec = tiers.includes('execution');
-    const hasPkg = tiers.includes('full_package');
+    const hasExec = tiers.includes('remote_skill');
+    const hasPkg = tiers.includes('full_skill');
     const lowestPrice = getLowestPrice(skill);
     const link = skillVanityUrl(skill) + '?from=agent';
     
@@ -272,10 +272,10 @@ function renderSkillCard(skill) {
     const statusClass = isOnline ? 'online' : 'offline';
     const statusText = isOnline ? 'Online' : 'Offline';
     
-    // Two tiers only: Full Skill + Remote Execution
+    // Two tiers: Full Skill + Remote Skill
     let tierButtons = '<div class="tier-buttons">';
-    if (hasPkg) tierButtons += `<a href="${link}" class="tier-btn-mini tier-pkg" title="${(skill.price_full_package || 0).toLocaleString()} sats"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline></svg> Full Skill</a>`;
-    if (hasExec) tierButtons += `<a href="${link}" class="tier-btn-mini tier-exec" title="${(skill.price_execution || 0).toLocaleString()} sats"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> Remote Execution</a>`;
+    if (hasPkg) tierButtons += `<a href="${link}" class="tier-btn-mini tier-pkg" title="${formatUsd(skill.price_full_skill_cents)}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline></svg> Full Skill</a>`;
+    if (hasExec) tierButtons += `<a href="${link}" class="tier-btn-mini tier-exec" title="${formatUsd(skill.price_remote_skill_cents)}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> Remote Skill</a>`;
     tierButtons += '</div>';
     
     return `
@@ -292,7 +292,7 @@ function renderSkillCard(skill) {
             <p class="skill-description">${esc(skill.description || '')}</p>
             ${tierButtons}
             <div class="skill-summary-stats">
-                <div class="summary-stat"><span class="summary-label">From</span><span class="summary-value price">${lowestPrice.toLocaleString()} sats</span></div>
+                <div class="summary-stat"><span class="summary-label">From</span><span class="summary-value price">${formatUsd(lowestPrice)}</span></div>
                 <div class="summary-stat"><span class="summary-label">Jobs</span><span class="summary-value">${totalJobs}</span></div>
                 <div class="summary-stat"><span class="summary-label">Success</span><span class="summary-value success">${successRate !== null ? successRate + '%' : '—'}</span></div>
             </div>
@@ -367,8 +367,23 @@ function renderAgentReviewCard(review, agent) {
 }
 
 function getLowestPrice(skill) {
-    const prices = [skill.price_execution, skill.price_full_package].filter(p => p && p > 0);
-    return prices.length > 0 ? Math.min(...prices) : (skill.price_sats || 0);
+    const prices = [skill.price_remote_skill_cents, skill.price_full_skill_cents].filter(p => p && p > 0);
+    return prices.length > 0 ? Math.min(...prices) : 0;
+}
+
+/**
+ * Format USD cents as a human-readable price string.
+ * Examples: 250 → "$2.50", 10000 → "$100.00"
+ */
+function formatUsd(cents) {
+    if (cents === null || cents === undefined) return '—';
+    const dollars = Number(cents) / 100;
+    return dollars.toLocaleString('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
 }
 
 function formatDate(dateStr) {

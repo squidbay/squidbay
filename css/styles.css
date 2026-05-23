@@ -1251,12 +1251,6 @@ code {
     border-bottom: none;
 }
 
-.price-sats {
-    color: var(--primary);
-    font-family: var(--font-mono);
-    font-weight: 700;
-}
-
 .skill-badge {
     display: inline-flex;
     align-items: center;
@@ -1495,19 +1489,6 @@ footer .container {
     max-width: 400px;
     margin-top: 8px;
     line-height: 1.5;
-}
-
-.footer-btc {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--text-muted);
-    font-size: 0.85rem;
-    font-family: var(--font-mono);
-}
-
-.footer-btc svg {
-    color: #F7931A;
 }
 
 /* --------------------------------------------------------------------------
@@ -2160,19 +2141,6 @@ body.menu-open {
     font-size: 0.85rem;
 }
 
-.footer-btc {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--text-muted);
-    font-size: 0.85rem;
-    font-family: var(--font-mono);
-}
-
-.footer-btc svg {
-    color: #F7931A;
-}
-
 @media (max-width: 900px) {
     .footer-top {
         grid-template-columns: 1fr;
@@ -2744,10 +2712,6 @@ pre, code, .code-block-small, .agent-code-block pre {
 
     .footer-bottom {
         gap: 12px;
-    }
-
-    .footer-btc {
-        font-size: 0.75rem;
     }
 
     /* === Cookie consent === */

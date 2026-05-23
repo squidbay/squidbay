@@ -1,8 +1,8 @@
 /**
  * SquidBay Marketplace - JavaScript
  * Connected to Railway Backend API
- * With Tiered Pricing Support + Vanity URLs
- * TWO TIERS ONLY: Full Skill + Remote Execution (Skill File tier KILLED)
+ * Tiered Pricing Support + Vanity URLs
+ * Two tiers: Full Skill + Remote Skill. USD cents pricing.
  * ================================
  */
 
@@ -15,6 +15,21 @@
     
     // F-01: Use centralized config
     const API_BASE = (window.SQUIDBAY_CONFIG && window.SQUIDBAY_CONFIG.API_BASE) || 'https://api.squidbay.io';
+
+    /**
+     * Format USD cents as a human-readable price string.
+     * Examples: 250 → "$2.50", 10000 → "$100.00", 1 → "$0.01"
+     */
+    function formatUsd(cents) {
+        if (cents === null || cents === undefined) return '—';
+        const dollars = Number(cents) / 100;
+        return dollars.toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+    }
     
     // Category icons mapping — dynamic, grows with marketplace
     const categoryIcons = {
@@ -189,20 +204,20 @@
     
     function getLowestPrice(skill) {
         const prices = [
-            skill.price_execution,
-            skill.price_full_package
+            skill.price_remote_skill_cents,
+            skill.price_full_skill_cents
         ].filter(p => p && p > 0);
-        return prices.length > 0 ? Math.min(...prices) : (skill.price_sats || 0);
+        return prices.length > 0 ? Math.min(...prices) : 0;
     }
     
     function getTierBadges(skill) {
         let badges = '';
         const tiers = skill.available_tiers || [];
         
-        if (tiers.includes('execution') || (!tiers.length && skill.price_execution > 0)) {
-            badges += '<span class="tier-badge-mini tier-badge-exec" title="Remote Execution"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></span>';
+        if (tiers.includes('remote_skill') || (!tiers.length && skill.price_remote_skill_cents > 0)) {
+            badges += '<span class="tier-badge-mini tier-badge-exec" title="Remote Skill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></span>';
         }
-        if (tiers.includes('full_package') || (!tiers.length && skill.price_full_package)) {
+        if (tiers.includes('full_skill') || (!tiers.length && skill.price_full_skill_cents)) {
             badges += '<span class="tier-badge-mini tier-badge-pkg" title="Full Skill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline></svg></span>';
         }
         
@@ -211,8 +226,8 @@
     
     function getTransferLabel(skill) {
         const tiers = skill.available_tiers || [];
-        const hasExec = tiers.includes('execution');
-        const hasPkg = tiers.includes('full_package');
+        const hasExec = tiers.includes('remote_skill');
+        const hasPkg = tiers.includes('full_skill');
         
         if (hasPkg && hasExec) {
             return '<span class="transfer-label transfer-label-all">All Options</span>';
@@ -298,8 +313,8 @@
         
         // TWO TIERS ONLY: Full Skill (full_package) + Remote Execution (execution)
         const tiers = skill.available_tiers || [];
-        const hasExec = tiers.includes('execution');
-        const hasPkg = tiers.includes('full_package');
+        const hasExec = tiers.includes('remote_skill');
+        const hasPkg = tiers.includes('full_skill');
         const lowestPrice = getLowestPrice(skill);
         
         // Vanity URLs for skill page
@@ -308,10 +323,10 @@
         // Build tier buttons — two tiers only
         let tierButtons = '<div class="tier-buttons">';
         if (hasPkg) {
-            tierButtons += `<a href="${skillTierUrl(skill, 'full_package')}" class="tier-btn tier-pkg" title="${skill.price_full_package.toLocaleString()} sats"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline></svg> Full Skill</a>`;
+            tierButtons += `<a href="${skillTierUrl(skill, 'full_skill')}" class="tier-btn tier-pkg" title="${formatUsd(skill.price_full_skill_cents)}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline></svg> Full Skill</a>`;
         }
         if (hasExec) {
-            tierButtons += `<a href="${skillTierUrl(skill, 'execution')}" class="tier-btn tier-exec" title="${(skill.price_execution || 0).toLocaleString()} sats"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> Remote Execution</a>`;
+            tierButtons += `<a href="${skillTierUrl(skill, 'remote_skill')}" class="tier-btn tier-exec" title="${formatUsd(skill.price_remote_skill_cents)}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> Remote Skill</a>`;
         }
         tierButtons += '</div>';
         
@@ -360,7 +375,7 @@
                 <div class="skill-stats">
                     <div class="stat-item">
                         <span class="stat-label">From</span>
-                        <span class="stat-value price">${lowestPrice.toLocaleString()} sats</span>
+                        <span class="stat-value price">${formatUsd(lowestPrice)}</span>
                     </div>
                     <div class="stat-item">
                         <span class="stat-label">Jobs</span>
@@ -449,7 +464,7 @@
         let totalSuccessfulJobs = 0;
         
         skills.forEach(function(skill) {
-            const agentKey = skill.agent_name || skill.lightning_address || skill.id.substring(0, 6);
+            const agentKey = skill.agent_name || skill.id.substring(0, 6);
             uniqueAgents.add(agentKey);
             
             if (skill.agent_online === true) {

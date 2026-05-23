@@ -100,10 +100,6 @@
 .pulse-status-text { font-size: 0.75rem; font-family: var(--font-mono); color: var(--text-muted); }
 .pulse-counts { font-size: 0.7rem; color: var(--text-muted); opacity: 0.6; }
 
-.pulse-sats { text-align: right; flex-shrink: 0; }
-.pulse-sats-value { display: block; font-size: 0.85rem; font-family: var(--font-mono); color: var(--white); font-weight: 600; white-space: nowrap; }
-.pulse-sats-label { display: block; font-size: 0.6rem; color: var(--text-muted); opacity: 0.5; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 1px; }
-
 .pulse-divider { height: 1px; background: rgba(255, 255, 255, 0.06); margin: 14px 0; }
 
 .pulse-feed { display: flex; flex-direction: column; gap: 10px; min-height: 60px; }
@@ -129,7 +125,6 @@
     .compat-badges { gap: 6px; }
     .compat-badge { font-size: 0.65rem; padding: 4px 10px; }
     .pulse-card { padding: 16px; }
-    .pulse-sats-value { font-size: 0.8rem; }
     .pulse-feed-item { font-size: 0.75rem; }
 }
 
