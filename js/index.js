@@ -35,89 +35,105 @@
     
     function initChatDemo() {
         const chatMessages = document.getElementById('chatMessages');
-        const replayBtn = document.getElementById('replayDemo');
         
         if (!chatMessages) return;
         
-        // Chat conversation script — full-skill purchase, set price, token-locked install (audit Q2)
+        // Chat conversation script — Customer Review Responder, user-driven voice (audit Issue 11)
+        // Each entry can include `step` (1-4) which highlights the matching explainer card on the right.
         const conversation = [
             {
                 type: 'user',
                 avatar: '👤',
-                message: 'Find me a skill to translate my client\'s German emails.',
-                delay: 500
+                message: 'Hey, can you help me respond to a new Yelp review?',
+                step: 1,
+                delay: 600
             },
             {
                 type: 'agent',
-                avatar: '🤖',
-                message: 'Searching the marketplace...',
+                avatar: '🦑',
+                message: 'Sure. Let me check the marketplace.',
+                step: 2,
                 delay: 1200
             },
             {
                 type: 'system',
                 message: '🔍 Searching SquidBay marketplace...',
+                step: 2,
                 delay: 800
             },
             {
                 type: 'agent',
-                avatar: '🤖',
-                message: 'Top match — owning is cheaper than renting for ongoing email work:',
+                avatar: '🦑',
+                message: 'Found 3 candidates. Top match — 4.9 stars, 137 verified buyers:',
                 card: {
-                    skill: 'EU Business German Translator',
-                    provider: 'PolyglotAgent-7',
-                    price: '$5',
+                    skill: 'Customer Review Responder',
+                    provider: 'ReviewBot-7',
+                    price: '$9.99',
                     rating: '4.9 ★'
                 },
-                delay: 1500
+                step: 2,
+                delay: 1600
+            },
+            {
+                type: 'agent',
+                avatar: '🦑',
+                message: '$9.99 to own (token-locked, install on me), or $3.99 per job as a Remote Skill. Owning breaks even at 3 reviews. Want me to buy it?',
+                step: 2,
+                delay: 1400
             },
             {
                 type: 'user',
                 avatar: '👤',
                 message: 'Buy it.',
+                step: 3,
                 delay: 800
             },
             {
                 type: 'agent',
-                avatar: '🤖',
+                avatar: '🦑',
                 message: '',
                 action: 'pending',
                 actionText: 'Stripe Connect — confirming payment...',
+                step: 3,
                 delay: 1200
             },
             {
                 type: 'agent',
-                avatar: '🤖',
+                avatar: '🦑',
                 message: '',
                 action: 'success',
-                actionText: '✓ Paid $5 · Skill installed · token-locked to your agent',
+                actionText: '✓ Paid $9.99 · 90% to seller · token-locked to your agent',
+                step: 4,
                 delay: 1500
             },
             {
                 type: 'agent',
-                avatar: '🤖',
-                message: 'Done. I own the skill now and can translate your client\'s German emails directly. Want me to try one?',
+                avatar: '🦑',
+                message: 'Done. Skill installed and verified. Ready to draft a reply when you paste the review.',
+                step: 4,
                 delay: 1200
-            },
-            {
-                type: 'user',
-                avatar: '👤',
-                message: 'Yes — translate "Vielen Dank für Ihre Geduld" please.',
-                delay: 1000
-            },
-            {
-                type: 'agent',
-                avatar: '🤖',
-                message: 'Here you go:',
-                result: {
-                    label: 'English',
-                    value: 'Thank you very much for your patience.'
-                },
-                delay: 1000
             }
         ];
         
         let currentIndex = 0;
         let isPlaying = false;
+        
+        function highlightStep(stepNum) {
+            if (!stepNum) return;
+            const steps = document.querySelectorAll('.chat-demo-step');
+            steps.forEach(function(el) {
+                if (parseInt(el.dataset.step, 10) === stepNum) {
+                    el.classList.add('is-active');
+                } else {
+                    el.classList.remove('is-active');
+                }
+            });
+        }
+        
+        function clearStepHighlights() {
+            const steps = document.querySelectorAll('.chat-demo-step');
+            steps.forEach(function(el) { el.classList.remove('is-active'); });
+        }
         
         function createMessage(item) {
             const msgDiv = document.createElement('div');
@@ -202,11 +218,19 @@
         function playNext() {
             if (currentIndex >= conversation.length) {
                 isPlaying = false;
-                if (replayBtn) replayBtn.disabled = false;
+                // Loop: pause 5s, then restart the demo (audit Task 9 — continuous loop, no replay button)
+                setTimeout(function() {
+                    currentIndex = 0;
+                    chatMessages.innerHTML = '';
+                    clearStepHighlights();
+                    isPlaying = true;
+                    setTimeout(playNext, 500);
+                }, 5000);
                 return;
             }
             
             const item = conversation[currentIndex];
+            highlightStep(item.step);
             
             // Show typing for agent messages
             if (item.type === 'agent' && currentIndex > 0) {
@@ -234,7 +258,7 @@
             isPlaying = true;
             currentIndex = 0;
             chatMessages.innerHTML = '';
-            if (replayBtn) replayBtn.disabled = true;
+            clearStepHighlights();
             
             setTimeout(playNext, 500);
         }
@@ -250,11 +274,6 @@
         }, { threshold: 0.3 });
         
         observer.observe(chatMessages);
-        
-        // Replay button
-        if (replayBtn) {
-            replayBtn.addEventListener('click', startDemo);
-        }
     }
 
     // --------------------------------------------------------------------------
