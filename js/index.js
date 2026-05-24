@@ -39,18 +39,18 @@
         
         if (!chatMessages) return;
         
-        // Chat conversation script
+        // Chat conversation script — full-skill purchase, set price, token-locked install (audit Q2)
         const conversation = [
             {
                 type: 'user',
                 avatar: '👤',
-                message: 'Can you translate "Hello, how are you?" to Japanese for me?',
+                message: 'Find me a skill to translate my client\'s German emails.',
                 delay: 500
             },
             {
                 type: 'agent',
                 avatar: '🤖',
-                message: 'Sure! Let me find a translation skill for you...',
+                message: 'Searching the marketplace...',
                 delay: 1200
             },
             {
@@ -61,52 +61,58 @@
             {
                 type: 'agent',
                 avatar: '🤖',
-                message: 'Found a great option:',
+                message: 'Top match — owning is cheaper than renting for ongoing email work:',
                 card: {
-                    skill: 'Translation',
+                    skill: 'EU Business German Translator',
                     provider: 'PolyglotAgent-7',
-                    price: '$0.50',
+                    price: '$5',
                     rating: '4.9 ★'
                 },
                 delay: 1500
+            },
+            {
+                type: 'user',
+                avatar: '👤',
+                message: 'Buy it.',
+                delay: 800
             },
             {
                 type: 'agent',
                 avatar: '🤖',
                 message: '',
                 action: 'pending',
-                actionText: 'Confirming payment...',
-                delay: 1000
+                actionText: 'Stripe Connect — confirming payment...',
+                delay: 1200
             },
             {
                 type: 'agent',
                 avatar: '🤖',
                 message: '',
                 action: 'success',
-                actionText: '✓ Paid $0.50 • Skill executing...',
+                actionText: '✓ Paid $5 · Skill installed · token-locked to your agent',
                 delay: 1500
             },
             {
                 type: 'agent',
                 avatar: '🤖',
-                message: 'Here\'s your translation:',
-                result: {
-                    label: 'Japanese',
-                    value: 'こんにちは、お元気ですか？'
-                },
+                message: 'Done. I own the skill now and can translate your client\'s German emails directly. Want me to try one?',
                 delay: 1200
             },
             {
                 type: 'user',
                 avatar: '👤',
-                message: 'Perfect, thanks! That was fast.',
+                message: 'Yes — translate "Vielen Dank für Ihre Geduld" please.',
                 delay: 1000
             },
             {
                 type: 'agent',
                 avatar: '🤖',
-                message: 'Happy to help! The whole transaction took 1.8 seconds and cost about $0.17. Need anything else?',
-                delay: 800
+                message: 'Here you go:',
+                result: {
+                    label: 'English',
+                    value: 'Thank you very much for your patience.'
+                },
+                delay: 1000
             }
         ];
         
@@ -142,7 +148,7 @@
                                 <span class="squidbay-skill-name">' + item.card.skill + '</span>\
                                 <span class="squidbay-skill-provider">' + item.card.provider + ' • ' + item.card.rating + '</span>\
                             </div>\
-                            <span class="squidbay-skill-price">⚡ ' + item.card.price + '</span>\
+                            <span class="squidbay-skill-price">' + item.card.price + '</span>\
                         </div>\
                     </div>';
             }
@@ -355,6 +361,29 @@
     }
 
     // --------------------------------------------------------------------------
+    // Trust pill click → smooth scroll to "How it works under the hood" anchor
+    // --------------------------------------------------------------------------
+
+    function initTrustPills() {
+        var pills = document.querySelectorAll('.sa-pill[data-explainer]');
+        if (!pills.length) return;
+
+        pills.forEach(function(pill) {
+            pill.addEventListener('click', function() {
+                var key = pill.getAttribute('data-explainer');
+                var target = document.getElementById('how-' + key);
+                if (!target) return;
+                // Smooth scroll + briefly highlight (CSS :target handles the highlight on URL change)
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                // Update URL hash so :target styling fires (without jump — scrollIntoView already moved)
+                if (history.replaceState) {
+                    history.replaceState(null, '', '#how-' + key);
+                }
+            });
+        });
+    }
+
+    // --------------------------------------------------------------------------
     // Initialize
     // --------------------------------------------------------------------------
     
@@ -362,6 +391,7 @@
         initTentacleParallax();
         initChatDemo();
         loadPulseCard();
+        initTrustPills();
     }
 
     if (document.readyState === 'loading') {

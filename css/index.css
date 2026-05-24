@@ -131,3 +131,384 @@
 @media (max-width: 480px) {
     .contact-form { padding: 24px 20px; margin: 0 -4px; }
 }
+
+/* ==========================================================================
+   MARKETING REFRESH — squidbay.io marketing refresh
+   Trust pills · Whats-a-skill · How-it-works-under-hood · Anatomy · Protection
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Trust pills (hero) — mirrors agent.squidbay.io .sa-pill empirical pattern
+   -------------------------------------------------------------------------- */
+.trust-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 20px 0 8px;
+    animation: fadeInUp 0.6s ease-out 0.35s both;
+}
+
+.sa-pill {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--text-muted);
+    background: rgba(0, 217, 255, 0.05);
+    border: 1px solid rgba(0, 217, 255, 0.18);
+    border-radius: 20px;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    -webkit-appearance: none;
+    appearance: none;
+    font-family: var(--font-mono);
+}
+.sa-pill:hover {
+    color: var(--primary);
+    border-color: rgba(0, 217, 255, 0.45);
+    background: rgba(0, 217, 255, 0.10);
+    transform: translateY(-1px);
+}
+.sa-pill:focus { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+.sa-pill-patent {
+    color: var(--yellow);
+    border-color: rgba(255, 189, 46, 0.45);
+    background: rgba(255, 189, 46, 0.08);
+}
+.sa-pill-patent:hover {
+    color: var(--yellow);
+    border-color: rgba(255, 189, 46, 0.7);
+    background: rgba(255, 189, 46, 0.14);
+}
+
+/* Compat note (sub-row to compat-badges) */
+.compat-note { font-size: 0.72rem; color: var(--text-muted); margin-top: 10px; opacity: 0.75; }
+.compat-note a, .compat-learn-more, .compat-register-link {
+    color: rgba(0, 217, 255, 0.7);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.compat-note a:hover, .compat-learn-more:hover, .compat-register-link:hover { color: var(--primary); }
+
+/* --------------------------------------------------------------------------
+   What's a skill? — WordPress plugin analogy section
+   -------------------------------------------------------------------------- */
+.whats-a-skill {
+    padding: 100px 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(0, 217, 255, 0.025) 50%, transparent 100%);
+}
+.whats-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 64px;
+    align-items: center;
+}
+.whats-prose h2 { font-size: 2.4rem; line-height: 1.15; margin: 12px 0 28px; max-width: 580px; }
+.whats-prose p { font-size: 1.05rem; line-height: 1.65; color: var(--text-muted); margin-bottom: 18px; max-width: 580px; }
+.whats-prose strong { color: var(--white); font-weight: 600; }
+.whats-prose code {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    background: rgba(0, 217, 255, 0.08);
+    border: 1px solid rgba(0, 217, 255, 0.15);
+    border-radius: 4px;
+    padding: 1px 6px;
+    color: var(--primary);
+}
+.whats-meta { font-size: 0.92rem !important; opacity: 0.85; padding-top: 6px; border-top: 1px solid rgba(255, 255, 255, 0.06); }
+
+/* Skill listing demo card (right side of What's a skill) */
+.whats-card-demo { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.skill-listing-card {
+    width: 100%;
+    max-width: 340px;
+    background: var(--dark);
+    border: 1px solid rgba(0, 217, 255, 0.18);
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: 0 12px 40px rgba(0, 217, 255, 0.07);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.skill-listing-card:hover { transform: translateY(-4px); border-color: rgba(0, 217, 255, 0.35); }
+
+.skill-listing-top { display: flex; gap: 14px; align-items: center; margin-bottom: 12px; }
+.skill-listing-icon { font-size: 2rem; line-height: 1; flex-shrink: 0; }
+.skill-listing-meta { flex: 1; min-width: 0; }
+.skill-listing-name { font-size: 1rem; font-weight: 700; color: var(--white); line-height: 1.2; }
+.skill-listing-seller { display: block; font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+
+.skill-listing-stars { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; font-size: 0.85rem; }
+.skill-stars-row { color: var(--yellow); letter-spacing: 1px; }
+.skill-stars-count { color: var(--text-muted); font-size: 0.78rem; }
+
+.skill-listing-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px; }
+.skill-listing-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding-top: 14px;
+}
+.skill-listing-price { display: flex; flex-direction: column; gap: 2px; }
+.skill-listing-price-amount { font-size: 1.5rem; font-weight: 800; color: var(--white); line-height: 1; }
+.skill-listing-price-label { font-size: 0.7rem; color: var(--text-muted); font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.05em; }
+.skill-listing-btn {
+    background: var(--primary);
+    color: var(--black);
+    border: none;
+    padding: 9px 22px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+.whats-card-caption { font-size: 0.7rem; color: var(--text-muted); font-family: var(--font-mono); opacity: 0.6; }
+
+/* --------------------------------------------------------------------------
+   How it works under the hood
+   -------------------------------------------------------------------------- */
+.how-under-hood { padding: 100px 0; }
+.how-under-hood h2 { font-size: 2.2rem; max-width: 700px; margin-bottom: 14px; }
+.under-hood-intro { font-size: 1.05rem; color: var(--text-muted); max-width: 640px; margin-bottom: 48px; }
+
+.under-hood-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    margin-bottom: 56px;
+}
+.under-hood-card {
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(0, 217, 255, 0.12);
+    border-radius: 14px;
+    padding: 26px;
+    scroll-margin-top: 100px; /* anchor offset so trust-pill clicks land below sticky nav */
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+.under-hood-card:hover {
+    border-color: rgba(0, 217, 255, 0.3);
+    background: rgba(0, 217, 255, 0.03);
+}
+.under-hood-card:target {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 1px var(--primary), 0 0 30px rgba(0, 217, 255, 0.15);
+}
+.under-hood-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 217, 255, 0.08);
+    border-radius: 10px;
+    color: var(--primary);
+    margin-bottom: 16px;
+}
+.under-hood-card h3 { font-size: 1.05rem; margin-bottom: 10px; color: var(--white); }
+.under-hood-card p { font-size: 0.92rem; color: var(--text-muted); line-height: 1.55; }
+.under-hood-card-patent .under-hood-icon { background: rgba(255, 189, 46, 0.10); color: var(--yellow); }
+.under-hood-card-patent:target { border-color: var(--yellow); box-shadow: 0 0 0 1px var(--yellow), 0 0 30px rgba(255, 189, 46, 0.15); }
+
+.under-hood-note {
+    background: rgba(0, 217, 255, 0.03);
+    border: 1px solid rgba(0, 217, 255, 0.12);
+    border-left: 3px solid var(--primary);
+    border-radius: 12px;
+    padding: 28px 32px;
+    max-width: 880px;
+}
+.under-hood-note h3 { font-size: 1.05rem; margin-bottom: 12px; color: var(--white); }
+.under-hood-note p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 12px; }
+.under-hood-note p:last-child { margin-bottom: 0; }
+
+/* --------------------------------------------------------------------------
+   Non-squid callout (in How It Works section)
+   -------------------------------------------------------------------------- */
+.non-squid-callout {
+    margin: 64px auto 0;
+    max-width: 880px;
+    background: linear-gradient(135deg, rgba(0, 217, 255, 0.05) 0%, rgba(255, 189, 46, 0.03) 100%);
+    border: 1px solid rgba(0, 217, 255, 0.18);
+    border-radius: 16px;
+    padding: 28px 32px;
+    display: flex;
+    gap: 22px;
+    align-items: flex-start;
+}
+.non-squid-callout-icon { font-size: 2.5rem; line-height: 1; flex-shrink: 0; }
+.non-squid-callout-body { flex: 1; }
+.non-squid-callout-body h3 { font-size: 1.1rem; margin-bottom: 10px; color: var(--white); }
+.non-squid-callout-body p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 10px; }
+.non-squid-callout-body p:last-child { margin-bottom: 0; }
+.non-squid-callout-body strong { color: var(--white); font-weight: 600; }
+
+/* --------------------------------------------------------------------------
+   Chat-style code block (replaces buy_skill.py demo)
+   -------------------------------------------------------------------------- */
+.code-block-chat .code-chat-body { padding: 24px; display: flex; flex-direction: column; gap: 14px; }
+.code-chat-line { display: flex; gap: 12px; align-items: flex-start; }
+.code-chat-prefix {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 3px 10px;
+    border-radius: 6px;
+    min-width: 56px;
+    text-align: center;
+}
+.code-chat-user .code-chat-prefix { background: rgba(0, 217, 255, 0.12); color: var(--primary); }
+.code-chat-agent .code-chat-prefix { background: rgba(255, 189, 46, 0.12); color: var(--yellow); }
+.code-chat-msg { font-size: 0.92rem; color: var(--white); line-height: 1.55; flex: 1; }
+.code-chat-msg em { color: var(--primary); font-style: normal; font-weight: 600; }
+.code-chat-msg strong { color: var(--yellow); }
+
+/* --------------------------------------------------------------------------
+   Anatomy of a Skill
+   -------------------------------------------------------------------------- */
+.anatomy { padding: 100px 0; }
+.anatomy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 56px;
+    align-items: center;
+}
+.anatomy-prose h2 { font-size: 2.2rem; line-height: 1.15; margin: 12px 0 22px; }
+.anatomy-caption { font-size: 1rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 16px; }
+.anatomy-caption-strong { font-size: 1rem; color: var(--white); line-height: 1.65; }
+.anatomy-caption-strong strong { color: var(--primary); }
+
+.anatomy-tree {
+    background: var(--darker);
+    border: 1px solid rgba(0, 217, 255, 0.18);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+.anatomy-code-header {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.anatomy-code-header .code-title { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.78rem; margin-left: 10px; }
+.anatomy-pre {
+    padding: 24px;
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--white);
+    overflow-x: auto;
+    background: transparent;
+}
+.anatomy-folder { color: var(--primary); font-weight: 600; }
+.anatomy-file { color: var(--white); }
+.anatomy-comment { color: var(--text-muted); font-style: italic; opacity: 0.85; }
+
+/* --------------------------------------------------------------------------
+   Protection block (Section J — Real protection. Built into every sale.)
+   -------------------------------------------------------------------------- */
+.protection {
+    padding: 100px 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(255, 189, 46, 0.025) 50%, transparent 100%);
+}
+.protection h2 { font-size: 2.2rem; margin-bottom: 14px; }
+.protection-lede { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 48px; }
+
+.protection-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 40px;
+    margin-bottom: 36px;
+}
+.protection-column h3 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--primary);
+    font-family: var(--font-mono);
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+.protection-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 16px; }
+.protection-list li {
+    padding-left: 20px;
+    position: relative;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+.protection-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 8px;
+    height: 8px;
+    background: var(--primary);
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(0, 217, 255, 0.5);
+}
+.protection-list strong { color: var(--white); font-weight: 600; }
+.protection-summary { font-size: 1rem; color: var(--white); line-height: 1.65; max-width: 760px; margin-bottom: 28px; }
+.protection-patent-footer {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-style: italic;
+    border-top: 1px solid rgba(255, 189, 46, 0.18);
+    padding-top: 20px;
+    max-width: 760px;
+}
+
+/* --------------------------------------------------------------------------
+   Pricing — fix alignment + remove the legacy black box behind tier cells
+   -------------------------------------------------------------------------- */
+.pricing .section-label,
+.pricing h2 { text-align: center; }
+.price-amount {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 1.05rem;
+    display: inline-block;
+    line-height: 1.3;
+}
+.price-amount small { color: var(--text-muted); font-size: 0.75rem; font-weight: 400; display: block; margin-top: 4px; }
+
+/* Clean up any leftover .price-sats stragglers (Stripe-Migration-4 deferred CSS cleanup) */
+.price-sats { font-family: var(--font-mono); font-weight: 700; color: var(--primary); font-size: 1.05rem; }
+
+/* --------------------------------------------------------------------------
+   Mobile responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+    .whats-grid,
+    .anatomy-grid,
+    .under-hood-grid,
+    .protection-grid { grid-template-columns: 1fr; gap: 32px; }
+    .under-hood-grid { gap: 18px; }
+    .non-squid-callout { padding: 22px; gap: 16px; flex-direction: column; }
+    .non-squid-callout-icon { font-size: 2rem; }
+    .whats-prose h2, .anatomy-prose h2, .protection h2, .how-under-hood h2 { font-size: 1.7rem; }
+}
+
+@media (max-width: 768px) {
+    .whats-a-skill, .how-under-hood, .anatomy, .protection { padding: 64px 0; }
+    .trust-pills { gap: 6px; margin: 16px 0 6px; }
+    .sa-pill { font-size: 0.65rem; padding: 5px 12px; }
+    .anatomy-pre { font-size: 0.75rem; padding: 18px; }
+    .skill-listing-card { max-width: 100%; }
+    .code-chat-prefix { min-width: 48px; font-size: 0.65rem; }
+    .code-chat-msg { font-size: 0.85rem; }
+    .protection-list li { font-size: 0.9rem; }
+}
