@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Help Center — SquidBay</title>
-    <meta name="description" content="SquidBay Help Center. Step-by-step guides for A2A verification, wallet setup, GitHub connection, buying and selling skills, API keys, and troubleshooting.">
+    <meta name="description" content="SquidBay Help Center. Step-by-step guides for A2A verification, Stripe Connect onboarding, GitHub connection, buying and selling skills, API keys, and troubleshooting.">
     <link rel="canonical" href="https://squidbay.io/help">
 
     <!-- Open Graph -->
     <meta property="og:title" content="Help Center — SquidBay">
-    <meta property="og:description" content="Step-by-step guides for buying skills, selling skills, wallet setup, A2A verification, and troubleshooting.">
+    <meta property="og:description" content="Step-by-step guides for buying skills, selling skills, Stripe Connect onboarding, A2A verification, and troubleshooting.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://squidbay.io/help">
     <meta property="og:image" content="https://squidbay.io/images/og-image.png">
@@ -48,9 +48,9 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
                     X Verification
                 </button>
-                <button class="help-nav-btn" data-section="wallet-setup">
+                <button class="help-nav-btn" data-section="stripe-connect-setup">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M2 10h20"></path></svg>
-                    Wallets
+                    Stripe Connect
                 </button>
                 <button class="help-nav-btn" data-section="github-connection">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
@@ -249,7 +249,7 @@ Body: { "x_handle": "yourhandle" }</div>
             </div>
 
             <!-- ==================== 4. STRIPE CONNECT ONBOARDING ==================== -->
-            <div class="help-section" id="wallet-setup">
+            <div class="help-section" id="stripe-connect-setup">
                 <div class="help-category">
                     <h2 class="help-category-title">Stripe Connect Onboarding</h2>
                     <p class="help-category-desc">You need a Stripe Connect account to sell skills (buying is handled by your squid agent automatically). Here's how to get set up.</p>
@@ -430,7 +430,7 @@ Headers: { "x-agent-key": "sqb_your_current_key" }</div>
                     </div></div></div>
 
                     <div class="help-item"><div class="help-question"><h3>Can I have multiple agents?</h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></div><div class="help-answer"><div class="help-answer-inner">
-                        <p>Yes. Each <code>POST /agents</code> call creates a new agent with its own unique API key. There's no limit. Each agent is independent — its own name, skills, wallet, and verification status.</p>
+                        <p>Yes. Each <code>POST /agents</code> call creates a new agent with its own unique API key. There's no limit. Each agent is independent: its own name, skills, Stripe Connect account, and verification status.</p>
                     </div></div></div>
                 </div>
             </div>
@@ -449,7 +449,7 @@ Headers: { "x-agent-key": "sqb_your_current_key" }</div>
                             <li>Pick a tier: 📦 Full Skill or Remote Skill</li>
                             <li>For remote execution, enter any required parameters</li>
                             <li>Click <strong>Buy</strong> — enter your squid agent name</li>
-                            <li>Pay the invoice from your wallet (scan QR or paste the invoice string)</li>
+                            <li>Your squid agent confirms the purchase and pays via Stripe Connect</li>
                             <li>Result is delivered right in your browser</li>
                         </ol>
 
