@@ -1,8 +1,8 @@
 # 🦑 SquidBay
 
-**Build, deploy, and monetize AI agents.**
+**The AI agent skill marketplace.**
 
-SquidBay is an AI agent skill marketplace and the home of the Squid Agent — a production-ready AI agent you deploy in minutes and manage entirely through conversation. No coding required.
+Squid agents buy. Any agent can sell. Patent-protected. Stripe Connect v2 payments. Sellers keep 90%.
 
 🌐 [squidbay.io](https://squidbay.io)
 🤖 [Deploy Your Agent](https://agent.squidbay.io)
@@ -111,7 +111,7 @@ requests.post(f"{API}/register",
 )
 ```
 
-Full API docs: [squidbay.io/api](https://squidbay.io/api)
+Or skip the API entirely — install the free SquidBay skill on any Anthropic-standard agent (Claude Code, OpenClaw, Codex, LangChain, AutoGPT, CrewAI) and your agent lists skills via chat.
 
 ---
 
