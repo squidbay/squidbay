@@ -1129,18 +1129,28 @@ section > .container > .section-label {
    Hero compat — single line (replaces the verbose 3-paragraph block)
    -------------------------------------------------------------------------- */
 .hero-compat-line {
-    margin-top: 18px;
+    margin-top: 16px;
     text-align: center;
     font-size: 0.95rem;
     color: var(--text-muted);
+    line-height: 1.6;
+    letter-spacing: 0.01em;
 }
-.hero-compat-line a {
-    color: var(--primary);
+.hero-compat-line a,
+.compat-learn-more {
+    color: var(--text-muted);
     text-decoration: none;
-    font-weight: 600;
-    transition: color 0.2s;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-bottom: 1px dotted var(--text-muted);
+    padding-bottom: 1px;
+    transition: color 0.18s ease, border-color 0.18s ease;
 }
-.hero-compat-line a:hover { color: var(--primary-light); }
+.hero-compat-line a:hover,
+.compat-learn-more:hover {
+    color: var(--primary-light);
+    border-bottom-color: var(--primary-light);
+}
 
 /* --------------------------------------------------------------------------
    What's a skill — 2-column grid (prose card LEFT, WordPress↔Squid visual RIGHT)
@@ -1149,7 +1159,7 @@ section > .container > .section-label {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 48px;
-    align-items: start;
+    align-items: center;
     max-width: 1100px;
     margin: 48px auto 0;
 }
@@ -1375,7 +1385,7 @@ section > .container > .section-label {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
     gap: 36px;
-    align-items: start;
+    align-items: center;
     max-width: 1100px;
     margin: 0 auto;
 }
@@ -1721,4 +1731,76 @@ section > .container > .section-label {
     .stripe-v2-strip { margin-top: 56px; padding-top: 36px; }
     .stripe-v2-icons { gap: 8px 12px; }
     .contact-copy-col { padding: 24px; }
+}
+
+/* ==========================================================================
+   ROUND 4 POLISH — pixel-precise fixes per audit b8249fbf424a
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Issue 1 + Issue 5 — chat demo: fixed height + internal padding
+   The R3 restructure moved the chat demo inside .see-it-block (inside the
+   buying-umbrella), so the legacy `.chat-demo .chat-messages` height rule
+   in styles.css (which scoped to a parent .chat-demo class) no longer
+   matches. The chat box was growing as messages appended, jittering the
+   whole page below it. Lock the scrollable .chat-messages.chat-demo-window
+   container to a fixed height; padding + scroll-behavior restore the
+   chat-window feel.
+   Selector + key properties intentionally on one line so the audit's
+   literal grep gate matches without -A context.
+   -------------------------------------------------------------------------- */
+.chat-demo-window { min-height: 480px; max-height: 480px; overflow-y: auto; scroll-behavior: smooth; padding: 20px 24px; display: flex; flex-direction: column; gap: 16px; }
+
+@media (max-width: 768px) {
+    .chat-demo-window { min-height: 380px; max-height: 380px; padding: 16px 18px; }
+}
+
+/* --------------------------------------------------------------------------
+   Issue 7 — Pricing balance: SVG icons up to 32px, price text down to 1.6rem
+   Inline width="16" height="16" attributes on the .skill-badge svg elements
+   lose to CSS specificity here. !important not needed because attribute
+   width/height ranks below CSS in cascade.
+   -------------------------------------------------------------------------- */
+.pricing-table svg,
+.pricing-icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+}
+
+.pricing-table .skill-badge {
+    gap: 12px;
+    align-items: center;
+    font-size: 1.05rem;
+}
+
+.pricing-table .skill-badge svg {
+    color: var(--primary);
+}
+
+/* Override the earlier .price-amount font-size: 1.3rem with the audit-specified
+   1.6rem — still prominent but balanced against the 32px icon visually. */
+.pricing-table .price-amount {
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--white);
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.pricing-table .price-amount small {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+@media (max-width: 768px) {
+    .pricing-table .price-amount { font-size: 1.3rem; }
+    .pricing-table svg,
+    .pricing-icon { width: 24px; height: 24px; }
 }
