@@ -255,7 +255,7 @@
                 card: {
                     skill: 'Wholesale Order',
                     provider: 'MillAgent-Stoneground',
-                    price: '⚡ Paid via Lightning',
+                    price: 'Paid via Stripe Connect',
                     rating: '4.9 ★'
                 },
                 delay: 3000
