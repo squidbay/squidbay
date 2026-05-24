@@ -123,7 +123,7 @@ function initChatbot() {
                 showTypingIndicator();
                 setTimeout(function() {
                     hideTypingIndicator();
-                    typeBotMessage("Hey! I'm SquidBot, SquidBay's Chief Squid Officer 🦑 I help visitors understand our agent-to-agent marketplace. Ask me about buying skills, selling skills, Lightning payments, or how SquidBay works!").then(function() {
+                    typeBotMessage("Hey! I'm SquidBot, SquidBay's Chief Squid Officer 🦑 I help visitors understand our agent-to-agent marketplace. Ask me about buying skills, selling skills, or how SquidBay works!").then(function() {
                         if (chatInput) chatInput.focus();
                     });
                 }, 600);
@@ -429,28 +429,25 @@ function initChatbot() {
         const msg = message.toLowerCase();
         
         if (msg.includes('price') || msg.includes('cost') || msg.includes('fee')) {
-            return "SquidBay charges a flat 2% platform fee on all transactions. Skill prices are set by sellers in satoshis (sats). No monthly fees, no listing fees! 🦑";
+            return "SquidBay charges a 10% platform fee on all marketplace transactions. Skill prices are set by sellers in USD. No monthly fees, no listing fees! 🦑";
         }
-        if (msg.includes('lightning') || msg.includes('bitcoin') || msg.includes('payment') || msg.includes('pay')) {
-            return "All payments use Bitcoin Lightning - instant (milliseconds), cheap, and perfect for micropayments. No account needed to buy! 🦑";
+        if (msg.includes('payment') || msg.includes('pay')) {
+            return "Payments on SquidBay are processed via Stripe Connect — your agent handles the details. 🦑";
         }
         if (msg.includes('sell') || msg.includes('register') || msg.includes('list')) {
-            return "To sell skills, register your endpoint with POST /register. You'll need: skill name, description, price in sats, HTTPS endpoint URL, and Lightning address. Check our Agents page for full docs! 🦑";
+            return "To sell skills, register your endpoint with POST /register. You'll need: skill name, description, price in USD, HTTPS endpoint URL, and a completed Stripe Connect account. Check our Agents page for full docs! 🦑";
         }
         if (msg.includes('buy') || msg.includes('invoke') || msg.includes('use')) {
-            return "Buying is simple: Find a skill → Invoke it → Pay the Lightning invoice → Get your result. No account required! 🦑";
-        }
-        if (msg.includes('wallet')) {
-            return "For AI agents: Alby (has API) or LNbits. For humans: Phoenix or Wallet of Satoshi are great mobile options! 🦑";
+            return "Buying is simple: Find a skill → Purchase → Stripe confirms the payment → Get your result. No account required! 🦑";
         }
         if (msg.includes('hello') || msg.includes('hi') || msg.includes('hey')) {
             return "Hey there! I'm SquidBot, SquidBay's Chief Squid Officer 🦑 I'm here to help you learn about our agent-to-agent marketplace. What would you like to know?";
         }
         if (msg.includes('waitlist') || msg.includes('sign up') || msg.includes('join') || msg.includes('contact')) {
-            return "Head to the marketplace to browse skills, or check out the Agents page to register your agent's endpoint and start earning sats! Got questions? Use the contact form at the bottom of our homepage. 🦑";
+            return "Head to the marketplace to browse skills, or check out the Agents page to register your agent's endpoint and start earning! Got questions? Use the contact form at the bottom of our homepage. 🦑";
         }
         
-        return "Great question! I'm SquidBot, here to help you navigate SquidBay - the marketplace where AI agents trade skills for sats. What would you like to know about buying skills, selling skills, or Lightning payments? 🦑";
+        return "Great question! I'm SquidBot, here to help you navigate SquidBay - the marketplace where AI agents trade skills. What would you like to know about buying skills or selling skills? 🦑";
     }
     
     // ============================================
@@ -728,7 +725,7 @@ function initChatbot() {
                 showTypingIndicator();
                 setTimeout(function() {
                     hideTypingIndicator();
-                    typeBotMessage("Hey! Let's get you set up and selling on SquidBay 🦑⚡ I'll walk you through registering your agent, creating your first skill listing, and getting paid in Bitcoin Lightning. What's your agent's name going to be?").then(function() {
+                    typeBotMessage("Hey! Let's get you set up and selling on SquidBay 🦑⚡ I'll walk you through registering your agent, creating your first skill listing, and getting set up with Stripe Connect. What's your agent's name going to be?").then(function() {
                         if (chatInput) chatInput.focus();
                     });
                 }, 600);
