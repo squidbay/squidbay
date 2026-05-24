@@ -547,3 +547,301 @@
         overflow-x: auto;
     }
 }
+
+/* ==========================================================================
+   ROUND 3 — register.html full overhaul (replaces old sidebar guide layout)
+   ========================================================================== */
+
+.register-hero {
+    padding: 96px 0 64px;
+    text-align: center;
+    background: radial-gradient(ellipse at top, rgba(0, 217, 255, 0.06) 0%, transparent 50%);
+}
+.register-hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--white);
+    margin: 0 0 16px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.register-hero-sub {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    max-width: 640px;
+    margin: 0 auto;
+    line-height: 1.5;
+}
+
+.register-section {
+    padding: 80px 0;
+}
+.register-section-divider {
+    border-top: 1px solid rgba(0, 217, 255, 0.10);
+}
+.register-section > .container > .section-label {
+    display: block;
+    text-align: center;
+    margin: 0 auto 12px;
+}
+.register-section > .container > h2 {
+    text-align: center;
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    color: var(--white);
+    font-weight: 700;
+    margin: 0 auto 48px;
+    max-width: 700px;
+}
+
+/* 4-card "What you get" grid */
+.register-card-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+.register-card {
+    padding: 24px;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(0, 217, 255, 0.14);
+    border-radius: 12px;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+}
+.register-card:hover {
+    border-color: rgba(0, 217, 255, 0.40);
+    transform: translateY(-3px);
+}
+.register-card-icon {
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+    line-height: 1;
+}
+.register-card h3 {
+    font-size: 1rem;
+    color: var(--white);
+    font-weight: 700;
+    margin: 0 0 8px;
+}
+.register-card p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin: 0;
+}
+.register-card code {
+    font-family: var(--font-mono);
+    font-size: 0.78em;
+    background: rgba(0, 217, 255, 0.08);
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: var(--primary);
+}
+
+/* 5-step register flow */
+.register-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+.register-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 24px 28px;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(0, 217, 255, 0.12);
+    border-radius: 12px;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+}
+.register-step:hover {
+    border-color: rgba(0, 217, 255, 0.32);
+    transform: translateX(4px);
+}
+.register-step-num {
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: var(--primary);
+    color: var(--black);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 1.15rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.register-step-body { flex: 1; min-width: 0; }
+.register-step-body h3 {
+    font-size: 1.1rem;
+    color: var(--white);
+    font-weight: 700;
+    margin: 0 0 8px;
+}
+.register-step-body p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Free skill 4-card grid */
+.free-skill-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+.free-skill-card {
+    padding: 22px 20px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(0, 217, 255, 0.14);
+    border-radius: 12px;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+}
+.free-skill-card:hover {
+    border-color: rgba(0, 217, 255, 0.40);
+    transform: translateY(-3px);
+}
+.free-skill-icon {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    line-height: 1;
+}
+.free-skill-card h3 {
+    font-size: 1rem;
+    color: var(--white);
+    font-weight: 700;
+    margin: 0 0 6px;
+}
+.free-skill-card p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin: 0;
+}
+.free-skill-note {
+    text-align: center;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    max-width: 720px;
+    margin: 32px auto 0;
+    line-height: 1.6;
+    font-style: italic;
+}
+
+/* Squid shortcut */
+.squid-shortcut {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 32px 36px;
+    background: linear-gradient(135deg, rgba(0, 217, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border: 1px solid rgba(0, 217, 255, 0.30);
+    border-radius: 14px;
+    text-align: center;
+}
+.squid-shortcut h3 {
+    font-size: 1.25rem;
+    color: var(--white);
+    font-weight: 700;
+    margin: 0 0 12px;
+}
+.squid-shortcut p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0 0 20px;
+}
+.squid-shortcut .btn { margin: 0; }
+
+/* Pricing reminder row */
+.pricing-reminder {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+.pricing-reminder-item {
+    padding: 28px 20px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(0, 217, 255, 0.14);
+    border-radius: 12px;
+    transition: border-color 0.3s ease;
+}
+.pricing-reminder-item:hover {
+    border-color: rgba(0, 217, 255, 0.36);
+}
+.pricing-reminder-amount {
+    font-family: var(--font-mono);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 6px;
+    line-height: 1;
+}
+.pricing-reminder-label {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+.pricing-reminder-note {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 28px auto 0;
+    max-width: 720px;
+}
+.pricing-reminder-note a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+.pricing-reminder-note a:hover { color: var(--primary-light); }
+
+/* Final CTA */
+.register-cta-final {
+    text-align: center;
+    padding-bottom: 96px;
+}
+.register-cta-final h2 {
+    margin-bottom: 16px !important;
+}
+.register-cta-final p {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0;
+}
+.register-cta-final a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+.register-cta-final a:hover { color: var(--primary-light); }
+
+/* Mobile */
+@media (max-width: 900px) {
+    .register-card-grid { grid-template-columns: 1fr 1fr; }
+    .free-skill-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .pricing-reminder { grid-template-columns: 1fr; }
+    .register-step:hover { transform: none; }
+}
+@media (max-width: 640px) {
+    .register-card-grid { grid-template-columns: 1fr; }
+    .free-skill-grid { grid-template-columns: 1fr; }
+    .register-hero { padding: 64px 0 48px; }
+    .register-section { padding: 56px 0; }
+    .register-step { padding: 20px 22px; gap: 16px; }
+    .register-step-num { width: 36px; height: 36px; font-size: 1rem; }
+    .squid-shortcut { padding: 24px 22px; }
+    .pricing-reminder-amount { font-size: 1.6rem; }
+}
