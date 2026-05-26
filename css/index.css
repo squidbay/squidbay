@@ -1861,7 +1861,7 @@ section > .container > .section-label {
 
 /* ============================================================================
    ============================================================================
-   INDEX DESIGN CLEANUP — ROUND 2-9 (consolidated)
+   INDEX DESIGN CLEANUP — ROUND 2-9 + ROUND 10 (consolidated)
    ============================================================================
    Last-pass overrides; lives at end of file so cascade order guarantees
    these rules win over earlier ones with equal specificity.
@@ -1870,8 +1870,6 @@ section > .container > .section-label {
 
 /* ----------------------------------------------------------------------------
    R2: Emoji → SVG conversions (icon container sizing)
-   The .analogy-icon and .protection-compact-icon containers previously sized
-   for emoji. SVGs need explicit dimensions + currentColor inheritance.
    ---------------------------------------------------------------------------- */
 .analogy-icon { color: var(--text-muted); display: inline-flex; align-items: center; justify-content: center; }
 .analogy-tile-squid .analogy-icon { color: var(--primary); }
@@ -1887,13 +1885,13 @@ section > .container > .section-label {
     background: rgba(255, 189, 46, 0.10);
     border-radius: 8px;
     flex-shrink: 0;
-    font-size: initial; /* override emoji-era font-size */
+    font-size: initial;
     margin-top: 0;
 }
 
 
 /* ----------------------------------------------------------------------------
-   R3: "What's a skill?" — compaction
+   R3 + R10: "What's a skill?" — 3 numbered points + URL/reputation module
    ---------------------------------------------------------------------------- */
 .whats-a-skill { padding: 72px 0; }
 .whats-a-skill > .container > h2 { margin-bottom: 14px; font-size: clamp(1.8rem, 4vw, 2.4rem); }
@@ -1903,16 +1901,94 @@ section > .container > .section-label {
     gap: 32px;
     margin: 32px auto 0;
     max-width: 1100px;
-    align-items: start; /* match heights with content, not center-vertical empty space */
+    align-items: start;
 }
+
+/* Left column: numbered points list */
 .skill-explainer-card { padding: 28px; }
-.skill-explainer-card p { font-size: 0.95rem; line-height: 1.6; margin-bottom: 14px; }
-.skill-explainer-card .whats-meta { margin-top: 18px; padding-top: 14px; font-size: 0.85rem; }
-.skill-analogy-visual { padding: 28px; gap: 18px; }
+.skill-explainer-points {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+.skill-explainer-points li {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding-bottom: 18px;
+    border-bottom: 1px solid rgba(0, 217, 255, 0.08);
+}
+.skill-explainer-points li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+.skill-explainer-points p { margin: 0; font-size: 0.95rem; line-height: 1.6; color: var(--text-muted); }
+.skill-point-num {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    background: rgba(0, 217, 255, 0.10);
+    border: 1px solid rgba(0, 217, 255, 0.25);
+    color: var(--primary);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+}
+
+/* Right column: analogy + URL module stacked */
+.skill-visual-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+.skill-analogy-visual { padding: 24px; gap: 16px; }
 .analogy-tile { padding: 14px 10px; gap: 6px; }
 .analogy-icon { font-size: 1.6rem; }
 .analogy-label { font-size: 0.72rem; }
 .analogy-result { padding: 12px 14px; font-size: 0.82rem; }
+
+.skill-urls-module {
+    padding: 18px 20px;
+    background: rgba(0, 217, 255, 0.04);
+    border: 1px solid rgba(0, 217, 255, 0.16);
+    border-left: 3px solid var(--primary);
+    border-radius: 10px;
+}
+.skill-urls-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--primary);
+    background: rgba(0, 217, 255, 0.10);
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    letter-spacing: 0.08em;
+}
+.skill-urls-module p {
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+}
+.skill-urls-module code {
+    font-family: var(--font-mono);
+    font-size: 0.78em;
+    background: rgba(0, 217, 255, 0.08);
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: var(--primary);
+}
+.skill-urls-module strong { color: var(--white); font-weight: 600; }
 
 
 /* ----------------------------------------------------------------------------
@@ -1931,13 +2007,13 @@ section > .container > .section-label {
 
 
 /* ----------------------------------------------------------------------------
-   R5: Selling/Buying umbrella + Anatomy — compaction
+   R5 + R10: Selling/Buying — compaction + pair grid + buying pipeline
    ---------------------------------------------------------------------------- */
 .selling-umbrella,
 .buying-umbrella { padding: 72px 0 !important; }
 
-.umbrella-subhead { margin-bottom: 32px !important; }
-.umbrella-subhead-h3 { margin: 32px 0 18px !important; font-size: 1.15rem; }
+.umbrella-subhead { margin-bottom: 28px !important; }
+.umbrella-subhead-h3 { margin: 28px 0 16px !important; font-size: 1.1rem; }
 .umbrella-subhead-h3:first-of-type { margin-top: 0 !important; }
 
 .flow-grid { gap: 16px !important; }
@@ -1945,56 +2021,232 @@ section > .container > .section-label {
 .flow-card h3 { font-size: 1rem; margin-bottom: 8px; }
 .flow-card p { font-size: 0.9rem; line-height: 1.55; }
 
-.non-squid-callout {
-    margin: 36px auto 0 !important;
-    padding: 22px 28px !important;
-    gap: 18px !important;
+/* R10: Selling pair grid — Two-ways-to-package + Can-any-agent-sell side by side */
+.selling-pair-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: 20px;
+    align-items: stretch;
+    max-width: 1180px;
+    margin: 0 auto;
 }
-.non-squid-callout-icon { font-size: 2rem !important; }
-.non-squid-callout-body h3 { font-size: 1.05rem; margin-bottom: 8px; }
-.non-squid-callout-body p { font-size: 0.92rem; line-height: 1.6; margin-bottom: 8px; }
+.selling-pair-tiers {
+    grid-template-columns: 1fr 1fr !important;
+    max-width: none !important;
+    margin: 0 !important;
+    align-items: stretch;
+}
+.selling-pair-tiers .flow-card { display: flex; flex-direction: column; }
+.selling-pair-tiers .flow-card p { flex: 1; }
 
-/* Anatomy compaction */
-.anatomy-block { margin-top: 56px; }
-.anatomy-h3 { font-size: 1.5rem !important; margin-bottom: 10px; }
-.anatomy-lede { font-size: 0.95rem !important; max-width: 760px; margin-bottom: 28px !important; }
-.anatomy-grid-r3 { gap: 28px !important; max-width: 1080px; margin-left: auto; margin-right: auto; }
-.anatomy-legend li { font-size: 0.85rem; padding: 8px 0; }
-.anatomy-pre { font-size: 0.82rem !important; padding: 16px 18px !important; }
+.non-squid-callout {
+    margin: 0 !important; /* now sits inside selling-pair-grid */
+    padding: 22px 26px !important;
+    gap: 16px !important;
+    height: 100%;
+    box-sizing: border-box;
+}
+.non-squid-callout-icon { font-size: 1.9rem !important; }
+.non-squid-callout-body h3 { font-size: 1.02rem; margin-bottom: 8px; }
+.non-squid-callout-body p { font-size: 0.88rem; line-height: 1.55; margin-bottom: 8px; }
 
 
 /* ----------------------------------------------------------------------------
-   R6: "See It In Action" chat demo — fits viewport, balanced columns
+   R10: Anatomy wrapped in longhaul-style card (mirrors agent.squidbay.io)
    ---------------------------------------------------------------------------- */
-.see-it-block { margin-top: 56px; }
-.see-it-h3 { text-align: center; font-size: 1.5rem; margin-bottom: 28px; }
+.anatomy-longhaul {
+    margin-top: 36px !important;
+    padding: 36px 32px !important;
+    background: linear-gradient(135deg, rgba(0, 217, 255, 0.05), transparent);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.sa-longhaul-eyebrow {
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.sa-longhaul-title {
+    color: var(--primary);
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin: 0 0 12px 0;
+    text-align: center;
+    letter-spacing: -0.01em;
+}
+.sa-longhaul-lead {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto 28px;
+}
+.sa-longhaul-lead strong { color: var(--white); font-weight: 600; }
+
+.anatomy-longhaul .anatomy-grid-r3 {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 24px;
+    max-width: none;
+    margin: 0;
+}
+.anatomy-longhaul .anatomy-pre { font-size: 0.82rem !important; padding: 16px 18px !important; }
+.anatomy-longhaul .anatomy-legend li { font-size: 0.85rem; padding: 8px 0; }
+
+.sa-longhaul-close {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.65;
+    text-align: center;
+    max-width: 800px;
+    margin: 28px auto 0;
+}
+.sa-longhaul-close strong { color: var(--white); font-weight: 600; }
+
+
+/* ----------------------------------------------------------------------------
+   R10: Buying — sa-pipeline ported from agent.squidbay.io
+   ---------------------------------------------------------------------------- */
+.sa-pipeline {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(0, 217, 255, 0.16);
+    border-radius: 14px;
+    padding: 28px 28px 24px;
+    margin: 32px auto 0;
+    max-width: 1100px;
+    position: relative;
+}
+.sa-pipeline-title {
+    color: var(--primary);
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin: 0 0 10px 0;
+    text-align: center;
+    letter-spacing: -0.01em;
+}
+.sa-pipeline-sub {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    text-align: center;
+    max-width: 780px;
+    margin: 0 auto 22px;
+}
+.sa-pipeline-steps {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 8px 10px;
+    margin-bottom: 18px;
+}
+.sa-pipeline-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 4px;
+    color: var(--white);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+.sa-pipeline-step-patent { color: var(--yellow); }
+.sa-pipeline-num {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--primary);
+    background: rgba(0, 217, 255, 0.10);
+    border: 1px solid rgba(0, 217, 255, 0.28);
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+.sa-pipeline-step-patent .sa-pipeline-num {
+    color: var(--yellow);
+    background: rgba(255, 189, 46, 0.10);
+    border-color: rgba(255, 189, 46, 0.32);
+}
+.sa-pipeline-arrow {
+    color: var(--primary);
+    font-size: 1rem;
+    font-weight: 700;
+    opacity: 0.5;
+}
+.buying-why-squid {
+    margin-top: 18px !important;
+    padding-top: 18px;
+    border-top: 1px solid rgba(0, 217, 255, 0.12);
+    font-size: 0.88rem !important;
+    line-height: 1.65 !important;
+}
+.buying-why-squid strong { color: var(--primary); }
+
+
+/* ----------------------------------------------------------------------------
+   R6 + R10: Chat-demo HEIGHT-LOCKED (matches agent.squidbay.io exactly)
+   The chat-messages container is locked to a fixed height with hidden
+   scrollbars. The JS auto-scrolls to bottom on each new message, so the
+   conversation always shows the most recent activity without growing
+   the page.
+   ---------------------------------------------------------------------------- */
+.see-it-block { margin-top: 48px; }
+.see-it-h3 { text-align: center; font-size: 1.4rem; margin-bottom: 24px; }
 
 .sa-chat-demo-grid {
+    display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 28px;
-    align-items: stretch; /* both cols same height, no orphan whitespace */
+    align-items: start;
     max-width: 1100px;
+    margin: 0 auto;
 }
 
-/* Chat window matches the explainer-panel height */
+/* Hard lock the chat window height — the heart of the fix */
 .chat-demo-window {
-    min-height: 0 !important;
-    max-height: none !important;
-    height: 100%;
-    overflow-y: auto;
+    min-height: 480px !important;
+    max-height: 480px !important;
+    overflow-y: auto !important;
+    height: 480px !important;
+    /* Hide scrollbar — auto-scroll handles visibility */
+    scrollbar-width: none;     /* Firefox */
+    -ms-overflow-style: none;  /* IE/Edge legacy */
 }
-.chat-window { display: flex; flex-direction: column; }
+.chat-demo-window::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+}
+.chat-window {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+}
 
-/* Tighter explainer steps — 4 fit comfortably in ~520px */
-.chat-demo-panel { gap: 12px; }
-.chat-demo-step { padding: 16px 18px; gap: 14px; }
-.chat-demo-step h4 { font-size: 0.95rem; margin-bottom: 4px; }
-.chat-demo-step p { font-size: 0.85rem; line-height: 1.5; }
-.chat-demo-step-num { width: 28px; height: 28px; font-size: 0.85rem; }
+/* Right-column step cards — sized to match chat window total height */
+.chat-demo-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+}
+.chat-demo-step {
+    padding: 14px 18px;
+    gap: 14px;
+    align-items: flex-start;
+}
+.chat-demo-step h4 { font-size: 0.95rem; margin-bottom: 3px; }
+.chat-demo-step p { font-size: 0.83rem; line-height: 1.5; margin: 0; }
+.chat-demo-step-num { width: 28px; height: 28px; font-size: 0.85rem; flex-shrink: 0; }
 
 
 /* ----------------------------------------------------------------------------
-   R7: Protection — section-label lock icon, 4-up grid, integrated patent line
+   R7: Protection — section-label lock icon, 7-tile grid with full-width last
    ---------------------------------------------------------------------------- */
 .protection-module { padding: 72px 0; }
 .protection-module > .container > .section-label {
@@ -2023,9 +2275,7 @@ section > .container > .section-label {
     max-width: 1100px;
 }
 .protection-compact-item { padding: 18px 20px; gap: 14px; align-items: center; }
-.protection-compact-item-wide {
-    grid-column: 1 / -1; /* span full row */
-}
+.protection-compact-item-wide { grid-column: 1 / -1; }
 .protection-compact-text h3 { font-size: 0.92rem; margin-bottom: 4px; }
 .protection-compact-text p { font-size: 0.8rem; line-height: 1.5; }
 
@@ -2039,72 +2289,151 @@ section > .container > .section-label {
 
 
 /* ----------------------------------------------------------------------------
-   R8: Pricing — size normalization, badge wrap fix, compaction
+   R8 + R10: Pricing — uniform sizing, CSS-grid layout (no more table wrap),
+   restrained price font, label/title/description triad like other sections
    ---------------------------------------------------------------------------- */
 .pricing { padding: 72px 0 !important; }
 
-/* Title sized to match other sections (was inheriting global h2 = up to 3rem) */
+.pricing > .container > .section-label { text-align: center; }
 .pricing > .container > h2,
 .pricing-title {
+    text-align: center;
     font-size: clamp(1.8rem, 4vw, 2.4rem) !important;
-    margin-bottom: 32px !important;
+    margin-bottom: 14px !important;
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.pricing-subhead {
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    max-width: 680px;
+    margin: 0 auto 32px;
+}
+.pricing-subhead strong { color: var(--white); font-weight: 600; }
+
+.pricing-example { padding: 24px 28px !important; max-width: 820px; margin: 0 auto; }
+
+/* New CSS-grid pricing layout — replaces the <table> that was causing
+   word-by-word wrap and inflated price font at narrower widths. */
+.pricing-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+.pricing-row {
+    display: grid;
+    grid-template-columns: minmax(220px, 1.1fr) minmax(0, 2fr) minmax(110px, 0.7fr);
+    gap: 20px;
+    align-items: center;
+    padding: 16px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.pricing-row:first-child { border-top: none; }
+.pricing-row-head {
+    padding: 0 0 12px;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    border-top: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.10);
 }
 
-.pricing-example { padding: 28px !important; max-width: 760px; }
-
-/* Tier badge: stop word-by-word wrapping in the 180px column.
-   Widen the tier col and let the badge flow naturally. */
-.pricing-table td:first-child { width: 240px !important; }
-.pricing-table td:last-child { width: 130px !important; }
-.pricing-table .skill-badge {
+.pricing-col-tier {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+.pricing-tier-icon {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: rgba(0, 217, 255, 0.10);
+    border: 1px solid rgba(0, 217, 255, 0.22);
+    color: var(--primary);
     display: inline-flex;
     align-items: center;
-    flex-wrap: nowrap;
-    gap: 8px;
-    font-size: 0.92rem;
-    line-height: 1.35;
-    color: var(--white);
+    justify-content: center;
 }
-.pricing-table .skill-badge svg { flex-shrink: 0; }
-
-/* Price amount — restrained, baseline-aligned, no oversized appearance */
-.pricing-table .price-amount {
-    font-size: 1.4rem !important;
-    line-height: 1.1 !important;
+.pricing-tier-label {
     color: var(--white);
-    display: inline-flex;
-    align-items: baseline;
-    gap: 6px;
-    flex-wrap: nowrap;
-    white-space: nowrap;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.3;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
 }
-.pricing-table .price-amount small {
-    font-size: 0.68rem !important;
+.pricing-tier-label small {
     color: var(--text-muted);
-    font-family: var(--font-mono);
+    font-size: 0.72rem;
     font-weight: 500;
+    font-family: var(--font-mono);
     text-transform: uppercase;
     letter-spacing: 0.04em;
+}
+
+.pricing-col-what {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.55;
+}
+.pricing-col-what strong { color: var(--white); font-weight: 600; }
+
+.pricing-col-price {
+    text-align: right;
     white-space: nowrap;
+    display: inline-flex;
+    align-items: baseline;
+    justify-content: flex-end;
+    gap: 6px;
+}
+.pricing-row-head .pricing-col-price { display: block; }
+.pricing-price {
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1;
+}
+.pricing-price-unit {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
 }
 
 .pricing-breakeven { margin-top: 20px !important; font-size: 0.92rem !important; }
-.pricing-note { margin-top: 14px !important; font-size: 0.82rem !important; line-height: 1.55; }
+.pricing-note { margin-top: 12px !important; font-size: 0.8rem !important; line-height: 1.55; }
 
 
 /* ----------------------------------------------------------------------------
-   R9: Features carousel — ports sa-carousel from agent.squidbay.io
+   R9 + R10: Features carousel — hover lift no longer clipped at top
+   The viewport needs vertical padding so the -2px hover translate doesn't
+   get cropped by overflow:hidden.
    ---------------------------------------------------------------------------- */
-.features { padding: 72px 0 !important; overflow: hidden; }
+.features { padding: 72px 0 !important; overflow: visible !important; }
 .features > .container > h2 {
     text-align: center;
-    margin-bottom: 32px;
+    margin-bottom: 28px;
     font-size: clamp(1.8rem, 4vw, 2.4rem);
 }
 .features > .container > .section-label { text-align: center; }
 
-.sa-carousel { position: relative; overflow: hidden; max-width: 1100px; margin: 0 auto; }
-.sa-carousel-viewport { overflow: hidden; margin: 0 48px; }
+.sa-carousel { position: relative; max-width: 1100px; margin: 0 auto; overflow: visible; }
+.sa-carousel-viewport {
+    overflow: hidden;
+    margin: 0 48px;
+    padding: 10px 4px 14px; /* breathing room for hover lift + shadow */
+}
 .sa-carousel-track {
     display: flex;
     gap: 16px;
@@ -2119,31 +2448,31 @@ section > .container > .section-label {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    padding: 24px;
+    padding: 22px;
     background: linear-gradient(135deg, var(--dark) 0%, var(--darker) 100%);
     border: 1px solid var(--gray);
     border-radius: var(--radius-lg, 12px);
-    transition: all 0.2s ease;
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 .sa-carousel-track .sa-feature:hover {
     border-color: rgba(0, 217, 255, 0.4);
     transform: translateY(-2px);
-    box-shadow: 0 8px 28px rgba(0, 217, 255, 0.08);
+    box-shadow: 0 8px 28px rgba(0, 217, 255, 0.10);
 }
 .sa-carousel-track .sa-feature .feature-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 9px;
     background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark, #00A8CC) 100%);
     color: var(--black);
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 16px;
-    box-shadow: 0 4px 16px rgba(0, 217, 255, 0.25);
+    margin-bottom: 14px;
+    box-shadow: 0 4px 16px rgba(0, 217, 255, 0.22);
 }
 .sa-carousel-track .sa-feature h3 { font-size: 1rem; margin-bottom: 8px; color: var(--white); }
-.sa-carousel-track .sa-feature p { font-size: 0.88rem; line-height: 1.55; color: var(--text-muted); margin: 0; }
+.sa-carousel-track .sa-feature p { font-size: 0.87rem; line-height: 1.55; color: var(--text-muted); margin: 0; }
 
 .sa-carousel-btn {
     position: absolute;
@@ -2152,8 +2481,8 @@ section > .container > .section-label {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: rgba(0, 217, 255, 0.1);
-    border: 1px solid rgba(0, 217, 255, 0.3);
+    background: rgba(0, 217, 255, 0.10);
+    border: 1px solid rgba(0, 217, 255, 0.30);
     color: var(--primary);
     font-size: 1.4rem;
     line-height: 1;
@@ -2165,7 +2494,7 @@ section > .container > .section-label {
     z-index: 2;
     padding: 0;
 }
-.sa-carousel-btn:hover { background: rgba(0, 217, 255, 0.2); border-color: var(--primary); }
+.sa-carousel-btn:hover { background: rgba(0, 217, 255, 0.20); border-color: var(--primary); }
 .sa-carousel-prev { left: 0; }
 .sa-carousel-next { right: 0; }
 
@@ -2173,7 +2502,7 @@ section > .container > .section-label {
     display: flex;
     justify-content: center;
     gap: 8px;
-    margin-top: 24px;
+    margin-top: 20px;
 }
 .carousel-dot {
     width: 8px; height: 8px; border-radius: 50%;
@@ -2183,37 +2512,76 @@ section > .container > .section-label {
 }
 .carousel-dot.active {
     background: var(--primary);
-    box-shadow: 0 0 8px rgba(0, 217, 255, 0.6);
+    box-shadow: 0 0 8px rgba(0, 217, 255, 0.60);
 }
 
 
 /* ----------------------------------------------------------------------------
-   R9: Contact section — compaction + GitHub row styling
+   R9 + R10: Contact section — compaction + lined-up right column
    ---------------------------------------------------------------------------- */
-.waitlist { padding: 72px 0 !important; }
+.waitlist { padding: 64px 0 !important; }
 .waitlist > .container > h2 {
     font-size: clamp(1.8rem, 4vw, 2.4rem) !important;
     margin-bottom: 28px !important;
-    max-width: 700px;
+    max-width: 720px;
     margin-left: auto;
     margin-right: auto;
 }
 
-.contact-alt-github {
-    display: inline-flex !important;
-    align-items: center;
-    gap: 6px;
+/* Tighten the form column */
+.waitlist .contact-form { padding: 24px 26px !important; gap: 14px !important; }
+.waitlist .form-textarea { min-height: 110px !important; }
+.waitlist .contact-form .btn-submit { margin-top: 4px; }
+
+/* Right column: align EMAIL / X / GITHUB labels and values on a consistent grid */
+.contact-copy-col { display: flex; flex-direction: column; gap: 20px; padding: 4px 0; }
+.contact-copy-lede { font-size: 0.95rem !important; line-height: 1.6 !important; }
+.contact-alt-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
 }
+.contact-alt-list li {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+.contact-alt-list li:first-child { border-top: none; padding-top: 6px; }
+.contact-alt-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+.contact-alt-value {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--primary) !important;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    word-break: break-word;
+}
+.contact-alt-value:hover { color: var(--primary-light) !important; }
 .contact-alt-github svg { flex-shrink: 0; }
 
 
 /* ============================================================================
-   MOBILE OVERRIDES — keep density tight, prevent overflows
+   MOBILE OVERRIDES
    ============================================================================ */
 @media (max-width: 900px) {
     .skill-explainer-grid { grid-template-columns: 1fr !important; gap: 20px !important; margin-top: 24px !important; }
     .skill-explainer-card,
-    .skill-analogy-visual { padding: 22px !important; }
+    .skill-analogy-visual { padding: 20px !important; }
+    .skill-urls-module { padding: 16px !important; }
     .analogy-row {
         grid-template-columns: 1fr auto 1fr;
         grid-template-rows: auto auto;
@@ -2225,20 +2593,42 @@ section > .container > .section-label {
     .under-hood-grid { grid-template-columns: 1fr !important; gap: 14px; margin-bottom: 24px; }
     .under-hood-card { padding: 18px !important; }
 
-    .non-squid-callout { flex-direction: column !important; padding: 20px !important; gap: 14px !important; }
+    .selling-pair-grid { grid-template-columns: 1fr !important; gap: 18px !important; }
+    .selling-pair-tiers { grid-template-columns: 1fr 1fr !important; }
+    .non-squid-callout { flex-direction: column !important; padding: 20px !important; gap: 14px !important; height: auto !important; }
     .non-squid-callout-icon { font-size: 1.8rem !important; }
 
-    .sa-chat-demo-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
-    .chat-demo-window { min-height: 380px !important; max-height: 420px !important; }
+    .anatomy-longhaul { padding: 24px 18px !important; }
+    .anatomy-longhaul .anatomy-grid-r3 { grid-template-columns: 1fr !important; gap: 22px !important; }
+
+    .sa-pipeline { padding: 22px 18px 18px !important; }
+    .sa-pipeline-steps { flex-direction: column; gap: 6px; }
+    .sa-pipeline-arrow { transform: rotate(90deg); }
+    .sa-pipeline-step { width: 100%; justify-content: center; }
+
+    .sa-chat-demo-grid { grid-template-columns: 1fr !important; gap: 22px !important; }
+    .chat-demo-window {
+        min-height: 420px !important;
+        max-height: 420px !important;
+        height: 420px !important;
+    }
 
     .protection-compact-grid { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
     .protection-compact-item { padding: 16px !important; }
     .protection-compact-item-wide { grid-column: 1 / -1; }
 
-    .pricing-example { padding: 22px !important; }
-    .pricing-table td:first-child { width: auto !important; }
-    .pricing-table td:last-child { width: auto !important; }
-    .pricing-table .price-amount { font-size: 1.2rem !important; }
+    .pricing-example { padding: 20px !important; }
+    .pricing-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 16px 0;
+    }
+    .pricing-row-head { display: none; }
+    .pricing-col-price { justify-content: flex-start; text-align: left; }
+    .pricing-price { font-size: 1.15rem; }
+
+    .contact-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+    .contact-alt-list li { grid-template-columns: 80px 1fr; gap: 12px; padding: 12px 0; }
 
     .sa-carousel-viewport { margin: 0 38px; }
     .sa-carousel-track .sa-feature { min-width: 260px; max-width: 260px; min-height: 220px; }
@@ -2250,4 +2640,10 @@ section > .container > .section-label {
     .sa-carousel-btn { width: 32px; height: 32px; font-size: 1.15rem; }
     .protection-compact-grid { grid-template-columns: 1fr !important; }
     .protection-compact-item-wide { grid-column: auto; }
+    .selling-pair-tiers { grid-template-columns: 1fr !important; }
+    .chat-demo-window {
+        min-height: 380px !important;
+        max-height: 380px !important;
+        height: 380px !important;
+    }
 }
