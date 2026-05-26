@@ -3956,3 +3956,32 @@
         padding: 0 8px;
     }
 }
+
+/* ============================================================================
+   Beta Access — supporting note under hero + final CTA Request-Beta-Access
+   buttons. Subtle, brand-teal link, muted body color.
+   ============================================================================ */
+.sa-hero-beta-note,
+.sa-cta-beta-note {
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 14px auto 0;
+    max-width: 620px;
+    text-align: center;
+}
+.sa-hero-beta-note { text-align: left; margin-left: 0; margin-right: 0; }
+.sa-hero-beta-note a,
+.sa-cta-beta-note a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color 0.18s ease;
+}
+.sa-hero-beta-note a:hover,
+.sa-cta-beta-note a:hover { color: var(--primary-light); }
+
+@media (max-width: 768px) {
+    .sa-hero-beta-note,
+    .sa-cta-beta-note { font-size: 12.5px; }
+    .sa-hero-beta-note { text-align: center; max-width: none; }
+}
