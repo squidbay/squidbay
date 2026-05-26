@@ -86,6 +86,60 @@
     background: rgba(15, 20, 25, 0.8); border: 1px solid rgba(0, 217, 255, 0.12);
     border-radius: 16px; padding: 20px;
     backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    position: relative;
+    box-shadow: 0 0 0 1px rgba(0, 217, 255, 0.06), 0 0 40px rgba(0, 217, 255, 0.06);
+}
+
+/* ----------------------------------------------------------------------
+   Pulse-card animated teal runner — mirrors agent.squidbay.io Surge
+   module, swapped gold (#F4C430) for our brand teal (#00D9FF).
+   A bright dot traces the perimeter via a rotating conic gradient,
+   masked to the 2px border only. @property is required so the angle
+   actually animates (CSS vars alone won't transition for gradients).
+   ---------------------------------------------------------------------- */
+@property --pulse-angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+}
+
+.pulse-card::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 18px; /* pulse-card radius (16) + 2 */
+    padding: 2px;
+    background: conic-gradient(
+        from var(--pulse-angle),
+        transparent 0deg,
+        transparent 320deg,
+        rgba(0, 217, 255, 0.6) 340deg,
+        #B3F1FF 355deg,
+        rgba(0, 217, 255, 0.6) 370deg,
+        transparent 390deg
+    );
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+    animation: pulse-electrify 4s linear infinite;
+    z-index: 0;
+    filter: drop-shadow(0 0 4px rgba(0, 217, 255, 0.7))
+            drop-shadow(0 0 10px rgba(0, 217, 255, 0.4));
+}
+
+@keyframes pulse-electrify {
+    to { --pulse-angle: 360deg; }
+}
+
+/* Keep card contents above the runner */
+.pulse-card > * { position: relative; z-index: 1; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .pulse-card::after { animation: none; }
 }
 
 .pulse-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
@@ -1126,30 +1180,30 @@ section > .container > .section-label {
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   Hero compat — single line (replaces the verbose 3-paragraph block)
+   Hero compat — single subtle line, left-aligned, teal link
    -------------------------------------------------------------------------- */
 .hero-compat-line {
-    margin-top: 16px;
-    text-align: center;
-    font-size: 0.95rem;
+    margin-top: 18px;
+    text-align: left;
+    font-size: 0.8rem;
     color: var(--text-muted);
-    line-height: 1.6;
+    line-height: 1.5;
     letter-spacing: 0.01em;
+    opacity: 0.85;
 }
 .hero-compat-line a,
 .compat-learn-more {
-    color: var(--text-muted);
+    color: var(--primary);
     text-decoration: none;
-    font-size: 0.95rem;
+    font-size: 0.8rem;
     font-weight: 500;
-    border-bottom: 1px dotted var(--text-muted);
-    padding-bottom: 1px;
-    transition: color 0.18s ease, border-color 0.18s ease;
+    border-bottom: none;
+    padding-bottom: 0;
+    transition: color 0.18s ease;
 }
 .hero-compat-line a:hover,
 .compat-learn-more:hover {
     color: var(--primary-light);
-    border-bottom-color: var(--primary-light);
 }
 
 /* --------------------------------------------------------------------------
@@ -1803,4 +1857,397 @@ section > .container > .section-label {
     .pricing-table .price-amount { font-size: 1.3rem; }
     .pricing-table svg,
     .pricing-icon { width: 24px; height: 24px; }
+}
+
+/* ============================================================================
+   ============================================================================
+   INDEX DESIGN CLEANUP — ROUND 2-9 (consolidated)
+   ============================================================================
+   Last-pass overrides; lives at end of file so cascade order guarantees
+   these rules win over earlier ones with equal specificity.
+   ============================================================================ */
+
+
+/* ----------------------------------------------------------------------------
+   R2: Emoji → SVG conversions (icon container sizing)
+   The .analogy-icon and .protection-compact-icon containers previously sized
+   for emoji. SVGs need explicit dimensions + currentColor inheritance.
+   ---------------------------------------------------------------------------- */
+.analogy-icon { color: var(--text-muted); display: inline-flex; align-items: center; justify-content: center; }
+.analogy-tile-squid .analogy-icon { color: var(--primary); }
+.analogy-icon-squid { font-size: 1.8rem; line-height: 1; } /* 🦑 stays emoji */
+
+.protection-compact-icon {
+    color: var(--yellow);
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 189, 46, 0.10);
+    border-radius: 8px;
+    flex-shrink: 0;
+    font-size: initial; /* override emoji-era font-size */
+    margin-top: 0;
+}
+
+
+/* ----------------------------------------------------------------------------
+   R3: "What's a skill?" — compaction
+   ---------------------------------------------------------------------------- */
+.whats-a-skill { padding: 72px 0; }
+.whats-a-skill > .container > h2 { margin-bottom: 14px; font-size: clamp(1.8rem, 4vw, 2.4rem); }
+.whats-lede { margin-bottom: 28px !important; }
+
+.skill-explainer-grid {
+    gap: 32px;
+    margin: 32px auto 0;
+    max-width: 1100px;
+    align-items: start; /* match heights with content, not center-vertical empty space */
+}
+.skill-explainer-card { padding: 28px; }
+.skill-explainer-card p { font-size: 0.95rem; line-height: 1.6; margin-bottom: 14px; }
+.skill-explainer-card .whats-meta { margin-top: 18px; padding-top: 14px; font-size: 0.85rem; }
+.skill-analogy-visual { padding: 28px; gap: 18px; }
+.analogy-tile { padding: 14px 10px; gap: 6px; }
+.analogy-icon { font-size: 1.6rem; }
+.analogy-label { font-size: 0.72rem; }
+.analogy-result { padding: 12px 14px; font-size: 0.82rem; }
+
+
+/* ----------------------------------------------------------------------------
+   R4: "How it works under the hood" — compaction
+   ---------------------------------------------------------------------------- */
+.how-under-hood { padding: 72px 0 !important; }
+.how-under-hood > .container > h2 { margin-bottom: 12px; font-size: clamp(1.8rem, 4vw, 2.4rem); }
+.under-hood-intro { margin-bottom: 32px !important; font-size: 1rem; }
+.under-hood-grid { gap: 18px; margin-bottom: 32px; }
+.under-hood-card { padding: 22px; }
+.under-hood-card h3 { font-size: 1rem; }
+.under-hood-card p { font-size: 0.88rem; }
+.under-hood-note { padding: 22px 26px; max-width: 1100px; margin-left: auto; margin-right: auto; }
+.under-hood-note h3 { font-size: 1rem; margin-bottom: 10px; }
+.under-hood-note p { font-size: 0.9rem; line-height: 1.6; margin-bottom: 10px; }
+
+
+/* ----------------------------------------------------------------------------
+   R5: Selling/Buying umbrella + Anatomy — compaction
+   ---------------------------------------------------------------------------- */
+.selling-umbrella,
+.buying-umbrella { padding: 72px 0 !important; }
+
+.umbrella-subhead { margin-bottom: 32px !important; }
+.umbrella-subhead-h3 { margin: 32px 0 18px !important; font-size: 1.15rem; }
+.umbrella-subhead-h3:first-of-type { margin-top: 0 !important; }
+
+.flow-grid { gap: 16px !important; }
+.flow-card { padding: 22px !important; }
+.flow-card h3 { font-size: 1rem; margin-bottom: 8px; }
+.flow-card p { font-size: 0.9rem; line-height: 1.55; }
+
+.non-squid-callout {
+    margin: 36px auto 0 !important;
+    padding: 22px 28px !important;
+    gap: 18px !important;
+}
+.non-squid-callout-icon { font-size: 2rem !important; }
+.non-squid-callout-body h3 { font-size: 1.05rem; margin-bottom: 8px; }
+.non-squid-callout-body p { font-size: 0.92rem; line-height: 1.6; margin-bottom: 8px; }
+
+/* Anatomy compaction */
+.anatomy-block { margin-top: 56px; }
+.anatomy-h3 { font-size: 1.5rem !important; margin-bottom: 10px; }
+.anatomy-lede { font-size: 0.95rem !important; max-width: 760px; margin-bottom: 28px !important; }
+.anatomy-grid-r3 { gap: 28px !important; max-width: 1080px; margin-left: auto; margin-right: auto; }
+.anatomy-legend li { font-size: 0.85rem; padding: 8px 0; }
+.anatomy-pre { font-size: 0.82rem !important; padding: 16px 18px !important; }
+
+
+/* ----------------------------------------------------------------------------
+   R6: "See It In Action" chat demo — fits viewport, balanced columns
+   ---------------------------------------------------------------------------- */
+.see-it-block { margin-top: 56px; }
+.see-it-h3 { text-align: center; font-size: 1.5rem; margin-bottom: 28px; }
+
+.sa-chat-demo-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 28px;
+    align-items: stretch; /* both cols same height, no orphan whitespace */
+    max-width: 1100px;
+}
+
+/* Chat window matches the explainer-panel height */
+.chat-demo-window {
+    min-height: 0 !important;
+    max-height: none !important;
+    height: 100%;
+    overflow-y: auto;
+}
+.chat-window { display: flex; flex-direction: column; }
+
+/* Tighter explainer steps — 4 fit comfortably in ~520px */
+.chat-demo-panel { gap: 12px; }
+.chat-demo-step { padding: 16px 18px; gap: 14px; }
+.chat-demo-step h4 { font-size: 0.95rem; margin-bottom: 4px; }
+.chat-demo-step p { font-size: 0.85rem; line-height: 1.5; }
+.chat-demo-step-num { width: 28px; height: 28px; font-size: 0.85rem; }
+
+
+/* ----------------------------------------------------------------------------
+   R7: Protection — section-label lock icon, 4-up grid, integrated patent line
+   ---------------------------------------------------------------------------- */
+.protection-module { padding: 72px 0; }
+.protection-module > .container > .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+    width: 100%;
+}
+.protection-label-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--yellow);
+    background: rgba(255, 189, 46, 0.12);
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    box-shadow: 0 0 12px rgba(255, 189, 46, 0.25);
+}
+.protection-module > .container > h2 { margin-bottom: 32px; }
+
+.protection-compact-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    max-width: 1100px;
+}
+.protection-compact-item { padding: 18px 20px; gap: 14px; align-items: center; }
+.protection-compact-item-wide {
+    grid-column: 1 / -1; /* span full row */
+}
+.protection-compact-text h3 { font-size: 0.92rem; margin-bottom: 4px; }
+.protection-compact-text p { font-size: 0.8rem; line-height: 1.5; }
+
+.protection-module .protection-patent-footer {
+    margin-top: 28px;
+    padding-top: 18px;
+    font-size: 0.82rem;
+    max-width: 760px;
+    line-height: 1.55;
+}
+
+
+/* ----------------------------------------------------------------------------
+   R8: Pricing — size normalization, badge wrap fix, compaction
+   ---------------------------------------------------------------------------- */
+.pricing { padding: 72px 0 !important; }
+
+/* Title sized to match other sections (was inheriting global h2 = up to 3rem) */
+.pricing > .container > h2,
+.pricing-title {
+    font-size: clamp(1.8rem, 4vw, 2.4rem) !important;
+    margin-bottom: 32px !important;
+}
+
+.pricing-example { padding: 28px !important; max-width: 760px; }
+
+/* Tier badge: stop word-by-word wrapping in the 180px column.
+   Widen the tier col and let the badge flow naturally. */
+.pricing-table td:first-child { width: 240px !important; }
+.pricing-table td:last-child { width: 130px !important; }
+.pricing-table .skill-badge {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 8px;
+    font-size: 0.92rem;
+    line-height: 1.35;
+    color: var(--white);
+}
+.pricing-table .skill-badge svg { flex-shrink: 0; }
+
+/* Price amount — restrained, baseline-aligned, no oversized appearance */
+.pricing-table .price-amount {
+    font-size: 1.4rem !important;
+    line-height: 1.1 !important;
+    color: var(--white);
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+.pricing-table .price-amount small {
+    font-size: 0.68rem !important;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+}
+
+.pricing-breakeven { margin-top: 20px !important; font-size: 0.92rem !important; }
+.pricing-note { margin-top: 14px !important; font-size: 0.82rem !important; line-height: 1.55; }
+
+
+/* ----------------------------------------------------------------------------
+   R9: Features carousel — ports sa-carousel from agent.squidbay.io
+   ---------------------------------------------------------------------------- */
+.features { padding: 72px 0 !important; overflow: hidden; }
+.features > .container > h2 {
+    text-align: center;
+    margin-bottom: 32px;
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+}
+.features > .container > .section-label { text-align: center; }
+
+.sa-carousel { position: relative; overflow: hidden; max-width: 1100px; margin: 0 auto; }
+.sa-carousel-viewport { overflow: hidden; margin: 0 48px; }
+.sa-carousel-track {
+    display: flex;
+    gap: 16px;
+    align-items: stretch;
+    transition: transform 0.4s ease;
+}
+.sa-carousel-track .sa-feature {
+    min-width: 300px;
+    max-width: 300px;
+    min-height: 240px;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    background: linear-gradient(135deg, var(--dark) 0%, var(--darker) 100%);
+    border: 1px solid var(--gray);
+    border-radius: var(--radius-lg, 12px);
+    transition: all 0.2s ease;
+}
+.sa-carousel-track .sa-feature:hover {
+    border-color: rgba(0, 217, 255, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(0, 217, 255, 0.08);
+}
+.sa-carousel-track .sa-feature .feature-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark, #00A8CC) 100%);
+    color: var(--black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 16px rgba(0, 217, 255, 0.25);
+}
+.sa-carousel-track .sa-feature h3 { font-size: 1rem; margin-bottom: 8px; color: var(--white); }
+.sa-carousel-track .sa-feature p { font-size: 0.88rem; line-height: 1.55; color: var(--text-muted); margin: 0; }
+
+.sa-carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(0, 217, 255, 0.1);
+    border: 1px solid rgba(0, 217, 255, 0.3);
+    color: var(--primary);
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    z-index: 2;
+    padding: 0;
+}
+.sa-carousel-btn:hover { background: rgba(0, 217, 255, 0.2); border-color: var(--primary); }
+.sa-carousel-prev { left: 0; }
+.sa-carousel-next { right: 0; }
+
+.sa-carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 24px;
+}
+.carousel-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    border: none; cursor: pointer; padding: 0;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+.carousel-dot.active {
+    background: var(--primary);
+    box-shadow: 0 0 8px rgba(0, 217, 255, 0.6);
+}
+
+
+/* ----------------------------------------------------------------------------
+   R9: Contact section — compaction + GitHub row styling
+   ---------------------------------------------------------------------------- */
+.waitlist { padding: 72px 0 !important; }
+.waitlist > .container > h2 {
+    font-size: clamp(1.8rem, 4vw, 2.4rem) !important;
+    margin-bottom: 28px !important;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.contact-alt-github {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 6px;
+}
+.contact-alt-github svg { flex-shrink: 0; }
+
+
+/* ============================================================================
+   MOBILE OVERRIDES — keep density tight, prevent overflows
+   ============================================================================ */
+@media (max-width: 900px) {
+    .skill-explainer-grid { grid-template-columns: 1fr !important; gap: 20px !important; margin-top: 24px !important; }
+    .skill-explainer-card,
+    .skill-analogy-visual { padding: 22px !important; }
+    .analogy-row {
+        grid-template-columns: 1fr auto 1fr;
+        grid-template-rows: auto auto;
+        gap: 10px;
+    }
+    .analogy-row .analogy-arrow:nth-of-type(1) { grid-column: 1 / -1; transform: rotate(90deg); }
+    .analogy-row .analogy-result { grid-column: 1 / -1; }
+
+    .under-hood-grid { grid-template-columns: 1fr !important; gap: 14px; margin-bottom: 24px; }
+    .under-hood-card { padding: 18px !important; }
+
+    .non-squid-callout { flex-direction: column !important; padding: 20px !important; gap: 14px !important; }
+    .non-squid-callout-icon { font-size: 1.8rem !important; }
+
+    .sa-chat-demo-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+    .chat-demo-window { min-height: 380px !important; max-height: 420px !important; }
+
+    .protection-compact-grid { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
+    .protection-compact-item { padding: 16px !important; }
+    .protection-compact-item-wide { grid-column: 1 / -1; }
+
+    .pricing-example { padding: 22px !important; }
+    .pricing-table td:first-child { width: auto !important; }
+    .pricing-table td:last-child { width: auto !important; }
+    .pricing-table .price-amount { font-size: 1.2rem !important; }
+
+    .sa-carousel-viewport { margin: 0 38px; }
+    .sa-carousel-track .sa-feature { min-width: 260px; max-width: 260px; min-height: 220px; }
+}
+
+@media (max-width: 600px) {
+    .sa-carousel-viewport { margin: 0 32px; }
+    .sa-carousel-track .sa-feature { min-width: 240px; max-width: 240px; }
+    .sa-carousel-btn { width: 32px; height: 32px; font-size: 1.15rem; }
+    .protection-compact-grid { grid-template-columns: 1fr !important; }
+    .protection-compact-item-wide { grid-column: auto; }
 }

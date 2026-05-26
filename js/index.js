@@ -403,6 +403,135 @@
     }
 
     // --------------------------------------------------------------------------
+    // Feature Carousel — ports agent.squidbay.io .sa-carousel pattern
+    // Auto-rotates every 4s, pauses on hover, swipe-enabled on touch,
+    // responsive visible-count (3 desktop / 2 tablet / 1 mobile), dots indicator.
+    // --------------------------------------------------------------------------
+
+    function initFeatureCarousel() {
+        const carouselEl = document.getElementById('features-carousel');
+        if (!carouselEl) return;
+
+        const track = carouselEl.querySelector('.sa-carousel-track');
+        const prevBtn = carouselEl.querySelector('.sa-carousel-prev');
+        const nextBtn = carouselEl.querySelector('.sa-carousel-next');
+        const dotsContainer = carouselEl.querySelector('.sa-carousel-dots');
+        if (!track || !prevBtn || !nextBtn) return;
+
+        const cards = Array.from(track.children);
+        const totalCards = cards.length;
+        if (totalCards === 0) return;
+
+        let currentIndex = 0;
+        let autoTimer = null;
+        let touchStartX = 0;
+
+        function getVisibleCount() {
+            if (window.innerWidth <= 600) return 1;
+            if (window.innerWidth <= 900) return 2;
+            return 3;
+        }
+
+        function getMaxIndex() {
+            return Math.max(0, totalCards - getVisibleCount());
+        }
+
+        function getSlideWidth() {
+            const card = cards[0];
+            if (!card) return 0;
+            const style = getComputedStyle(track);
+            const gap = parseInt(style.gap) || 16;
+            return card.offsetWidth + gap;
+        }
+
+        function buildDots() {
+            if (!dotsContainer) return;
+            dotsContainer.innerHTML = '';
+            const maxIdx = getMaxIndex();
+            for (let i = 0; i <= maxIdx; i++) {
+                const dot = document.createElement('button');
+                dot.className = 'carousel-dot' + (i === currentIndex ? ' active' : '');
+                dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+                (function(idx) {
+                    dot.addEventListener('click', function() { goTo(idx); startAuto(); });
+                })(i);
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        function updateDots() {
+            if (!dotsContainer) return;
+            const dots = dotsContainer.querySelectorAll('.carousel-dot');
+            for (let i = 0; i < dots.length; i++) {
+                dots[i].classList.toggle('active', i === currentIndex);
+            }
+        }
+
+        function goTo(index) {
+            const maxIdx = getMaxIndex();
+            currentIndex = Math.max(0, Math.min(index, maxIdx));
+            track.style.transform = 'translateX(-' + (currentIndex * getSlideWidth()) + 'px)';
+            updateDots();
+        }
+
+        function next() {
+            const maxIdx = getMaxIndex();
+            if (currentIndex >= maxIdx) goTo(0);
+            else goTo(currentIndex + 1);
+        }
+
+        function prev() {
+            const maxIdx = getMaxIndex();
+            if (currentIndex <= 0) goTo(maxIdx);
+            else goTo(currentIndex - 1);
+        }
+
+        function startAuto() {
+            stopAuto();
+            autoTimer = setInterval(next, 4500);
+        }
+
+        function stopAuto() {
+            if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
+        }
+
+        prevBtn.addEventListener('click', function() { prev(); startAuto(); });
+        nextBtn.addEventListener('click', function() { next(); startAuto(); });
+
+        carouselEl.addEventListener('mouseenter', stopAuto);
+        carouselEl.addEventListener('mouseleave', startAuto);
+
+        track.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+            stopAuto();
+        }, { passive: true });
+
+        track.addEventListener('touchend', function(e) {
+            const diff = touchStartX - e.changedTouches[0].screenX;
+            if (Math.abs(diff) > 50) { diff > 0 ? next() : prev(); }
+            startAuto();
+        }, { passive: true });
+
+        let resizeTimer = null;
+        window.addEventListener('resize', function() {
+            if (resizeTimer) clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function() {
+                goTo(Math.min(currentIndex, getMaxIndex()));
+                buildDots();
+                startAuto();
+            }, 150);
+        });
+
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) startAuto();
+        });
+
+        buildDots();
+        goTo(0);
+        startAuto();
+    }
+
+    // --------------------------------------------------------------------------
     // Initialize
     // --------------------------------------------------------------------------
     
@@ -411,6 +540,7 @@
         initChatDemo();
         loadPulseCard();
         initTrustPills();
+        initFeatureCarousel();
     }
 
     if (document.readyState === 'loading') {
