@@ -86,6 +86,60 @@
     background: rgba(15, 20, 25, 0.8); border: 1px solid rgba(0, 217, 255, 0.12);
     border-radius: 16px; padding: 20px;
     backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    position: relative;
+    box-shadow: 0 0 0 1px rgba(0, 217, 255, 0.06), 0 0 40px rgba(0, 217, 255, 0.06);
+}
+
+/* ----------------------------------------------------------------------
+   Pulse-card animated teal runner — mirrors agent.squidbay.io Surge
+   module, swapped gold (#F4C430) for our brand teal (#00D9FF).
+   A bright dot traces the perimeter via a rotating conic gradient,
+   masked to the 2px border only. @property is required so the angle
+   actually animates (CSS vars alone won't transition for gradients).
+   ---------------------------------------------------------------------- */
+@property --pulse-angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+}
+
+.pulse-card::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 18px; /* pulse-card radius (16) + 2 */
+    padding: 2px;
+    background: conic-gradient(
+        from var(--pulse-angle),
+        transparent 0deg,
+        transparent 320deg,
+        rgba(0, 217, 255, 0.6) 340deg,
+        #B3F1FF 355deg,
+        rgba(0, 217, 255, 0.6) 370deg,
+        transparent 390deg
+    );
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+    animation: pulse-electrify 4s linear infinite;
+    z-index: 0;
+    filter: drop-shadow(0 0 4px rgba(0, 217, 255, 0.7))
+            drop-shadow(0 0 10px rgba(0, 217, 255, 0.4));
+}
+
+@keyframes pulse-electrify {
+    to { --pulse-angle: 360deg; }
+}
+
+/* Keep card contents above the runner */
+.pulse-card > * { position: relative; z-index: 1; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .pulse-card::after { animation: none; }
 }
 
 .pulse-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
@@ -1126,30 +1180,30 @@ section > .container > .section-label {
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   Hero compat — single line (replaces the verbose 3-paragraph block)
+   Hero compat — single subtle line, left-aligned, teal link
    -------------------------------------------------------------------------- */
 .hero-compat-line {
-    margin-top: 16px;
-    text-align: center;
-    font-size: 0.95rem;
+    margin-top: 18px;
+    text-align: left;
+    font-size: 0.8rem;
     color: var(--text-muted);
-    line-height: 1.6;
+    line-height: 1.5;
     letter-spacing: 0.01em;
+    opacity: 0.85;
 }
 .hero-compat-line a,
 .compat-learn-more {
-    color: var(--text-muted);
+    color: var(--primary);
     text-decoration: none;
-    font-size: 0.95rem;
+    font-size: 0.8rem;
     font-weight: 500;
-    border-bottom: 1px dotted var(--text-muted);
-    padding-bottom: 1px;
-    transition: color 0.18s ease, border-color 0.18s ease;
+    border-bottom: none;
+    padding-bottom: 0;
+    transition: color 0.18s ease;
 }
 .hero-compat-line a:hover,
 .compat-learn-more:hover {
     color: var(--primary-light);
-    border-bottom-color: var(--primary-light);
 }
 
 /* --------------------------------------------------------------------------
